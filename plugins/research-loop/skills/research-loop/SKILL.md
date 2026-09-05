@@ -36,7 +36,8 @@ Use the bundled Research Loop MCP server as the source of truth. Act on the user
 - Respect the non-linear lifecycle: topic → questions/literature → methods → experiments/refinement → results → paper → rebuttal.
 - For planning requests, inspect active projects and deadlines first. Create only the plans or deadlines the user authorized; do not silently reorganize unrelated projects.
 - For experiments and methods, use a research object plus its rich page when tables, code, plots, files, or detailed notes are needed.
-- Build table blocks directly when the data is available. Image, plot, and file blocks currently reference an HTTPS URL or an already-uploaded Research Loop media path; do not claim that the MCP uploaded or rendered a binary artifact when it only saved a reference or placeholder.
+- Build table blocks directly from available data. Text supports **bold**, *italic*, ~~strikethrough~~ and inline code; use unescaped Markdown, not HTML. Code blocks and media metadata stay literal.
+- Generate real plots/figures with your available rendering tools, export PNG/JPEG/WebP/GIF, then use the upload workflow in references/operations.md. The server supports private image uploads up to 10 MiB; it does not render plots itself. Never fabricate measurements or report a placeholder as a finished figure.
 - To inspect an uploaded attachment, first read its page with `get_research_page`, then pass the attachment block ID to `get_research_media`. Its private download URL expires in 60 seconds; use it only for the requested inspection and never save or publish the URL in a page, note, or response.
 - For research-definition summaries, keep the abstract separate from numbered research questions.
 - For AI task work, claim before execution, record meaningful progress, and follow the task transition rules. Do not mark proposal/review work complete before review.

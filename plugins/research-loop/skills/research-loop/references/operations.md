@@ -11,6 +11,7 @@ Read this reference for writes, rich research pages, AI task transitions, protec
 | Reconstruct current project | `sync_project` or `get_project_context` | — |
 | Read or edit detailed research content | `get_research_page` | `save_research_page` |
 | Inspect an uploaded page attachment | `get_research_page` | `get_research_media` using the attachment block ID |
+| Add a generated figure | `get_research_page` | prepare/upload/complete media, then `save_research_page` |
 | Create a project | `who_am_i` | `create_project` with revision `0` |
 | Capture an unstructured note | project sync | `capture_inbox` |
 | Add a question, paper, method, experiment, result, decision, or claim | project sync | `create_research_object` |
@@ -56,6 +57,18 @@ Available blocks include paragraphs, headings, bulleted and numbered lists, quot
 If `hasPageSnapshot` is false, retain the returned legacy-summary paragraph unless the user explicitly replaces it.
 
 Private storage attachments can be inspected with `get_research_media` after reading the containing page. The returned download URL expires in 60 seconds. Never persist or publish that URL; retain the original storage reference and block ID instead. This read tool does not upload or generate media.
+
+## Generate and attach figures
+
+1. Use the real experiment data and your available rendering tools to generate a local PNG/JPEG/WebP/GIF. Include units, legible axes, and captions. Do not fabricate missing results; label synthetic examples.
+2. Prefer `prepare_research_media_upload` with the file name, byte size and SHA-256 (up to 10 MiB). Reuse its idempotency key for the same file after uncertain responses; use a new key when bytes or metadata change.
+3. PUT the exact binary bytes to the returned private `uploadUrl` with its Content-Type. Do not add the Research Loop API key or other Authorization header. The bundled [upload helper](../../../scripts/upload-image.mjs) accepts the prepare result JSON through stdin and the local file path as its argument, keeping the URL out of command-line arguments. It only uploads to Research Loop’s fixed Storage host and object path.
+4. Call `complete_research_media_upload` with `upload_id`. It verifies the image signature, size, SHA-256 and fresh permissions. Retry completion after an uncertain PUT before preparing a new file.
+5. Use the returned permanent `media` reference in an image/plot block. Read the latest page, preserve existing blocks, append the figure with caption and alt, and call `save_research_page`. Upload success alone is not a page save; Editor saves still require Owner review.
+
+For images up to 384 KiB decoded, `upload_research_media` accepts standard base64 directly. Prefer binary PUT when shell/file tools are available, to avoid large model-context payloads. The server permits 64 new uploads per human per 24 hours. SVG/PDF figures should be exported as PNG for inline display.
+
+Upload URLs are private two-hour capabilities, unlike 60-second download URLs. Never store either in research content or expose them in final answers. A revoked user can no longer complete or attach an upload, although an already-issued URL can upload to its reserved path until expiry. Files are private to project members, not uploader-only drafts. Unattached uploads are retained; never delete historical or pending-review assets as cleanup.
 
 ## AI task lifecycle
 
