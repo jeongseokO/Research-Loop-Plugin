@@ -1,0 +1,37 @@
+{
+  "name": "research-loop",
+  "version": "0.1.0",
+  "description": "Connect Codex to Research Loop projects, research pages, plans, deadlines, and AI change requests.",
+  "author": {
+    "name": "오정석",
+    "email": "jeongseok0112@gmail.com"
+  },
+  "repository": "https://github.com/jeongseokO/Research-Loop-Plugin",
+  "homepage": "https://research-loop.lukeo112.chatgpt.site",
+  "keywords": [
+    "research",
+    "experiments",
+    "literature",
+    "planning",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Research Loop",
+    "shortDescription": "연구 프로젝트 · 실험 · 문헌 · 일정",
+    "longDescription": "Projects · research pages · experiments · literature · plans · deadlines · governed AI changes",
+    "developerName": "오정석",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "내 Research Loop 현황 열기"
+    ],
+    "websiteURL": "https://research-loop.lukeo112.chatgpt.site",
+    "brandColor": "#256ABF"
+  },
+  "mcpServers": "./.mcp.json"
+}

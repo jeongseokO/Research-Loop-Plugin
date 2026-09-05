@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "research-loop-plugin": {
+      "type": "http",
+      "url": "https://ezmkpdnchcpjuvpilpxu.supabase.co/functions/v1/research-loop-mcp",
+      "oauth_resource": "https://ezmkpdnchcpjuvpilpxu.supabase.co/functions/v1/research-loop-mcp",
+      "scopes": ["email"],
+      "default_tools_approval_mode": "writes"
+    }
+  }
+}
