@@ -29,7 +29,7 @@ codex mcp login research-loop-plugin --scopes email --oauth-client-registration 
 
 ## 업데이트
 
-현재 패키지: **0.3.0**. 필요한 최신 안내를 MCP에서 읽는 경량 진입점, Semi-Owner 권한, 전체 프로젝트 일정 확인, 읽는 순서·관련 기록 점검, 하이라이트 AI 요청을 지원합니다.
+현재 패키지: **0.3.1**. 필요한 최신 안내를 MCP에서 읽는 경량 진입점, Semi-Owner 권한, 전체 프로젝트 일정 확인, 읽는 순서·관련 기록 점검, 하이라이트 AI 요청을 지원합니다. 하루 이미지 개수 제한은 없습니다.
 
 ```sh
 codex plugin marketplace upgrade research-loop
@@ -46,7 +46,7 @@ MCP 서버의 도구·작성 규격은 연결된 서버에서 제공됩니다. �
 
 사용자와 AI를 확인하고 프로젝트·페이지의 현재 revision을 읽은 뒤 요청된 변경만 수행합니다. 승인된 Semi-Owner AI는 허용된 연구 내용을 직접 수정하며, 프로젝트 생애·접근 권한 관리는 Owner에게 남습니다. Editor AI의 보호된 수정은 권한 있는 검토자에게 제안으로 제출됩니다. Viewer AI는 읽기 전용입니다.
 
-표와 문서 블록, Markdown 강조를 지원합니다. AI가 실험 데이터로 직접 plot·figure를 그린 뒤 PNG/JPEG/WebP/GIF 파일을 업로드하고 페이지에 넣을 수 있습니다. 파일당 최대 10MiB, 사용자당 하루 64개이며 SVG/PDF 그림은 PNG로 내보냅니다. 그림 생성은 연결한 AI의 실행·이미지 도구가 담당하고, Research Loop는 검증된 파일을 저장합니다.
+표와 문서 블록, Markdown 강조를 지원합니다. AI가 실험 데이터로 직접 plot·figure를 그린 뒤 PNG/JPEG/WebP/GIF 파일을 업로드하고 페이지에 넣을 수 있습니다. 하루 업로드 개수 제한 없이 파일당 최대 10MiB이며, SVG/PDF 그림은 PNG로 내보냅니다. 그림 생성은 연결한 AI의 실행·이미지 도구가 담당하고, Research Loop는 검증된 파일을 저장합니다.
 
 작은 파일은 MCP에서 직접 업로드할 수 있고, 큰 파일은 임시 업로드 주소를 사용합니다. 페이지 저장 권한과 Owner 검토 절차는 그대로 유지됩니다. 업로드·다운로드용 임시 주소를 페이지에 저장하거나 공개하지 마세요.
 
