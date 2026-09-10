@@ -29,6 +29,8 @@ codex mcp login research-loop-plugin --scopes email --oauth-client-registration 
 
 ## 업데이트
 
+현재 패키지: **0.3.0**. 필요한 최신 안내를 MCP에서 읽는 경량 진입점, Semi-Owner 권한, 전체 프로젝트 일정 확인, 읽는 순서·관련 기록 점검, 하이라이트 AI 요청을 지원합니다.
+
 ```sh
 codex plugin marketplace upgrade research-loop
 codex plugin add research-loop@research-loop
@@ -36,9 +38,13 @@ codex plugin add research-loop@research-loop
 
 업데이트 후 새 작업을 시작합니다. 실제 계정의 설치·OAuth·권한 검증 상태는 [배포 체크리스트](RELEASE-CHECKLIST.md)를 참고하세요.
 
+MCP 서버의 도구·작성 규격은 연결된 서버에서 제공됩니다. 플러그인은 해당 작업에 필요한 안내만 읽도록 연결하며, 매번 전체 이력이나 모든 가이드를 불러오지 않습니다. 서버 업데이트가 이미 설치된 플러그인 파일까지 교체하지는 않습니다. 위 절차는 공개판용이며, 개인용 `research-loop@personal`은 해당 로컬 원본을 갱신한 뒤 재설치해야 합니다.
+
+하이라이트에서 보낸 AI 요청은 선택 문장과 요청사항을 함께 전달합니다. AI는 원문을 다시 확인하고 담당 작업을 claim한 뒤 처리합니다. 큐에 추가하는 것만으로 Codex·Claude가 자동 실행되지는 않습니다.
+
 ## 권한과 지원 범위
 
-사용자와 AI를 확인하고 프로젝트·페이지의 현재 revision을 읽은 뒤 요청된 변경만 수행합니다. Editor AI의 보호된 수정은 Owner 검토 요청으로 제출됩니다. Viewer AI는 읽기 전용입니다.
+사용자와 AI를 확인하고 프로젝트·페이지의 현재 revision을 읽은 뒤 요청된 변경만 수행합니다. 승인된 Semi-Owner AI는 허용된 연구 내용을 직접 수정하며, 프로젝트 생애·접근 권한 관리는 Owner에게 남습니다. Editor AI의 보호된 수정은 권한 있는 검토자에게 제안으로 제출됩니다. Viewer AI는 읽기 전용입니다.
 
 표와 문서 블록, Markdown 강조를 지원합니다. AI가 실험 데이터로 직접 plot·figure를 그린 뒤 PNG/JPEG/WebP/GIF 파일을 업로드하고 페이지에 넣을 수 있습니다. 파일당 최대 10MiB, 사용자당 하루 64개이며 SVG/PDF 그림은 PNG로 내보냅니다. 그림 생성은 연결한 AI의 실행·이미지 도구가 담당하고, Research Loop는 검증된 파일을 저장합니다.
 
