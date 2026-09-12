@@ -29,7 +29,7 @@ codex mcp login research-loop-plugin --scopes email --oauth-client-registration 
 
 ## 업데이트
 
-현재 패키지: **0.3.1**. 필요한 최신 안내를 MCP에서 읽는 경량 진입점, Semi-Owner 권한, 전체 프로젝트 일정 확인, 읽는 순서·관련 기록 점검, 하이라이트 AI 요청을 지원합니다. 하루 이미지 개수 제한은 없습니다.
+현재 패키지: **0.3.2**. 사람이 핵심을 이해하고 근거를 찾아볼 수 있도록 본문·설명·원본을 구분합니다. 필요한 최신 안내만 MCP에서 읽으며, 변경의 영향에 맞춰 관련 기록을 검토합니다. Semi-Owner 권한, 전체 프로젝트 일정 확인, 읽는 순서·관련 기록 점검, 하이라이트 AI 요청을 지원합니다. 하루 이미지 개수 제한은 없습니다.
 
 ```sh
 codex plugin marketplace upgrade research-loop
