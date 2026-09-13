@@ -39,7 +39,7 @@ For meeting minutes, use the meeting guide to separate decisions, feedback and p
 ## Change safely and finish consistently
 
 - For writes or attachments, read [operations](references/operations.md). Preserve unrelated content; project, page and task revisions are separate. Use one stable idempotency key per attempt; never bypass a conflict or approval.
-- Follow server capabilities: Owner and approved Semi-Owner agents can edit permitted research directly; Editor protected changes remain proposals. Project lifecycle and access administration stay Owner-controlled. A proposal is not an applied change.
+- Follow server capabilities and author/type rules: Editor can directly edit its human owner’s own ordinary notes (not discussion/reply), literature, experiments, datasets and results. Other existing records, deadlines, trash/restore, links and project changes require review; plan-status exceptions are server-checked. Creation authorship is immutable, not an editable property. Owner and approved Semi-Owner retain permitted research powers; lifecycle/access administration stays Owner-controlled. Report the server’s applied/proposed result.
 - Schedule writes require the fresh planning token and rationale. Account for other commitments and unknown availability without copying another project's private details into shared content or silently moving its work.
 - After commits, check `get_research_brief` for affected records/reading guides. Follow the workflow guide: small wording edits need an impact check, not a broad rewrite. Respect source/version review checks; leave unread dependencies pending, even after a small edit. Do not claim automatic reconciliation.
 
