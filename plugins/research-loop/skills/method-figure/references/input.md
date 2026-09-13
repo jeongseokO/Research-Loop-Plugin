@@ -47,6 +47,8 @@ and self edges are rejected.
 
 Grid spacing is automatic. Modules use rounded boxes; tensors use cell grids;
 tokens use token tiles; caches use stacked layers; operators use circles.
+These glyphs are symbolic: tile counts do not encode actual token counts or
+tensor dimensions. Add concise quantities such as N or k when relevant.
 
 Default direct edges use facing ports. A direct path that crosses another node
 automatically tries an outer route above the panel. Specify an explicit outer
