@@ -2,7 +2,7 @@
 
 프로젝트 · 연구 페이지 · 실험 · 문헌 · 일정 · 마감 · AI 작업
 
-[Research Loop](https://research-loop.lukeo112.chatgpt.site/)에 Codex를 연결하는 플러그인입니다. 웹앱 소스와 연구 데이터는 포함하지 않습니다. GitHub 배포와 OpenAI Plugins Directory 심사·게시는 별개이며, Directory에는 아직 게시되지 않았습니다.
+[Research Loop](https://research-loop.lukeo112.chatgpt.site/)에 Codex·Claude Code를 연결하는 플러그인입니다. 웹앱 소스와 연구 데이터는 포함하지 않습니다. GitHub 배포와 OpenAI Plugins Directory 심사·게시는 별개이며, Directory에는 아직 게시되지 않았습니다.
 
 ## Codex 설치
 
@@ -27,20 +27,42 @@ codex mcp login research-loop-plugin --scopes email --oauth-client-registration 
 
 기존 개인용 `research-loop@personal`을 사용 중이라면 두 플러그인을 동시에 켜지 마세요. 공개판의 연결을 확인한 뒤 기존 개인용 플러그인을 해제합니다. 이 저장소는 기존 설치나 API 키를 자동 변경하지 않습니다.
 
+## Claude Code 설치
+
+```sh
+claude plugin marketplace add jeongseokO/Research-Loop-Plugin
+claude plugin install research-loop@research-loop
+```
+
+새 세션에서 `/mcp`를 열어 Research Loop OAuth 로그인을 완료합니다. 기존 수동 MCP 연결이 있다면 중복 연결하지 말고 사용할 연결을 확인하세요. 설치는 서버 접근 승인을 대신하지 않습니다.
+
 ## 업데이트
 
-현재 패키지: **0.3.2**. 사람이 핵심을 이해하고 근거를 찾아볼 수 있도록 본문·설명·원본을 구분합니다. 필요한 최신 안내만 MCP에서 읽으며, 변경의 영향에 맞춰 관련 기록을 검토합니다. Semi-Owner 권한, 전체 프로젝트 일정 확인, 읽는 순서·관련 기록 점검, 하이라이트 AI 요청을 지원합니다. 하루 이미지 개수 제한은 없습니다.
+현재 패키지: **0.4.0**. 공통 방법론 그림 제작 스킬과 로컬 렌더러, Claude Code 설치 형식, 회의록 전용 안내를 추가했습니다. 필요한 안내만 읽고 기존 권한·전체 프로젝트 일정·관련 기록 점검 절차를 유지합니다.
 
 ```sh
 codex plugin marketplace upgrade research-loop
 codex plugin add research-loop@research-loop
 ```
 
+Claude Code는 `claude plugin marketplace update research-loop` 후 `claude plugin update research-loop@research-loop`를 실행합니다.
+
 업데이트 후 새 작업을 시작합니다. 실제 계정의 설치·OAuth·권한 검증 상태는 [배포 체크리스트](RELEASE-CHECKLIST.md)를 참고하세요.
 
 MCP 서버의 도구·작성 규격은 연결된 서버에서 제공됩니다. 플러그인은 해당 작업에 필요한 안내만 읽도록 연결하며, 매번 전체 이력이나 모든 가이드를 불러오지 않습니다. 서버 업데이트가 이미 설치된 플러그인 파일까지 교체하지는 않습니다. 위 절차는 공개판용이며, 개인용 `research-loop@personal`은 해당 로컬 원본을 갱신한 뒤 재설치해야 합니다.
 
 하이라이트에서 보낸 AI 요청은 선택 문장과 요청사항을 함께 전달합니다. AI는 원문을 다시 확인하고 담당 작업을 claim한 뒤 처리합니다. 큐에 추가하는 것만으로 Codex·Claude가 자동 실행되지는 않습니다.
+
+## 방법론 그림
+
+“이 방법론을 overview figure로 그려서 페이지에 넣어줘”라고 요청합니다. 그림 작업에만 [method-figure 스킬](plugins/research-loop/skills/method-figure/SKILL.md)을 읽습니다.
+
+- 검증된 방법을 토큰·tensor·cache·연산·연결로 표현합니다. 설명은 그림 밖에 둡니다.
+- 로컬 Python·Matplotlib으로 PNG와 SVG/PDF, 수정용 JSON을 만듭니다. 별도 이미지 생성 API는 사용하지 않습니다. 환경이 없으면 [전용 환경 설정](plugins/research-loop/skills/method-figure/references/setup.md)이 필요합니다.
+- AI가 실제 이미지를 확인하고 페이지에 첨부합니다. 코드만 작성·파일만 업로드한 상태와 승인 대기를 완료로 보고하지 않습니다.
+- 원본 파일은 로컬 작업 폴더에 유지합니다. 웹앱에는 PNG를 넣습니다. 그림의 정확성·가독성은 AI와 연구자가 확인해야 하며 모든 모델의 실행을 보장하지는 않습니다.
+
+MCP만 연결하면 로컬 스킬·제작 스크립트가 설치되지는 않습니다. 플러그인을 갱신하거나 사용 가능한 별도 그림 도구가 필요합니다.
 
 ## 권한과 지원 범위
 

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "research-loop-plugin": {
+      "type": "http",
+      "url": "https://ezmkpdnchcpjuvpilpxu.supabase.co/functions/v1/research-loop-mcp"
+    }
+  }
+}

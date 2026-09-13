@@ -1,7 +1,7 @@
 {
   "name": "research-loop",
-  "version": "0.3.2",
-  "description": "Connect Codex to Research Loop projects, research pages, plans, deadlines, and AI change requests.",
+  "version": "0.4.0",
+  "description": "Connect to Research Loop projects, pages and AI work; render editable methodology figures locally.",
   "author": {
     "name": "오정석",
     "email": "jeongseok0112@gmail.com"

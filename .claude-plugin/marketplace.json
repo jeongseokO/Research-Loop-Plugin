@@ -1,0 +1,8 @@
+{
+  "name": "research-loop",
+  "owner": { "name": "오정석", "email": "jeongseok0112@gmail.com" },
+  "metadata": { "description": "Research Loop research pages and local methodology figures" },
+  "plugins": [
+    { "name": "research-loop", "source": "./plugins/research-loop" }
+  ]
+}

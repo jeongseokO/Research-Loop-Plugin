@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "title": "Synthetic method demonstration",
+  "layout": "horizontal",
+  "panels": [
+    {
+      "title": "A · Token selection",
+      "nodes": [
+        {"id": "tokens", "label": "Input tokens", "kind": "tokens", "row": 0, "column": 0, "accent": "blue"},
+        {"id": "score", "label": "Token scorer", "kind": "module", "row": 0, "column": 1, "accent": "blue"},
+        {"id": "select", "label": "Top-k selector", "kind": "module", "row": 0, "column": 2, "accent": "teal"},
+        {"id": "selected", "label": "Selected tokens", "kind": "tokens", "row": 1, "column": 2, "accent": "teal"},
+        {"id": "cache", "label": "Token cache", "kind": "cache", "row": 1, "column": 0, "accent": "gray"}
+      ],
+      "edges": [
+        {"source": "tokens", "target": "score"},
+        {"source": "score", "target": "select", "label": "scores"},
+        {"source": "select", "target": "selected", "label": "keep k"},
+        {"source": "tokens", "target": "cache", "label": "retain"},
+        {"source": "cache", "target": "selected", "label": "lookup", "dashed": true}
+      ]
+    },
+    {
+      "title": "B · Gated fusion",
+      "nodes": [
+        {"id": "features", "label": "Selected features", "kind": "tensor", "row": 0, "column": 0, "accent": "teal"},
+        {"id": "project", "label": "Projection", "kind": "module", "row": 0, "column": 2, "accent": "purple"},
+        {"id": "gate", "label": "Gate", "kind": "module", "row": 1, "column": 1, "accent": "orange"},
+        {"id": "multiply", "label": "×", "kind": "operator", "row": 1, "column": 2, "accent": "orange"},
+        {"id": "sum", "label": "+", "kind": "operator", "row": 1, "column": 3, "accent": "purple"},
+        {"id": "output", "label": "Fused representation", "kind": "output", "row": 0, "column": 3, "accent": "purple"}
+      ],
+      "edges": [
+        {"source": "features", "target": "project"},
+        {"source": "features", "target": "gate"},
+        {"source": "project", "target": "multiply"},
+        {"source": "gate", "target": "multiply", "label": "gate weights"},
+        {"source": "multiply", "target": "sum"},
+        {"source": "features", "target": "sum", "label": "residual", "dashed": true, "route": "below"},
+        {"source": "sum", "target": "output"}
+      ]
+    }
+  ]
+}
