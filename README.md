@@ -38,7 +38,7 @@ claude plugin install research-loop@research-loop
 
 ## 업데이트
 
-현재 패키지: **0.4.1**. Editor 권한을 최초 작성자·기록 종류 기준으로 구분하고, 검토 요청에는 변경 이유를 분명히 남깁니다. 방법론 그림·회의록 등 기존 기능과 필요한 안내만 읽는 방식을 유지합니다.
+현재 패키지: **0.4.2**. 문헌은 섹션별 필요한 설명을 충분히 담고 원문 그림·표를 적극 활용합니다. 목록 요약과 본문을 구분하며, 권한·검토 규칙과 필요한 안내만 읽는 방식을 유지합니다.
 
 ```sh
 codex plugin marketplace upgrade research-loop
