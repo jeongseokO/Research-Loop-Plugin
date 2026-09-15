@@ -38,7 +38,7 @@ claude plugin install research-loop@research-loop
 
 ## 업데이트
 
-현재 패키지: **0.4.2**. 문헌은 섹션별 필요한 설명을 충분히 담고 원문 그림·표를 적극 활용합니다. 목록 요약과 본문을 구분하며, 권한·검토 규칙과 필요한 안내만 읽는 방식을 유지합니다.
+현재 패키지: **0.4.3**. AI가 만드는 plot·figure에는 필수 라벨과 데이터만, 부연설명은 이미지 밖 캡션에 둡니다. 문헌의 충분한 설명과 원문 그림 활용, 권한·검토 규칙 및 필요한 안내만 읽는 방식을 유지합니다.
 
 ```sh
 codex plugin marketplace upgrade research-loop

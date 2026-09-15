@@ -37,6 +37,12 @@ labels wrap to at most two lines using actual font metrics. Oversized labels
 fail with an explanation instead of overflowing; operator labels should be
 short symbols such as `+` or `×`.
 
+These are size limits, not permission to put explanation in a short label.
+Titles identify panels; labels identify components, operations or quantities.
+No interpretive sentences, conclusions or captions belong in any JSON text
+field. Write them in the external page caption instead. The renderer checks
+length and layout, not meaning: inspect the rendered image before attaching it.
+
 Limits: 128 KB UTF-8 JSON; 1–4 panels; 1–20 nodes and at most 32 edges per panel;
 at most 40 total nodes; exported page at most 32 × 24 inches. The grammar does
 not accept explicit canvas or object sizes. NaN, Infinity, duplicate JSON keys,

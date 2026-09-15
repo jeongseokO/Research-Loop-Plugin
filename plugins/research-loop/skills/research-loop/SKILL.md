@@ -34,6 +34,8 @@ Reuse a guide already read in this task unless its version or the server contrac
 
 Before drafting, choose the reader's question, visible essentials, contextual explanations and complete sources using the writing guide. The main path must make sense without opening every link. Reuse canonical pages; no forced template for ordinary notes. Put authors/performers in properties. Preserve full evidence and interpretation-changing limits; use the internal visualization guide when a figure helps.
 
+New plots/figures contain only necessary labels and data. No explanatory sentences, conclusions, commentary boxes or baked-in captions—even one sentence. Write explanations in the actual image/plot block caption, outside the canvas; keep alt text separately. Inspect this before uploading.
+
 For literature, follow the section-completeness and original paper figure/table guidance in `get_literature_review_template`. Explain what each section needs for understanding; remove repetition, not necessary information. The short list TLDR is not the full review. Prefer informative original paper visuals over generating imitations; see [operations](references/operations.md).
 
 For meeting minutes, use the meeting guide to separate decisions, feedback and proposals. Do not invent agreement, participants, assignees or dates. Recording agreed actions does not authorize task assignments or schedule changes; do not automatically reorganize old notes.

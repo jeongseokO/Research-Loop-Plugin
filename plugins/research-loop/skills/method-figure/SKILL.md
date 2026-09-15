@@ -5,7 +5,7 @@ description: Create or revise a research methodology overview figure with editab
 
 # Method figure
 
-Make the mechanism understandable through structure, not paragraphs inside boxes. Honor the user's chosen tools and scope. This skill renders locally; it does not call an image-generation API or grant project write access.
+Make the mechanism understandable through structure and concise labels. No explanatory text, conclusions, commentary boxes or baked-in captions—even one sentence. Explanations belong in the external page caption. Honor the user's tools and scope. This skill renders locally; it does not call an image-generation API or grant project write access.
 
 ## Choose the content
 
@@ -18,7 +18,7 @@ Make the mechanism understandable through structure, not paragraphs inside boxes
 1. Read [the input contract](references/input.md) and adapt the [synthetic example](examples/token-selection.json) only if needed. Preserve the method specification as JSON in the user's working directory, outside the installed plugin. Do not publish the example as real research.
 2. Run [the renderer](scripts/render-method-figure.py): `python3 <skill-directory>/scripts/render-method-figure.py INPUT.json --output-dir OUTPUT`. Resolve the skill directory from this file's actual location; do not paste an unexpanded placeholder. Use an existing Python environment with Matplotlib. If missing, follow [local setup](references/setup.md); do not install globally or send content to an external service as a fallback.
 3. The renderer saves PNG, SVG, PDF and the source JSON; it returns a small manifest on stdout with the PNG's actual size and SHA-256. Keep the files for later revisions. Reuse the source for local changes rather than recreating the entire figure. Do not load source code or image base64 into context when a file path suffices.
-4. Open the actual PNG with the client's image-viewing tool. Check the mechanism against its source, arrow direction, missing paths, label overlap and readability at the intended page/column width. Fix observed issues and inspect again. Successful rendering alone is not scientific or visual verification. If image inspection is unavailable, say it remains unchecked.
+4. Open the actual PNG with the client's image-viewing tool. Check the mechanism, arrows, missing paths, overlap and page-width readability. Every text item must identify a component, operation, quantity or panel—not explain a finding. Move commentary to the external caption, including text disguised as a short title/label. Fix and inspect again. Successful rendering is not verification; report if image inspection is unavailable.
 
 The bundled layout is a starting point, not a constraint on the research. If it cannot express the mechanism clearly, use an appropriate local vector tool with the same source-preservation and inspection requirements. Do not force a complex mechanism into a generic four-box flowchart. Missing source details may be left explicitly unresolved; they are not permission to fabricate a figure.
 

@@ -18,6 +18,8 @@ For literature, first inspect and reuse informative original paper figures/table
 
 For newly authored figures, read `get_visualization_guide` for the relevant technique; methodology overviews use the bundled [method-figure skill](../../method-figure/SKILL.md). Generate from verified data/structure. In either case, visually inspect the actual local image before uploading. Research Loop stores images, not rendered plots from arbitrary code. Never fabricate measurements or report a placeholder as completed.
 
+Before upload, keep only essential labels, axes, units, legends, data values or mechanism symbols in a new figure. Move all explanatory sentences, conclusions and commentary boxes to the real page block `caption`. Text in canvas margins, titles or annotations is still inside the image; do not bake in a caption. Alt text is separate, not a replacement for the visible caption. This does not authorize erasing text from original paper figures.
+
 1. Call `prepare_research_media_upload` with the file name, actual size and SHA-256, within current server limits.
 2. PUT the exact bytes to its private `uploadUrl` with Content-Type and **no additional Authorization header**. The bundled [upload helper](../../../scripts/upload-image.mjs) takes the prepare response through stdin and the local file path as its argument, keeping the URL out of command-line arguments. It validates the fixed Research Loop Storage destination.
 3. Call `complete_research_media_upload` with `upload_id`. After an uncertain PUT, try completion before preparing a duplicate upload. Reuse the prepare key only for the same file and metadata.

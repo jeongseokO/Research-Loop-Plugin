@@ -38,6 +38,9 @@ class ValidationTests(unittest.TestCase):
             lambda s: s.update(width=1e99),
             lambda s: s.update(layout=[]),
             lambda s: s.update(panels=[]),
+            lambda s: s.update(caption="This method is better"),
+            lambda s: s["panels"][0].update(description="Why this works"),
+            lambda s: s["panels"][0]["nodes"][0].update(callout="An explanation"),
             lambda s: s["panels"][0]["nodes"][0].update(row=float("nan")),
             lambda s: s["panels"][0]["nodes"][0].update(column=999),
             lambda s: s["panels"][0]["nodes"][0].update(column=True),
@@ -129,7 +132,17 @@ class RenderTests(unittest.TestCase):
             self.assertGreater(width, 1600)
             self.assertGreater(height, 600)
             svg = ET.parse(output / "method-overview.svg")
-            self.assertGreater(len(svg.findall(".//{http://www.w3.org/2000/svg}text")), 15)
+            text_nodes = svg.findall(".//{http://www.w3.org/2000/svg}text")
+            self.assertGreater(len(text_nodes), 15)
+            spec = json.loads(EXAMPLE.read_text())
+            self.assertNotIn("title", spec)
+            labels = [p["title"] for p in spec["panels"]]
+            labels += [n["label"] for p in spec["panels"] for n in p["nodes"]]
+            labels += [e["label"] for p in spec["panels"] for e in p["edges"] if "label" in e]
+            # SVG can split a wrapped label into separate text elements.
+            for node in text_nodes:
+                fragment = " ".join("".join(node.itertext()).split())
+                self.assertTrue(any(fragment in label for label in labels), fragment)
             self.assertTrue((output / "method-overview.pdf").read_bytes().startswith(b"%PDF"))
             snapshot = {p.name: p.read_bytes() for p in output.iterdir()}
             repeat = self.run_renderer(EXAMPLE, output)
