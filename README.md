@@ -38,7 +38,7 @@ claude plugin install research-loop@research-loop
 
 ## 업데이트
 
-현재 패키지: **0.4.3**. AI가 만드는 plot·figure에는 필수 라벨과 데이터만, 부연설명은 이미지 밖 캡션에 둡니다. 문헌의 충분한 설명과 원문 그림 활용, 권한·검토 규칙 및 필요한 안내만 읽는 방식을 유지합니다.
+현재 패키지: **0.4.4**. “Research Loop를 최신화해줘”를 요청하면 확인된 변화부터 기존 기록·관련 질문·읽는 순서에 반영하도록 안내합니다. 바뀐 내용이 없으면 문서를 고치지 않고, 반영·승인 대기·미확인을 구분합니다. 그림 밖 캡션, 충분한 문헌 설명, 권한·검토 규칙과 필요한 안내만 읽는 방식을 유지합니다.
 
 ```sh
 codex plugin marketplace upgrade research-loop

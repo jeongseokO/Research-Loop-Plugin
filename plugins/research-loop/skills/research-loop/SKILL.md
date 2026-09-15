@@ -22,7 +22,7 @@ Reuse a guide already read in this task unless its version or the server contrac
 | --- | --- |
 | Write or revise a page | `get_page_writing_guide`; `get_research_properties(type)` when creating/editing metadata |
 | Start a method, dataset, experiment, result, claim, paper or rebuttal page | `get_research_record_template(type)`; only these seven types are supported |
-| Synthesize findings, record a decision or review affected records | `get_research_workflow_guide` |
+| “Research Loop를 최신화해줘” / refresh research, synthesize findings or review affected records | `get_research_workflow_guide` |
 | Structure literature | `get_literature_review_template` |
 | Record or organize a meeting | `get_meeting_note_template`; meeting-only, not a template for ordinary notes |
 | Create question branches in Loop Map | `get_inquiry_template` |
@@ -42,9 +42,11 @@ For meeting minutes, use the meeting guide to separate decisions, feedback and p
 
 ## Change safely and finish consistently
 
+- “최신화” means reconcile verified work with existing records and affected answers/reading guides, not rewrite everything or upgrade the app. Follow the workflow guide’s refresh contract. No relevant change means no content write; report checked scope, applied changes and pending work honestly.
 - For writes or attachments, read [operations](references/operations.md). Preserve unrelated content; project, page and task revisions are separate. Use one stable idempotency key per attempt; never bypass a conflict or approval.
 - Follow server capabilities and author/type rules: Editor can directly edit its human owner’s own ordinary notes (not discussion/reply), literature, experiments, datasets and results. Other existing records, deadlines, trash/restore, links and project changes require review; plan-status exceptions are server-checked. Creation authorship is immutable, not an editable property. Owner and approved Semi-Owner retain permitted research powers; lifecycle/access administration stays Owner-controlled. Report the server’s applied/proposed result.
 - Schedule writes require the fresh planning token and rationale. Account for other commitments and unknown availability without copying another project's private details into shared content or silently moving its work.
-- After commits, check `get_research_brief` for affected records/reading guides. Follow the workflow guide: small wording edits need an impact check, not a broad rewrite. Respect source/version review checks; leave unread dependencies pending, even after a small edit. Do not claim automatic reconciliation.
+- After commits, check `get_research_brief` for affected records/reading guides. Review actual changes first; missing initial review history is not a new error or a request to process the backlog. Read a shared changed source once. Small wording edits need an impact check, not a broad rewrite. Keep unchecked dependencies pending; no automatic reconciliation.
+- Reuse existing notes and categories. Same-title candidates may contain different research: compare before proposing changes, never auto-merge or delete. Guide freshness confirms a checked snapshot, not scientific correctness.
 
 Return the changes, pending reviews and smallest unresolved decision. Do not repeat setup explanations. Queued tasks and discussion notifications do not automatically start another AI.
