@@ -22,9 +22,25 @@ with style_context():
     draw_delta_panel(ax, ["Condition A", "Condition B", "Condition C"], [1.2, -0.8, 0])
     ax.set(xlabel="Δ score (points)")
     manifest = save_figure(fig, Path(sys.argv[2]) / "comparison")
-    plt.close(fig)
 print(json.dumps(manifest))
 ```
+
+Run the local script through `<plugin-root>/scripts/render_guard.py` using the
+same Python environment: `python <plugin-root>/scripts/render_guard.py plot.py
+<skill-directory> <output-directory>`. Resolve the actual paths from this
+installed skill. The guard starts a single process, forces common numerical
+library thread settings to one, and stops the job after 60 seconds. `--timeout`
+before the script may choose a smaller limit or at most 120 seconds. A same-user
+lock rejects overlapping guarded jobs instead of queuing them. On POSIX a timeout
+kills the process group; on Windows it kills the Python worker. Do not spawn child
+jobs from the plotting script. Use your server's scheduler/cgroup/container for
+hard CPU and memory quotas; this launcher is not a sandbox.
+
+The guard controls the whole script only when you launch through it. Importing
+the helper directly does not add a timeout or prevent concurrent callers. A
+stopped custom script may leave its own files: write exports into a dedicated
+working directory and inspect failed output before reusing it. Do not wrap the
+method-figure command in this guard; that command already starts a guarded worker.
 
 The style applies to ordinary Matplotlib plots too: call `style_axes(ax, grid="y")` for curves or distributions, `grid="x"` for horizontal comparisons, or `grid=None` for a heatmap. The asset [research-loop.mplstyle](../assets/research-loop.mplstyle) is reusable without the helper, but font discovery, export handling and annotations then remain the caller's responsibility.
 
@@ -34,7 +50,19 @@ The style applies to ordinary Matplotlib plots too: call `style_axes(ax, grid="y
 - `style_axes(ax, grid="y")`: quiet grid and axes, without altering values or scale limits. `grid` accepts `"x"`, `"y"`, or `None`.
 - `delta_limits(values)`: data-derived symmetric limits for deltas. For comparable panels, pass the combined values once and reuse the limits. Never reuse the illustrative `[-7, 7]` range blindly.
 - `draw_delta_panel(ax, labels, values, title=None, limits=None)`: signed horizontal bars and endpoint values, preserving input order. Zero is neutral. Returns Matplotlib bars. Explicit limits must include zero and all values; labels move inward when those limits leave little room. A title, if used, is a short panel identifier, not an explanation. This helper does not compute averages, rank models, calculate uncertainty or know whether higher is better.
-- `save_figure(fig, output_stem, dpi=300, portable=True, overwrite=False)`: PNG, PDF and SVG plus a small manifest containing actual byte sizes and SHA-256. Existing exports are preserved unless you explicitly choose `overwrite=True`. Default portable SVG uses glyph paths to avoid relying on the reader's font installation; preserve the Python source for edits. `portable=False` keeps SVG text for editing where matching fonts exist. It does not upload or save research pages.
+- `save_figure(fig, output_stem, dpi=300, portable=True, overwrite=False, formats=("png",), close=True)`: PNG and a small manifest containing actual byte sizes and streamed SHA-256. Use `formats=("png", "pdf", "svg")` only when publication formats are needed. Existing exports are preserved unless you explicitly choose `overwrite=True`. The figure closes on success or failure; use `close=False` only when the caller will close it in `finally`. Portable SVG uses glyph paths; `portable=False` keeps editable text where matching fonts exist. It does not upload or save research pages.
+
+Bounds are checked before export: DPI 240–600, at most 16 × 12 inches and 12
+megapixels (including the interactive canvas), 4 axes, 2,000 artists, 100,000
+combined path/data points, and 2,000,000 image array values. Delta panels accept
+at most 100 values and 200 characters per label/title. Iterable inputs stop at
+their limit instead of consuming unbounded generators. Font paths are limited
+to eight. Export keeps the fixed canvas; use constrained layout or explicit
+margins rather than an unbounded tight bounding box. The limits apply to ordinary
+Matplotlib objects and do not undo data/artist allocations already made by your
+script or constrain arbitrary custom artist code. Inspect file sizes and load a
+bounded subset/aggregate before constructing the plot; never allocate a huge
+array and expect export validation to protect that earlier operation.
 
 ## Adapt deliberately
 

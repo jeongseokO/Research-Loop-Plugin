@@ -7,6 +7,7 @@ own rc_context, the style context is intended for sequential use, not threads.
 
 from contextlib import contextmanager
 import hashlib
+from itertools import islice
 import json
 import math
 from pathlib import Path
@@ -16,6 +17,11 @@ import warnings
 import matplotlib as mpl
 from matplotlib import font_manager
 from matplotlib.text import Annotation
+from matplotlib.text import Text
+from matplotlib.lines import Line2D
+from matplotlib.collections import Collection
+from matplotlib.image import AxesImage
+from matplotlib.patches import Patch
 from matplotlib.transforms import nonsingular
 
 
@@ -27,6 +33,23 @@ INK = "#223047"
 TEXT = "#334155"
 GRID = "#E7EDF4"
 STYLE_PATH = Path(__file__).resolve().parent.parent / "assets" / "research-loop.mplstyle"
+MAX_POINTS = 100_000
+MAX_DELTA_ROWS = 100
+MAX_ARTISTS = 2_000
+MAX_PIXELS = 12_000_000
+MAX_IMAGE_VALUES = 2_000_000
+
+
+def _bounded_list(values, limit, name):
+    if isinstance(values, (str, bytes)):
+        raise ValueError(f"{name} must be a sequence, not text")
+    try:
+        result = list(islice(iter(values), limit + 1))
+    except TypeError as error:
+        raise ValueError(f"{name} must be a finite sequence") from error
+    if len(result) > limit:
+        raise ValueError(f"{name} exceeds the {limit} item limit; split or aggregate the figure")
+    return result
 
 
 def _font_key(name):
@@ -37,7 +60,7 @@ def _select_font(font_paths):
     """Register provided fonts and macOS user NanumSquare files temporarily."""
     manager = font_manager.fontManager
     explicit_families = []
-    for filename in font_paths:
+    for filename in _bounded_list(font_paths, 8, "font_paths"):
         path = Path(filename).expanduser()
         try:
             manager.addfont(str(path))
@@ -48,7 +71,7 @@ def _select_font(font_paths):
     user_fonts = Path.home() / "Library" / "Fonts"
     known = {str(Path(entry.fname)) for entry in manager.ttflist}
     if user_fonts.is_dir():
-        for path in sorted(user_fonts.iterdir()):
+        for path in sorted(islice(user_fonts.iterdir(), 4096)):
             if (_font_key(path.stem).startswith("nanumsquare")
                     and path.suffix.lower() in {".ttf", ".otf", ".ttc"}
                     and str(path) not in known):
@@ -115,9 +138,9 @@ def style_axes(ax, grid="y"):
     return ax
 
 
-def _finite_values(values):
+def _finite_values(values, limit=MAX_POINTS):
+    original = _bounded_list(values, limit, "values")
     try:
-        original = list(values)
         if not original or any(isinstance(value, (str, bytes, bool)) for value in original):
             raise ValueError
         numbers = [float(value) for value in original]
@@ -191,12 +214,16 @@ def draw_delta_panel(ax, labels, values, title=None, limits=None):
     the input values. Limits default to ``delta_limits(values)``. Supply shared
     limits explicitly for comparisons; insufficient limits raise before drawing.
     """
-    numbers = _finite_values(values)
+    numbers = _finite_values(values, MAX_DELTA_ROWS)
     if isinstance(labels, (str, bytes)):
         raise ValueError("labels must be a sequence with one label per value")
-    names = list(labels)
+    names = _bounded_list(labels, MAX_DELTA_ROWS, "labels")
     if len(names) != len(numbers):
         raise ValueError("labels and values must have the same length")
+    if any(not isinstance(label, str) or len(label) > 200 for label in names):
+        raise ValueError("labels must contain at most 200 characters each")
+    if title is not None and (not isinstance(title, str) or len(title) > 200):
+        raise ValueError("title must contain at most 200 characters")
     if ax.get_xscale() != "linear":
         raise ValueError("delta panels require a linear x axis")
     bounds = delta_limits(numbers) if limits is None else _validate_limits(limits, numbers)
@@ -221,18 +248,87 @@ def draw_delta_panel(ax, labels, values, title=None, limits=None):
     return bars
 
 
-def save_figure(fig, output_stem, *, dpi=300, portable=True, overwrite=False):
-    """Export PNG (at least 240 dpi), PDF, SVG, and a small integrity manifest.
+def _validate_figure(fig, dpi):
+    """Check ordinary Matplotlib objects before draw/savefig allocates a canvas."""
+    width, height = map(float, fig.get_size_inches())
+    if (not all(math.isfinite(value) and value > 0 for value in (width, height))
+            or width > 16 or height > 12):
+        raise ValueError("figure must fit within 16 × 12 inches; split large panels")
+    canvas_dpi = float(fig.dpi)
+    if (not math.isfinite(canvas_dpi) or canvas_dpi <= 0
+            or width * height * dpi ** 2 > MAX_PIXELS or width * height * canvas_dpi ** 2 > MAX_PIXELS):
+        raise ValueError("figure exceeds 12 megapixels; reduce size or DPI")
+    if len(fig.axes) > 4:
+        raise ValueError("use at most 4 axes per figure; split large panels")
+    pending, seen, points, image_values = [fig], set(), 0, 0
+    while pending:
+        artist = pending.pop()
+        if id(artist) in seen:
+            continue
+        seen.add(id(artist))
+        if len(seen) > MAX_ARTISTS:
+            raise ValueError("figure exceeds 2000 artists; simplify it")
+        children = artist.get_children()
+        if len(children) + len(pending) > MAX_ARTISTS:
+            raise ValueError("figure exceeds 2000 artists; simplify it")
+        pending.extend(children)
+        if isinstance(artist, Text) and len(artist.get_text()) > 2000:
+            raise ValueError("text exceeds 2000 characters; move prose into the caption")
+        if isinstance(artist, Line2D):
+            points += max(len(artist.get_xdata()), len(artist.get_ydata()))
+        elif isinstance(artist, Collection):
+            points += len(artist.get_offsets())
+            paths = artist.get_paths()
+            if len(paths) > MAX_POINTS:
+                raise ValueError("figure exceeds 100000 path/data points; aggregate first")
+            points += sum(len(path.vertices) for path in paths)
+        elif isinstance(artist, Patch):
+            points += len(artist.get_path().vertices)
+        elif isinstance(artist, AxesImage):
+            image_values += artist.get_array().size
+        if points > MAX_POINTS or image_values > MAX_IMAGE_VALUES:
+            raise ValueError("figure exceeds 100000 path/data points or 2000000 image values; aggregate first")
+
+
+def _file_metadata(path):
+    digest, size = hashlib.sha256(), 0
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(64 * 1024), b""):
+            size += len(chunk)
+            digest.update(chunk)
+    return {"byteSize": size, "sha256": digest.hexdigest()}
+
+
+def save_figure(fig, output_stem, *, dpi=300, portable=True, overwrite=False,
+                formats=("png",), close=True):
+    """Export a bounded PNG and manifest; opt into PDF/SVG with ``formats``.
 
     Returns the same dictionary saved to ``<stem>.manifest.json``. Manifest paths
     are filenames relative to that file. Portable SVG outlines text; ``False``
     retains editable SVG text requiring the selected font on the viewing system.
     PDF embeds fonts in either mode. Existing outputs require ``overwrite=True``.
+    The figure closes even on failure unless ``close=False`` transfers that
+    responsibility to the caller. Use render_guard.py for the wall-time limit;
+    this in-process helper cannot bound arbitrary user code or memory allocations.
     """
-    if isinstance(dpi, bool) or not isinstance(dpi, (int, float)) or not math.isfinite(dpi) or dpi < 240:
-        raise ValueError("PNG export dpi must be a finite number of at least 240")
+    try:
+        return _save_figure(fig, output_stem, dpi=dpi, portable=portable, overwrite=overwrite, formats=formats)
+    finally:
+        if close:
+            from matplotlib import pyplot as plt
+            plt.close(fig)
+
+
+def _save_figure(fig, output_stem, *, dpi, portable, overwrite, formats):
+    if isinstance(dpi, bool) or not isinstance(dpi, (int, float)) or not math.isfinite(dpi) or not 240 <= dpi <= 600:
+        raise ValueError("PNG export dpi must be between 240 and 600")
+    formats = _bounded_list(formats, 3, "formats")
+    if (not formats or any(extension not in ("png", "pdf", "svg") for extension in formats)
+            or len(set(formats)) != len(formats) or "png" not in formats):
+        raise ValueError("formats must be unique png/pdf/svg values and include png")
+    _validate_figure(fig, dpi)
     stem = Path(output_stem).expanduser()
-    outputs = {extension: Path(f"{stem}.{extension}") for extension in ("png", "pdf", "svg")}
+    outputs = {extension: Path(f"{stem}.{extension}") for extension in formats}
     manifest_path = Path(f"{stem}.manifest.json")
     targets = list(outputs.values()) + [manifest_path]
     if not overwrite:
@@ -243,15 +339,14 @@ def save_figure(fig, output_stem, *, dpi=300, portable=True, overwrite=False):
     manifest = {"pngDpi": dpi, "svgText": "paths" if portable else "editable", "outputs": {}}
     with tempfile.TemporaryDirectory(prefix=".research-plot-", dir=stem.parent) as temporary:
         staged = Path(temporary)
-        with mpl.rc_context(rc={"svg.fonttype": "path" if portable else "none", "pdf.fonttype": 42}):
+        with mpl.rc_context(rc={"svg.fonttype": "path" if portable else "none", "pdf.fonttype": 42,
+                                "savefig.bbox": None}):
             for extension, target in outputs.items():
                 output = staged / target.name
-                fig.savefig(output, format=extension, dpi=dpi, bbox_inches="tight", pad_inches=0.12,
+                fig.savefig(output, format=extension, dpi=dpi, bbox_inches=None,
                             facecolor="white", edgecolor="white", transparent=False)
-                content = output.read_bytes()
                 manifest["outputs"][extension] = {
-                    "path": target.name, "byteSize": len(content),
-                    "sha256": hashlib.sha256(content).hexdigest(),
+                    "path": target.name, **_file_metadata(output),
                 }
         (staged / manifest_path.name).write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
         for target in targets:

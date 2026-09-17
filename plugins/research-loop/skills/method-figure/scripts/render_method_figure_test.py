@@ -10,6 +10,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
@@ -98,6 +99,23 @@ class ValidationTests(unittest.TestCase):
                     self.assertLess(ymin + .3, y)
                     self.assertLess(y, ymax - .3)
 
+    def test_input_and_canvas_caps_before_render(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = Path(temporary) / "large.json"
+            source.write_bytes(b" " * 128_001)
+            with self.assertRaisesRegex(renderer.DiagramError, "128 KB"):
+                renderer.load_spec(source)
+        with patch.object(renderer, "MAX_PIXELS", 1):
+            with self.assertRaisesRegex(renderer.DiagramError, "megapixels"):
+                renderer.plan(minimal())
+
+    def test_timeout_cleans_parent_staging_and_publishes_nothing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "output"
+            with patch.object(renderer, "run_python", side_effect=renderer.RenderLimitError("timeout")):
+                self.assertEqual(renderer.main([str(EXAMPLE), "--output-dir", str(output)]), 2)
+            self.assertEqual(list(Path(temporary).iterdir()), [])
+
 
 class RenderTests(unittest.TestCase):
     @classmethod
@@ -113,7 +131,7 @@ class RenderTests(unittest.TestCase):
     def test_example_exports_and_overwrite(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / "export"
-            result = self.run_renderer(EXAMPLE, output)
+            result = self.run_renderer(EXAMPLE, output, "--formats", "png", "pdf", "svg")
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(result.stderr, "", "Rendering must not emit font or layout warnings")
             manifest = json.loads(result.stdout)
@@ -158,7 +176,7 @@ class RenderTests(unittest.TestCase):
             spec["panels"][0]["nodes"][0]["label"] = "<script> & $x$"
             source = base / "literal.json"
             source.write_text(json.dumps(spec))
-            result = self.run_renderer(source, base / "output")
+            result = self.run_renderer(source, base / "output", "--formats", "png", "svg")
             self.assertEqual(result.returncode, 0, result.stderr)
             root = ET.parse(base / "output" / "method-overview.svg").getroot()
             texts = ["".join(node.itertext()) for node in root.findall(".//{http://www.w3.org/2000/svg}text")]
@@ -198,7 +216,17 @@ class RenderTests(unittest.TestCase):
             result = self.run_renderer(source, base / "output")
             self.assertEqual(result.returncode, 2)
             self.assertIn("too wide", result.stderr)
-            self.assertEqual(list((base / "output").iterdir()), [])
+            self.assertFalse((base / "output").exists())
+
+    def test_default_exports_only_png_and_source(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            source = base / "minimal.json"
+            source.write_text(json.dumps(minimal()))
+            result = self.run_renderer(source, base / "output")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(set(json.loads(result.stdout)["outputs"]), {"png", "sourceJson"})
+            self.assertEqual(len(list((base / "output").iterdir())), 2)
 
 
 if __name__ == "__main__":

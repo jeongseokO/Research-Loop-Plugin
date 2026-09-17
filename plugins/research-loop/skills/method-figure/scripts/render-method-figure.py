@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""Render a bounded method diagram JSON to editable SVG/PDF and a 2x PNG."""
+"""Render bounded method JSON to PNG; opt into editable SVG/PDF when needed."""
 
 import argparse
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -13,6 +12,9 @@ import textwrap
 import unicodedata
 import warnings
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "scripts"))
+from render_guard import DEFAULT_TIMEOUT, RenderLimitError, file_metadata, run_python
+
 VERSION = 1
 KINDS = {"module", "tensor", "tokens", "cache", "operator", "input", "output"}
 COLORS = {"blue": "#3973B9", "teal": "#25887E", "purple": "#8062AF",
@@ -21,6 +23,7 @@ PORTS = {"north", "south", "east", "west"}
 DX, DY, WIDTH, HEIGHT = 3.6, 2.5, 2.0, 1.16
 OUTPUT_NAMES = {"sourceJson": "method-source.json", "svg": "method-overview.svg",
                 "pdf": "method-overview.pdf", "png": "method-overview.png"}
+MAX_PIXELS = 8_000_000
 
 
 class DiagramError(ValueError):
@@ -55,8 +58,10 @@ def unique_object(pairs):
 
 
 def load_spec(path):
-    require(path.stat().st_size <= 128_000, "JSON: maximum input size is 128 KB")
-    raw = path.read_bytes()
+    require(path.is_file() and path.stat().st_size <= 128_000, "JSON: use a regular file of at most 128 KB")
+    with path.open("rb") as stream:
+        raw = stream.read(128_001)
+    require(len(raw) <= 128_000, "JSON: maximum input size is 128 KB")
     def nonfinite(value):
         raise DiagramError(f"JSON: non-finite number {value} is not allowed")
     try:
@@ -213,8 +218,8 @@ def plan(spec):
     height = max(s[1] for s in sizes) if horizontal else sum(s[1] for s in sizes)
     height += .8 if spec.get("title") else 0
     inches = (max(4., width * .55), max(2., height * .55))
-    require(inches[0] <= 32 and inches[1] <= 24,
-            "diagram exceeds the 32 × 24 inch limit; use fewer grid cells or change panel layout")
+    require(inches[0] <= 20 and inches[1] <= 12 and inches[0] * inches[1] * 200 ** 2 <= MAX_PIXELS,
+            "diagram exceeds 20 × 12 inches or 8 megapixels; split it into smaller figures")
     return panels, sizes, width, height, inches
 
 
@@ -298,7 +303,7 @@ def draw_node(ax, node, patches):
     fit_node_text(ax, artist, WIDTH - .22, .50 if kind in ("tensor", "tokens", "cache") else .95)
 
 
-def render(spec, geometry, font, staging):
+def render(spec, geometry, font, staging, formats=("png",)):
     import matplotlib
     matplotlib.use("Agg")
     from matplotlib import pyplot as plt, patches
@@ -350,7 +355,7 @@ def render(spec, geometry, font, staging):
             for artist in fig.texts:
                 require(fig.bbox.contains(*artist.get_window_extent().get_points()[1]),
                         "Diagram title exceeds figure bounds; shorten it")
-            for ext in ("svg", "pdf", "png"):
+            for ext in formats:
                 fig.savefig(staging / OUTPUT_NAMES[ext], format=ext, dpi=200, facecolor="white")
             return [int(inches[0] * 200), int(inches[1] * 200)]
         finally:
@@ -361,24 +366,49 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("input", type=Path)
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--overwrite", action="store_true", help="explicitly replace the four renderer outputs")
+    parser.add_argument("--overwrite", action="store_true", help="explicitly replace the selected renderer outputs")
     parser.add_argument("--font", help="installed font family covering every label")
+    parser.add_argument("--formats", nargs="+", choices=("png", "pdf", "svg"), default=["png"],
+                        help="PNG by default; request png pdf svg for publication exports")
+    parser.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT, help="wall time in seconds, at most 120")
+    parser.add_argument("--_worker-dir", type=Path, help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
     try:
         spec, raw = load_spec(args.input)
         geometry = plan(spec)
+        require(len(set(args.formats)) == len(args.formats) and "png" in args.formats,
+                "formats must be unique and include png")
+        formats = tuple(args.formats)
+        if args._worker_dir is not None:
+            import matplotlib.font_manager as font_manager
+            import matplotlib.ft2font as ft2font
+            font = select_font(spec, args.font, font_manager, ft2font)
+            dimensions = render(spec, geometry, font, args._worker_dir, formats)
+            (args._worker_dir / OUTPUT_NAMES["sourceJson"]).write_bytes(raw)
+            (args._worker_dir / "render-result.json").write_text(json.dumps({"font": font, "dimensions": dimensions}))
+            return 0
         output = args.output_dir.resolve()
-        targets = {key: output / name for key, name in OUTPUT_NAMES.items()}
+        targets = {key: output / OUTPUT_NAMES[key] for key in ("sourceJson", *formats)}
         require(args.overwrite or not any(p.exists() or p.is_symlink() for p in targets.values()),
                 "Output already exists; choose a new directory or explicitly pass --overwrite")
-        import matplotlib.font_manager as font_manager
-        import matplotlib.ft2font as ft2font
-        font = select_font(spec, args.font, font_manager, ft2font)
-        output.mkdir(parents=True, exist_ok=True)
-        with tempfile.TemporaryDirectory(prefix=".method-render-", dir=output) as temporary:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix=".method-render-", dir=output.parent) as temporary:
             staging = Path(temporary)
-            dimensions = render(spec, geometry, font, staging)
-            (staging / OUTPUT_NAMES["sourceJson"]).write_bytes(raw)
+            # The parent owns staging, so a timed-out worker cannot leave large temporary files.
+            source = staging / "input.json"
+            source.write_bytes(raw)
+            command = [str(source), "--output-dir", str(output), "--_worker-dir", str(staging),
+                       "--formats", *formats]
+            if args.font:
+                command += ["--font", args.font]
+            result = run_python(Path(__file__).resolve(), command, timeout=args.timeout)
+            if result:
+                return result
+            details = json.loads((staging / "render-result.json").read_text())
+            outputs = {key: {"path": str(path), **file_metadata(staging / OUTPUT_NAMES[key])}
+                       for key, path in targets.items()}
+            outputs["png"].update(width=details["dimensions"][0], height=details["dimensions"][1])
+            output.mkdir(parents=True, exist_ok=True)
             published = []
             try:
                 for key, target in targets.items():
@@ -391,12 +421,9 @@ def main(argv=None):
                 for target in published:
                     target.unlink()
                 raise
-        outputs = {key: {"path": str(path), "byteSize": path.stat().st_size,
-                         "sha256": hashlib.sha256(path.read_bytes()).hexdigest()} for key, path in targets.items()}
-        outputs["png"].update(width=dimensions[0], height=dimensions[1])
-        print(json.dumps({"schemaVersion": 1, "font": font, "outputs": outputs}, ensure_ascii=False))
+        print(json.dumps({"schemaVersion": 1, "font": details["font"], "outputs": outputs}, ensure_ascii=False))
         return 0
-    except (DiagramError, OSError, ImportError, Warning) as error:
+    except (DiagramError, RenderLimitError, OSError, ImportError, Warning) as error:
         print(f"method-figure: {error}", file=sys.stderr)
         return 2
 

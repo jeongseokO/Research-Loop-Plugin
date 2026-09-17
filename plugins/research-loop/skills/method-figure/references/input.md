@@ -1,6 +1,6 @@
 # Local method figure renderer
 
-`render-method-figure.py INPUT.json --output-dir DIR [--overwrite] [--font "Installed Font"]`
+`render-method-figure.py INPUT.json --output-dir DIR [--overwrite] [--font "Installed Font"] [--formats png pdf svg] [--timeout 60]`
 
 The renderer requires Python 3.9+ and matplotlib. Tested with Python 3.9.13 and
 matplotlib 3.9.4. It uses no model API, network fetch, browser, raw SVG input,
@@ -44,7 +44,15 @@ field. Write them in the external page caption instead. The renderer checks
 length and layout, not meaning: inspect the rendered image before attaching it.
 
 Limits: 128 KB UTF-8 JSON; 1–4 panels; 1–20 nodes and at most 32 edges per panel;
-at most 40 total nodes; exported page at most 32 × 24 inches. The grammar does
+at most 40 total nodes; exported page at most 20 × 12 inches and 8 megapixels.
+The command starts one guarded worker, with 60 seconds wall time by default
+(a positive `--timeout` no greater than 120 seconds) and common numerical-library
+thread settings forced to one. A same-user lock rejects overlapping guarded jobs.
+On POSIX a timeout kills the process group; on Windows it kills the renderer
+worker. This renderer does not start additional workers. Parent-owned temporary
+output is cleaned even when the worker times out. This is not an OS CPU/RAM quota;
+use a server scheduler/cgroup/container for hard shared-resource isolation.
+The grammar does
 not accept explicit canvas or object sizes. NaN, Infinity, duplicate JSON keys,
 duplicate node IDs or grid cells, unknown endpoints, duplicate directed edges,
 and self edges are rejected.
@@ -71,15 +79,16 @@ versus discarded data, and residual direction against the source method.
 
 ## Files and manifest
 
-Four files are written: `method-source.json`, `method-overview.svg`,
-`method-overview.pdf`, and `method-overview.png`. The source JSON is preserved
+Two files are written by default: `method-source.json` and `method-overview.png`.
+Pass `--formats png pdf svg` to add publication SVG/PDF files. Formats are rendered
+sequentially. The source JSON is preserved
 byte-for-byte. SVG keeps selectable text (`svg.fonttype=none`); PDF embeds
 TrueType fonts (`pdf.fonttype=42`); PNG uses 200 dpi, twice the 100 dpi design
 canvas. The vector outputs retain shapes and text for editing. SVG portability
 still depends on a viewer having the selected font installed.
 
 Successful stdout is a single JSON object with `schemaVersion`, `font`, and
-`outputs`. Each of `outputs.sourceJson`, `.svg`, `.pdf`, `.png` contains an
+`outputs`. Each selected output (`sourceJson`, `png`, and optionally `svg`/`pdf`) contains an
 absolute `path`, `byteSize`, and hexadecimal `sha256`. PNG also has integer
 `width` and `height`. There is no base64. Use PNG's path/byte count/hash with the
 existing signed uploader; this renderer does not upload or publish anything.
