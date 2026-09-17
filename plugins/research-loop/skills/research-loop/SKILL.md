@@ -26,7 +26,7 @@ Reuse a guide already read in this task unless its version or the server contrac
 | Structure literature | `get_literature_review_template` |
 | Record or organize a meeting | `get_meeting_note_template`; meeting-only, not a template for ordinary notes |
 | Create question branches in Loop Map | `get_inquiry_template` |
-| Make a figure | `get_visualization_guide`: one known `technique_id`, or compact index when choosing; methodology figures use the bundled [method-figure skill](../method-figure/SKILL.md) |
+| Make a figure | `get_visualization_guide`: one known `technique_id`, or compact index when choosing; quantitative plots use [research-plot](../research-plot/SKILL.md), methodology figures use [method-figure](../method-figure/SKILL.md) |
 | Create or change a schedule | `get_my_planning_context`: the owner's active projects, not just this project |
 | Work on a human assignment | `get_my_research_tasks`; only the human accepts or declines |
 | Respond to a discussion | `get_project_discussion` and its relevant source pages |

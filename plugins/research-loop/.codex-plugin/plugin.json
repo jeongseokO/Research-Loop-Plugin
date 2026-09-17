@@ -1,7 +1,7 @@
 {
   "name": "research-loop",
-  "version": "0.4.4",
-  "description": "Connect to Research Loop projects, pages and AI work; render editable methodology figures locally.",
+  "version": "0.5.0",
+  "description": "Research Loop projects, pages and AI work; local methodology figures and consistent research plots.",
   "author": {
     "name": "오정석",
     "email": "jeongseok0112@gmail.com"
