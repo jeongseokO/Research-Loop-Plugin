@@ -7,6 +7,8 @@ description: Create or revise quantitative Research Loop plots with the shared M
 
 Make the research comparison easy to read. Use the shared style as a default, not as a restriction on the analytical form or the user's explicit choices. Render measurements from verified data with code, not an image generator.
 
+When a quantitative table supports an analysis, normally plot the comparison the reader should notice and keep the full table accessible. Reuse an unchanged plot. A figure is not needed for every table: if no useful comparison exists or rendering is unavailable, briefly report that instead of manufacturing a chart or claiming one was made. Keep dataset specimens on their canonical dataset page and link them; do not put long examples in the plot or analysis.
+
 ## Choose and render
 
 - For Research Loop sources or attachments, follow [Research Loop](../research-loop/SKILL.md). Read `get_visualization_guide` for the chosen technique, reusing a guide already loaded. Do not load the whole catalog or unrelated pages.

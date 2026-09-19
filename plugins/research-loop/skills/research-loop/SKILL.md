@@ -23,8 +23,8 @@ Reuse an already-read guide unless its contract changed.
 | Operation | Guidance |
 | --- | --- |
 | Assigned human work / meeting action registration | [Task workflow](references/tasks.md) |
-| Write or review a page | [Writes and approvals](references/writes.md); `get_page_writing_guide` |
-| Metadata | `get_research_properties(type)` |
+| Write or review a page | [Writes and approvals](references/writes.md); `get_page_writing_guide` for canonical record placement and reader-first figures |
+| Metadata / dataset examples | `get_research_properties(type)`; dataset columns, samples and links belong to `type="dataset"` |
 | Method / dataset / experiment / result / claim / paper / rebuttal | `get_research_record_template(type)` |
 | Literature | `get_literature_review_template`; complete necessary sections, reuse informative source figures |
 | Meeting minutes | `get_meeting_note_template`; not for ordinary notes |
