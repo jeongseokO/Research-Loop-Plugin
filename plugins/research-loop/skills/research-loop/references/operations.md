@@ -33,6 +33,10 @@ Prefer binary upload to base64 in model context. `upload_research_media` is a fa
 
 ## Meeting actions and owner to-dos
 
+Group related work as `goal → month → week → task` when useful, not a mandatory four-level template. Use `create_plan(todo:true,todo_level:...,parent_todo_id:...)`; create/reuse the higher-level parent first, in the same project. Each goal has its own observable completion criterion. Set `fields.todoLevel` / `fields.parentTodoId` through normal reviewed object updates to reorganize existing work; `parentTodoId:null` detaches it. Never duplicate an existing task to move it. Keep unknown periods/dates unset rather than inventing deadlines.
+
+Owner task reads include a short `goal_path`, root first. Use it to understand the assigned outcome, then read only the goals/tasks needed for the authorized work. Do not scan every descendant at startup. Individual reports do not close shared tasks; child-task completion does not automatically close goals. Explain blockers against the intended outcome, not only the activity performed.
+
 Use one canonical plan per action: title, observable completion criterion, source meeting and relevant research page. For an explicit registration request, find/reuse the existing action first, or `create_plan(todo:true,source_meeting_id:...)`. Unknown date and estimate stay empty/0; undated, unestimated capture needs no schedule query. Adding a schedule still requires `get_my_planning_context` and its token/rationale.
 
 For authorized assignments, `get_my_research_tasks(project_id,include_members:true)` provides verified member IDs. Use `assign_research_task` with one stable UUID `request_key`. This sends pending requests, not acceptance. If the task saved but assignment failed, retry assignment on that task; do not recreate it. Link the canonical task in the minutes instead of maintaining another status table.
