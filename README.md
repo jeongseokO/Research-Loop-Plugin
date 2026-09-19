@@ -6,10 +6,20 @@
 
 ## Codex 설치
 
-플러그인을 지원하는 최신 Codex에서 다음 명령을 실행합니다.
+VS Code Codex의 **플러그인 마켓플레이스 추가**에 다음 값을 입력합니다.
+
+| 항목 | 입력값 |
+| --- | --- |
+| 출처 | `https://github.com/jeongseokO/Research-Loop-Plugin.git` |
+| Git ref | `codex/public-release` |
+| Sparse 경로 | 비워두기 |
+
+추가한 마켓플레이스에서 **Research Loop**를 설치합니다. 저장소 루트의 marketplace가 내부 플러그인 경로를 지정하므로 Sparse 경로는 필요 없습니다. [Codex 공식 설치 안내](https://developers.openai.com/plugins/build/plugins#add-a-marketplace-from-the-cli)
+
+CLI에서는 다음 명령으로 같은 마켓플레이스를 추가합니다.
 
 ```sh
-codex plugin marketplace add jeongseokO/Research-Loop-Plugin
+codex plugin marketplace add jeongseokO/Research-Loop-Plugin --ref codex/public-release
 codex plugin add research-loop@research-loop
 ```
 
@@ -38,7 +48,7 @@ claude plugin install research-loop@research-loop
 
 ## 업데이트
 
-현재 패키지: **0.11.0**. 변경한 기록의 연결 후보만 좁게 조회하고, 실제 내용을 확인한 뒤 검토합니다. 일정 작업은 별도 안내를 읽고, 동의한 사용자의 기본 Google 캘린더에서 가져온 바쁜 시간과 전체 활성 프로젝트 업무를 함께 고려합니다. 개인 일정은 공유 페이지에 복사하지 않습니다. 배정 업무의 결과·후속 검토·사람의 완료 확인, 계층과 기존 승인 규칙은 유지합니다. 반복 polling·자동 실험 실행·매번 전체 프로젝트 재조회는 하지 않습니다.
+현재 패키지: **0.11.1**. 매번 전체 프로젝트 요약을 읽도록 하던 구형 안내와 중복 검토 절차를 정리했습니다. 작업에 맞는 진입점 하나를 선택하고, 수정 후에는 변경한 기록의 연결 후보만 확인합니다. 전체 요약은 프로젝트 전체를 파악하거나 최신화할 때 사용합니다. 기존 승인·버전 확인·업무 진행 보고·일정 개인정보 보호 규칙은 유지합니다.
 
 ```sh
 codex plugin marketplace upgrade research-loop
