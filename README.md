@@ -6,28 +6,7 @@
 
 ## Codex 설치
 
-VS Code Codex의 **플러그인 마켓플레이스 추가**에 다음 값을 입력합니다.
-
-| 항목 | 입력값 |
-| --- | --- |
-| 출처 | `https://github.com/jeongseokO/Research-Loop-Plugin.git` |
-| Git ref | `codex/public-release` |
-| Sparse 경로 | 비워두기 |
-
-추가한 마켓플레이스에서 **Research Loop**를 설치합니다. 저장소 루트의 marketplace가 내부 플러그인 경로를 지정하므로 Sparse 경로는 필요 없습니다. [Codex 공식 설치 안내](https://developers.openai.com/plugins/build/plugins#add-a-marketplace-from-the-cli)
-
-CLI에서는 다음 명령으로 같은 마켓플레이스를 추가합니다.
-
-```sh
-codex plugin marketplace add jeongseokO/Research-Loop-Plugin --ref codex/public-release
-codex plugin add research-loop@research-loop
-```
-
-새 작업에서 Research Loop 계정으로 로그인하고 권한을 승인합니다. API 키를 채팅에 붙일 필요가 없습니다. 연결 시 자동 OAuth 등록이 지원되지 않으면 다음 명령을 한 번 실행합니다.
-
-```sh
-codex mcp login research-loop-plugin --scopes email --oauth-client-registration dcr
-```
+[단계별 AI 연결 안내](CONNECTION-GUIDE.md)를 따라 설치하세요. VS Code의 출처·Git ref·Sparse 입력값, CLI 설치, OAuth 로그인, 프로젝트 접근 요청과 오류 해결을 함께 정리했습니다. [웹에서 안내 보기](https://research-loop.lukeo112.chatgpt.site/guide/ai)
 
 사용 예:
 
@@ -39,16 +18,11 @@ codex mcp login research-loop-plugin --scopes email --oauth-client-registration 
 
 ## Claude Code 설치
 
-```sh
-claude plugin marketplace add jeongseokO/Research-Loop-Plugin
-claude plugin install research-loop@research-loop
-```
-
-새 세션에서 `/mcp`를 열어 Research Loop OAuth 로그인을 완료합니다. 기존 수동 MCP 연결이 있다면 중복 연결하지 말고 사용할 연결을 확인하세요. 설치는 서버 접근 승인을 대신하지 않습니다.
+[AI 연결 안내의 Claude Code 절차](CONNECTION-GUIDE.md)를 사용하세요. 플러그인과 MCP 직접 연결 중 하나만 선택합니다. 설치는 서버 접근 승인을 대신하지 않습니다.
 
 ## 업데이트
 
-현재 패키지: **0.11.1**. 매번 전체 프로젝트 요약을 읽도록 하던 구형 안내와 중복 검토 절차를 정리했습니다. 작업에 맞는 진입점 하나를 선택하고, 수정 후에는 변경한 기록의 연결 후보만 확인합니다. 전체 요약은 프로젝트 전체를 파악하거나 최신화할 때 사용합니다. 기존 승인·버전 확인·업무 진행 보고·일정 개인정보 보호 규칙은 유지합니다.
+현재 패키지: **0.11.2**. 서비스와 동일한 초록색 루프 아이콘과 단계별 연결 안내를 추가했습니다. 필요한 항목만 읽는 경량 지침과 기존 승인·버전 확인·업무 진행 보고·일정 개인정보 보호 규칙은 유지합니다.
 
 ```sh
 codex plugin marketplace upgrade research-loop

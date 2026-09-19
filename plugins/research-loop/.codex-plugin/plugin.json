@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "description": "Research Loop projects, pages and AI work; local methodology figures and consistent research plots.",
   "author": {
     "name": "오정석",
@@ -31,7 +31,10 @@
       "내 Research Loop 현황 열기"
     ],
     "websiteURL": "https://research-loop.lukeo112.chatgpt.site",
-    "brandColor": "#256ABF"
+    "brandColor": "#1D7568",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "logoDark": "./assets/icon.svg"
   },
   "mcpServers": "./.mcp.json"
 }
