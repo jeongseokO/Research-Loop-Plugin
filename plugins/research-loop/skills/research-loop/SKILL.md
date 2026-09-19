@@ -30,7 +30,7 @@ Reuse an already-read guide unless its contract changed.
 | Meeting minutes | `get_meeting_note_template`; not for ordinary notes |
 | Refresh or synthesize research | `get_research_workflow_guide` |
 | Change Loop Map question structure | `get_inquiry_template` |
-| Schedule work | [Writes and approvals](references/writes.md); `get_my_planning_context`, with fresh token and rationale |
+| Schedule work | [Private scheduling](references/scheduling.md); `get_my_planning_context`, with fresh token and rationale |
 | Figure / image upload | [Media](references/media.md); `get_visualization_guide` for one technique |
 | Quantitative plot / methodology figure | [research-plot](../research-plot/SKILL.md) / [method-figure](../method-figure/SKILL.md) |
 | Discussion | `get_project_discussion` and relevant evidence |
