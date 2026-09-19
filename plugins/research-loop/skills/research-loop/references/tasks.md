@@ -1,0 +1,23 @@
+## Meeting actions and owner to-dos
+
+Group related work as `goal → month → week → task` when useful, not a mandatory four-level template. Use `create_plan(todo:true,todo_level:...,parent_todo_id:...)`; create/reuse the higher-level parent first, in the same project. Each goal has its own observable completion criterion. Set `fields.todoLevel` / `fields.parentTodoId` through normal reviewed object updates to reorganize existing work; `parentTodoId:null` detaches it. Never duplicate an existing task to move it. Keep unknown periods/dates unset rather than inventing deadlines.
+
+Owner task reads include a short `goal_path`, root first. Use it to understand the assigned outcome, then read only the goals/tasks needed for the authorized work. Do not scan every descendant at startup. Individual reports do not close shared tasks; child-task completion does not automatically close goals. Explain blockers against the intended outcome, not only the activity performed.
+
+Use one canonical plan per action: title, observable completion criterion, source meeting and relevant research page. For an explicit registration request, find/reuse the existing action first, or `create_plan(todo:true,source_meeting_id:...)`. Unknown date and estimate stay empty/0; undated, unestimated capture needs no schedule query. Adding a schedule still requires `get_my_planning_context` and its token/rationale.
+
+For authorized assignments, `get_my_research_tasks(project_id,include_members:true)` provides verified member IDs. Use `assign_research_task` with one stable UUID `request_key`. This sends pending requests, not acceptance. If the task saved but assignment failed, retry assignment on that task; do not recreate it. Link the canonical task in the minutes instead of maintaining another status table.
+
+## Track and hand back work
+
+1. Use `who_am_i.ownerTasks` to orient; `get_my_research_tasks` only to find relevant assignments. Then `get_research_task_context(project_id,assignment_id)`, not a full-project brief. Read `get_project_instructions` explicitly and reuse within the task. A pending assignment is not acceptance.
+2. Read the exact task and needed source pages. A truncated context/outline is not full evidence or a replacement document. Respect parent goals, completion criteria and the current AI progress author. Coordinate before duplicating another AI's work.
+3. Report meaningful `in_progress` or `blocked` changes with `report_research_task_progress`; use the assignment revision, stable UUID request key, short note and current result IDs. No timers, recursive scans, broad renders or implicit experiment runs.
+4. Save actual results through the page workflow. A proposal is not committed. Review material impacts on known related records; leave unchecked records and pending proposals explicit. Never claim all dependencies were found: context covers explicit references only.
+5. Before `review_required`, read `get_research_task_context` with the intended `result_ids` (up to 10). Populate `checkpoint.task_version` from `task.version`, and `checkpoint.results` as `{recordId: version}` for every committed result. In the checkpoint’s review note, state what was actually checked. Put unresolved records in `follow_ups`: object_id, needs_review/proposal_pending, short note. If no page is warranted, use empty results and `no_result_reason`; do not create filler.
+6. The server checks task/result versions and saves progress atomically. On conflict, reread and re-evaluate; on uncertain delivery reuse the same request and key. Do not silently replace a stale version with a fresh one without reading changes.
+7. Return the outcome, result links and pending decisions briefly. Human confirms done. An individual report never closes teammates' assignments, shared tasks or parent goals. Notifications do not start a closed AI.
+
+If the requested result exists only as an unapplied proposal, keep work in_progress or blocked and explain the required approval. Never substitute the old committed version or use no_result_reason to imply that the proposed result was saved. A checkpoint may list pending follow-ups alongside genuinely committed results, but does not certify those pending changes.
+
+Do not call every guide at startup. Writing a page uses [writes](writes.md) and its type-specific guide; uploading a figure uses [media](media.md). Scheduling is a separate authorized action requiring `get_my_planning_context` and its current token. A result update alone does not authorize schedule changes.

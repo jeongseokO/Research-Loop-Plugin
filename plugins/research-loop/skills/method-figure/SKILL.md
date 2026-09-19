@@ -24,7 +24,7 @@ The bundled layout is a starting point, not a constraint on the research. If it 
 
 ## Attach when requested
 
-Use [the existing attachment workflow](../research-loop/references/operations.md#figures-and-attachments): prepare the PNG upload using the manifest, upload binary bytes, complete, reread the destination and attach the returned permanent media. Preserve unrelated blocks, caption/alt text and current page revision. SVG/PDF/source files are local deliverables; the image API does not accept them.
+Use [the existing attachment workflow](../research-loop/references/media.md): prepare the PNG upload using the manifest, upload binary bytes, complete, reread the destination and attach the returned permanent media. Preserve unrelated blocks, caption/alt text and current page revision. SVG/PDF/source files are local deliverables; the image API does not accept them.
 
 After a direct save, reread the page and confirm the intended attachment reference. If the server requires a proposal, report **awaiting review**, not saved. Do not bypass permissions, delete prior assets, or claim that an empty image block, generated code or uploaded-but-unattached file completes the requested page change.
 
