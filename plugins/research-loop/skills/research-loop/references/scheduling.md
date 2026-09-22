@@ -8,3 +8,5 @@ Read `get_my_planning_context` before authorized schedule changes. It combines c
 4. Write only the authorized change with `planning_context_token` and `planning_rationale`. Refresh after a scheduling write or a stale token. A token verifies a snapshot, not feasibility or a global reservation.
 
 Never copy private busy times or other-project names, IDs or schedules into shared pages. Give only a generic capacity constraint. New Google consent is a human action in personal settings. This integration imports availability and exports Research Loop schedules; it does not turn Google event edits into shared research edits or keep a closed AI client running.
+
+The human can choose hidden / busy-only / titles in the planning calendar. Optional titles are browser-owner-only, never returned to this AI. Project teammates can explicitly share busy times in the UI; do not infer consent from membership or copy the team's display into research records. The owner's private availability remains the authoritative scheduling input for this AI.
