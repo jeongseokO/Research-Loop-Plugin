@@ -61,6 +61,10 @@ and self edges are rejected.
 
 Grid spacing is automatic. Modules use rounded boxes; tensors use cell grids;
 tokens use token tiles; caches use stacked layers; operators use circles.
+Use these only when they match the actual subject, not as a universal layout.
+Keep the main flow left-to-right or bottom-to-top (rows increase downward, so
+bottom-to-top edges run from larger to smaller row indices). Distinct edge styles
+must have explicit meanings; check branch/merge junctions in the rendered image.
 These glyphs are symbolic: tile counts do not encode actual token counts or
 tensor dimensions. Add concise quantities such as N or k when relevant.
 
@@ -79,8 +83,9 @@ versus discarded data, and residual direction against the source method.
 
 ## Files and manifest
 
-Two files are written by default: `method-source.json` and `method-overview.png`.
-Pass `--formats png pdf svg` to add publication SVG/PDF files. Formats are rendered
+Two files are written by the bare CLI: `method-source.json` and `method-overview.png`.
+For research figures, pass `--formats png pdf svg` to retain editable SVG/vector PDF
+alongside PNG and source as the standard deliverable. Formats are rendered
 sequentially. The source JSON is preserved
 byte-for-byte. SVG keeps selectable text (`svg.fonttype=none`); PDF embeds
 TrueType fonts (`pdf.fonttype=42`); PNG uses 200 dpi, twice the 100 dpi design
