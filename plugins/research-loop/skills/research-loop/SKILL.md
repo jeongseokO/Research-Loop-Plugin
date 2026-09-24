@@ -50,7 +50,7 @@ Everything outside the core loop is task-specific. Reuse an already-read guide u
 | Refresh or synthesize research | `get_research_workflow_guide` |
 | Research history, status or turning points (연구 트리) | [Research tree](references/tree.md) |
 | Question branches inside a question | `get_inquiry_template` |
-| Schedule work | [Private scheduling](references/scheduling.md); `get_my_planning_context`, with fresh token and rationale |
+| Schedule or distribute work | [Scheduling](references/scheduling.md); owner planning token/rationale; `get_team_planning_context` for roles, capacity and AI-consented busy times |
 | Figure / image upload | [Media](references/media.md); `get_visualization_guide` for one technique |
 | Quantitative plot / methodology figure | [research-plot](../research-plot/SKILL.md) / [method-figure](../method-figure/SKILL.md) |
 | Discussion | `get_project_discussion` and relevant evidence |

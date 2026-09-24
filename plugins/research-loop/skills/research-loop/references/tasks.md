@@ -6,7 +6,7 @@ Owner task reads include a short `goal_path`, root first. Read only the goals/ta
 
 Use one canonical plan per action: title, observable completion criterion, source meeting and relevant research page. For an explicit registration request, find/reuse the existing action first, or `create_plan(todo:true,source_meeting_id:...)`. Unknown date and estimate stay empty/0; undated, unestimated capture needs no schedule query. Adding a schedule still requires `get_my_planning_context` and its token/rationale.
 
-For authorized assignments, `get_my_research_tasks(project_id,include_members:true)` provides verified member IDs. Use `assign_research_task` with one stable UUID `request_key`. This sends pending requests, not acceptance. If the task saved but assignment failed, retry assignment on that task; do not recreate it. Link the canonical task in the minutes instead of maintaining another status table.
+For authorized assignments, `get_my_research_tasks(project_id,include_members:true)` provides verified member IDs. Before choosing assignees, read [team scheduling](scheduling.md) and `get_team_planning_context` for the relevant period: compare responsibilities, declared capacity/workload, existing assignments and consented busy time. Unknown availability is not free time. Explain the fit and ask about unresolved capacity; do not substitute access roles for expertise. Use `assign_research_task` with one stable UUID `request_key`. This sends pending requests, not acceptance. If the task saved but assignment failed, retry assignment on that task; do not recreate it. Link the canonical task in the minutes instead of maintaining another status table.
 
 ## Track and hand back work
 
