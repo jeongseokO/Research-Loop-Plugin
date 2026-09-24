@@ -22,8 +22,9 @@
 
 ## 업데이트
 
-현재 패키지: **0.14.5**.
+현재 패키지: **0.15.0**.
 
+- 스킬 진입점은 핵심 도구 10개(`who_am_i`, `get_project_instructions`, `get_research_brief`, `query_research_objects`, `get_research_page`, `patch_research_page`, `save_research_page`, `create_research_object`, `get_research_tree`, `patch_research_tree`)로 이루어진 기본 흐름을 먼저 안내합니다. 나머지 도구는 현재 작업에 필요할 때만 불러오며, 도구 이름·권한은 바뀌지 않았습니다.
 - 방법론 figure는 구조·상호작용·개입 위치를 드러내는 코드 기반 벡터 제작이 기본입니다. PNG·편집 가능한 SVG/벡터 PDF·원본을 보관하고, 이미지 생성은 검증 가능한 최후 수단으로만 사용합니다.
 - 비교 표·plot은 높을수록 좋은 지표와 낮을수록 좋은 지표를 나눕니다. 작은 차이는 점·변화량 등 적합한 표현으로 드러내되 잘린 막대나 확대만으로 과장하지 않습니다. 기존 plot 팔레트·폰트와 자원 제한은 유지합니다.
 
