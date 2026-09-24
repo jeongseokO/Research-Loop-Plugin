@@ -59,7 +59,7 @@ Everything outside the core loop is task-specific. Reuse an already-read guide u
 ## Invariants
 
 - Preserve unrelated content. Prefer `patch_research_page` for local changes; never replace a page from a partial read. Project, page and assignment revisions differ.
-- Respect server capabilities and immutable authorship. Applied and approval-pending are different; never bypass approval. Only the human accepts/declines assignments. AI may report its owner's accepted assignment done only after verifying the outcome with a current checkpoint and no unresolved follow-ups; see the task workflow. This never closes teammates' work or Main.
+- Respect server capabilities and immutable authorship. Applied and approval-pending are different; never bypass approval. Only the human accepts/declines assignments. AI may report verified accepted work done with a current checkpoint; Sub completion first reconciles its Main report (see task workflow). Main completion is human-controlled unless the human explicitly instructs completion of that specific Main. Never infer this consent from Sub/assignment completion.
 - A task is not permission for new costly experiments, assignments or schedule changes. Never expose credentials or private cross-project planning details.
 - Keep essential explanations understandable, complete evidence linked and unknowns explicit. New figures contain only necessary labels/data; explanatory prose belongs in the separate caption, not the canvas.
 - Reconcile only verified changes. Keep unchecked dependencies and unapplied proposals pending; do not manufacture progress, auto-merge similar titles or rewrite a backlog. No relevant change means no content write.

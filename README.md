@@ -22,7 +22,7 @@
 
 ## 업데이트
 
-현재 패키지: **0.16.0**.
+현재 패키지: **0.16.1**.
 
 - 스킬 진입점은 핵심 도구 10개(`who_am_i`, `get_project_instructions`, `get_research_brief`, `query_research_objects`, `get_research_page`, `patch_research_page`, `save_research_page`, `create_research_object`, `get_research_tree`, `patch_research_tree`)로 이루어진 기본 흐름을 먼저 안내합니다. 나머지 도구는 현재 작업에 필요할 때만 불러오며, 도구 이름·권한은 바뀌지 않았습니다.
 - 방법론 figure는 구조·상호작용·개입 위치를 드러내는 코드 기반 벡터 제작이 기본입니다. PNG·편집 가능한 SVG/벡터 PDF·원본을 보관하고, 이미지 생성은 검증 가능한 최후 수단으로만 사용합니다.
