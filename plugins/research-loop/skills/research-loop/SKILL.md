@@ -44,7 +44,7 @@ Everything outside the core loop is task-specific. Reuse an already-read guide u
 | Follow-up after committed edits | `get_research_impacts` with changed IDs; inspect candidates with `get_research_review` |
 | Review a proposal | `list_change_requests`, then `get_change_request` for the one being reviewed |
 | Metadata / dataset catalog or examples | `get_research_properties(type)`; use `type="dataset"` for named benchmarks, constituent/independent datasets, columns and linked samples. Reuse that contract; other tasks do not need it. |
-| Method / dataset / experiment / result / claim / paper / rebuttal | `get_research_record_template(type)` |
+| Method / dataset / experiment / result / claim / paper / rebuttal | `get_research_record_template(type)`; for experiment roles and optional main links, reuse `get_research_properties(type="experiment")` |
 | Literature | `get_literature_review_template`; complete necessary sections, reuse informative source figures |
 | Meeting minutes | `get_meeting_note_template`; not for ordinary notes |
 | Refresh or synthesize research | `get_research_workflow_guide` |
