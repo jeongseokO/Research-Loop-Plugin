@@ -43,7 +43,7 @@ Everything outside the core loop is task-specific. Reuse an already-read guide u
 | Write or review a page | [Writes and approvals](references/writes.md); `get_page_writing_guide` for canonical record placement and reader-first figures |
 | Follow-up after committed edits | `get_research_impacts` with changed IDs; inspect candidates with `get_research_review` |
 | Review a proposal | `list_change_requests`, then `get_change_request` for the one being reviewed |
-| Metadata / dataset examples | `get_research_properties(type)`; dataset columns, samples and links belong to `type="dataset"` |
+| Metadata / dataset catalog or examples | `get_research_properties(type)`; use `type="dataset"` for named benchmarks, constituent/independent datasets, columns and linked samples. Reuse that contract; other tasks do not need it. |
 | Method / dataset / experiment / result / claim / paper / rebuttal | `get_research_record_template(type)` |
 | Literature | `get_literature_review_template`; complete necessary sections, reuse informative source figures |
 | Meeting minutes | `get_meeting_note_template`; not for ordinary notes |
