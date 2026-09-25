@@ -7,6 +7,8 @@ description: Read and maintain the user's Research Loop projects, research pages
 
 Help the human recover understanding and decisions, not accumulate pages.
 
+These instructions are in English. Write in the user's language unless another is requested. Preserve English proper nouns, official names and natural technical terms; explain their meanings in the user's language without forced translation. See the canonical writing guide for details.
+
 ## Core loop
 
 Ten tools cover most sessions. Learn these; load anything else only when the current operation needs it (next section).

@@ -2,6 +2,8 @@
 
 The server's `get_page_writing_guide` owns writing design. Do not copy its full policy into skills or load every guide at startup. A technical report normally needs core, report, lists, annotations and evidence, followed by review. Reuse modules at the same revision within the task.
 
+The guide's English is instruction language only. Follow core's output-language rule and annotations' naming/localization rules; reports, captions and clickable explanations follow the user's language unless explicitly requested otherwise.
+
 | When | Read |
 | --- | --- |
 | Before substantive authoring | `get_page_writing_guide(section="core")`: shared rules and module index |
