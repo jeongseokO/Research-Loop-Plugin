@@ -41,3 +41,7 @@ For several authorized Subs of the **same Main in one work session**, save their
 If the Main report does not yet exist or needs approval, do not create filler or force completion. Create a substantive synthesis only when authorized, otherwise report `review_required` on the accepted assignment with the committed Sub result and a Main `needs_review`/`proposal_pending` follow-up explaining what remains. Pending-only results stay in_progress/blocked as above. Work without an accepted assignment remains open with an explicit pending explanation; do not invent an assignment to obtain a review status.
 
 Do not call every guide at startup. Writing a page uses [writes](writes.md) and its type-specific guide; uploading a figure uses [media](media.md). Scheduling is a separate authorized action requiring `get_my_planning_context` and its current token. A result update alone does not authorize schedule changes.
+
+### Writing the analysis
+
+Follow [Writing design](writing.md), then `get_task_analysis_template(scope)`. Open with the research question and purpose, organize claims with indented evidence, and explain first-use terms with clickable notes. Keep run IDs, nodes and paths in linked reproduction details. The report follows the argument; progress reporting and Main/Sub completion rules above remain unchanged.

@@ -40,7 +40,7 @@ Everything outside the core loop is task-specific. Reuse an already-read guide u
 | --- | --- |
 | Assigned human work / meeting action registration | [Task workflow](references/tasks.md); `get_research_task_context` for one assignment (`get_my_research_tasks` only to find its ID) |
 | Queued AI requests for this project | [AI work](references/ai-work.md); check `list_ai_tasks` once, claim before execution, never redo claimed/review/completed work, do not poll |
-| Write or review a page | [Writes and approvals](references/writes.md); `get_page_writing_guide` for canonical record placement and reader-first figures |
+| Write or review a page | [Writes and approvals](references/writes.md); [Writing design](references/writing.md) for the canonical core and focused report/list/annotation modules |
 | Follow-up after committed edits | `get_research_impacts` with changed IDs; inspect candidates with `get_research_review` |
 | Review a proposal | `list_change_requests`, then `get_change_request` for the one being reviewed |
 | Metadata / dataset catalog or examples | `get_research_properties(type)`; use `type="dataset"` for named benchmarks, constituent/independent datasets, columns and linked samples. Reuse that contract; other tasks do not need it. |
@@ -61,6 +61,6 @@ Everything outside the core loop is task-specific. Reuse an already-read guide u
 - Preserve unrelated content. Prefer `patch_research_page` for local changes; never replace a page from a partial read. Project, page and assignment revisions differ.
 - Respect server capabilities and immutable authorship. Applied and approval-pending are different; never bypass approval. Only the human accepts/declines assignments. AI may report verified accepted work done with a current checkpoint; Sub completion first reconciles its Main report (see task workflow). Main completion is human-controlled unless the human explicitly instructs completion of that specific Main. Never infer this consent from Sub/assignment completion.
 - A task is not permission for new costly experiments, assignments or schedule changes. Never expose credentials or private cross-project planning details.
-- Keep essential explanations understandable, complete evidence linked and unknowns explicit. New figures contain only necessary labels/data; explanatory prose belongs in the separate caption, not the canvas.
+- Start with the research question/purpose; use parent claims with indented evidence and first-use clickable term notes. Keep complete evidence linked and unknowns explicit. New figures contain only necessary labels/data; explanatory prose belongs in the separate caption, not the canvas.
 - Reconcile only verified changes. Keep unchecked dependencies and unapplied proposals pending; do not manufacture progress, auto-merge similar titles or rewrite a backlog. No relevant change means no content write.
 - Report meaningful progress on the existing assignment, not another status note. `review_required` uses a version-checked checkpoint; the server contract and task workflow explain it. Notifications do not wake other AIs or keep a closed client running.

@@ -22,7 +22,7 @@
 
 ## 업데이트
 
-현재 패키지: **0.18.0**. 실험 역할(메인·Ablation·Preliminary)과 선택적인 메인 연결은 실험 작업에서만 규격을 읽습니다. 기존 실험은 자동 분류하지 않습니다. 같은 묶음의 하위 결과를 함께 종합하여 메인 보고서의 중복 작성을 줄이며, 메인 할 일 완료는 여전히 사람의 명시적 결정입니다. 팀 배정 시 역할·업무 여유와 별도 동의된 바쁜 시간을 확인합니다.
+현재 패키지: **0.19.0**. 공통 작성 디자인을 core/report/lists/annotations/evidence/review로 나눠 필요한 지침만 읽습니다. 연구 질문에서 시작하는 보고서, 주장·근거의 계층 목록, 첫 등장 용어의 클릭 주석을 적용합니다. 실험 역할(메인·Ablation·Preliminary)과 선택적인 메인 연결은 실험 작업에서만 규격을 읽습니다. 기존 실험은 자동 분류하지 않습니다. 같은 묶음의 하위 결과를 함께 종합하여 메인 보고서의 중복 작성을 줄이며, 메인 할 일 완료는 여전히 사람의 명시적 결정입니다. 팀 배정 시 역할·업무 여유와 별도 동의된 바쁜 시간을 확인합니다.
 
 - 스킬 진입점은 핵심 도구 10개(`who_am_i`, `get_project_instructions`, `get_research_brief`, `query_research_objects`, `get_research_page`, `patch_research_page`, `save_research_page`, `create_research_object`, `get_research_tree`, `patch_research_tree`)로 이루어진 기본 흐름을 먼저 안내합니다. 나머지 도구는 현재 작업에 필요할 때만 불러오며, 도구 이름·권한은 바뀌지 않았습니다.
 - 방법론 figure는 구조·상호작용·개입 위치를 드러내는 코드 기반 벡터 제작이 기본입니다. PNG·편집 가능한 SVG/벡터 PDF·원본을 보관하고, 이미지 생성은 검증 가능한 최후 수단으로만 사용합니다.
