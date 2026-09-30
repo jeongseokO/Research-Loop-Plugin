@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "description": "Research Loop workspace, task evidence and sharing drafts, embedded editing and contextual ChatGPT collaboration; local research figures and plots.",
   "author": {
     "name": "오정석",
