@@ -40,6 +40,7 @@ Everything outside the core loop is task-specific. Reuse an already-read guide u
 
 | Operation | Guidance |
 | --- | --- |
+| Browse beside the conversation / open the reader | `open_research_panel` with optional known project/page IDs; [Panel and mentions](references/panel.md). Use only when an interactive view helps or the user asks. |
 | Assigned human work / meeting action registration | [Task workflow](references/tasks.md); `get_research_task_context` for one assignment (`get_my_research_tasks` only to find its ID) |
 | Queued AI requests for this project | [AI work](references/ai-work.md); check `list_ai_tasks` once, claim before execution, never redo claimed/review/completed work, do not poll |
 | Write or review a page | [Writes and approvals](references/writes.md); [Writing design](references/writing.md) for the canonical core and focused report/list/annotation modules |
