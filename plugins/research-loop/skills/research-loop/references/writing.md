@@ -7,6 +7,7 @@ The guide's English is instruction language only. Follow core's output-language 
 | When | Read |
 | --- | --- |
 | Before substantive authoring | `get_page_writing_guide(section="core")`: shared rules and module index |
+| Create or rename a plan/to-do | `section="tasks"`: concrete target/action, purpose-first description and observable completion criteria |
 | Task/Main analysis, research report, PI/student report | `section="report"`: question/purpose → approach → findings → interpretation/limits → decision |
 | Structured lists and indentation | `section="lists"`: parent claims, child evidence, Markdown versus block item syntax |
 | First-use technical terms, metrics, datasets or conditions | `section="annotations"`: clickable explanations, definitions, escaping and reproduction details |
