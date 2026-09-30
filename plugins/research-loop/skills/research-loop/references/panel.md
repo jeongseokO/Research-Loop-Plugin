@@ -1,6 +1,8 @@
-# Interactive research reader
+# Interactive research workspace
 
-- Open `open_research_panel` when the user wants to browse pages beside the conversation. Known IDs open one page directly; otherwise the user chooses a project and searches titles.
+- Open `open_research_panel` when the user wants to browse pages beside the conversation. Known IDs open one page directly; otherwise the user chooses a project and navigates research categories, notes or to-dos, with title search in each section. The layout shares the website research taxonomy and groups loaded Sub tasks under their Main.
+- Recent additions, the research tree, planning and AI collaboration have explicit links to the same project on the website. These views are not duplicated inside the panel. Bounded list counts describe loaded rows, not project totals; use More to continue.
+- Navigation remains available while reading. Back restores the loaded list. Narrow screens use a collapsible project menu; wide mode is offered only when supported by the host.
 - The reader declares conversation-panel and global-sidebar entrypoints. Availability depends on host extension support and refreshed tool discovery. Never claim an installed client has updated just because the MCP server or package was published.
 - Native desktop composer mentions search current record titles and attach a scoped resource. Search is bounded to six approved projects and twenty results, with named projects prioritized. For records outside that search scope, use the panel's project picker.
 - Opening a page supplies its identity and revision to model context. Only the explicit “share selected passage” action supplies selected text (up to 4,000 characters); it does not supply the full page automatically or request edits.
