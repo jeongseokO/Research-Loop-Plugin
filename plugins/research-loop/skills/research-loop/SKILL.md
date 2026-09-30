@@ -44,6 +44,7 @@ Everything outside the core loop is task-specific. Reuse an already-read guide u
 | Create or rename a to-do | `get_page_writing_guide(section="tasks")`; [Task workflow](references/tasks.md). Name the actual target/action and purpose; preserve existing scope and state. |
 | Assigned human work / meeting action registration | [Task workflow](references/tasks.md); `get_research_task_context` for one assignment (`get_my_research_tasks` only to find its ID) |
 | Queued AI requests for this project | [AI work](references/ai-work.md); check `list_ai_tasks` once, claim before execution, never redo claimed/review/completed work, do not poll |
+| Weekly update / presentation from team work | [Team updates and presentations](references/team-updates.md); reuse canonical To Dos and committed evidence |
 | Write or review a page | [Writes and approvals](references/writes.md); [Writing design](references/writing.md) for the canonical core and focused report/list/annotation modules |
 | Follow-up after committed edits | `get_research_impacts` with changed IDs; inspect candidates with `get_research_review` |
 | Review a proposal | `list_change_requests`, then `get_change_request` for the one being reviewed |
