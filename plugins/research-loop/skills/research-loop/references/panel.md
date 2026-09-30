@@ -1,8 +1,15 @@
 # Embedded research workspace
 
-- Open `open_research_panel` when the user wants to browse, write or edit pages beside ChatGPT. Known IDs open one page directly; otherwise the user chooses a project and navigates research categories, notes or to-dos, with title search in each section. The layout shares the website research taxonomy and groups loaded Sub tasks under their Main.
+- Open `open_research_panel` when the user wants to browse, write or edit pages beside ChatGPT. Known IDs open one page directly; otherwise the research home guides the user to tasks, records and sharing. Choose a project and navigate research categories, notes or to-dos, with title search in each section. The layout shares the website research taxonomy and groups loaded Sub tasks under their Main.
 - Recent additions, the research tree, planning and AI collaboration have explicit links to the same project on the website. These views are not duplicated inside the panel. Bounded list counts describe loaded rows, not project totals; use More to continue.
 - Navigation remains available while reading. Back restores the loaded list. Narrow screens use a collapsible project menu; wide mode is offered only when supported by the host. Keep an unsaved draft until the user saves it or explicitly discards it.
+- Task reading presents available purpose, completion criteria and explicit source links. Bounded previews do not establish complete evidence, chronology, ownership or team coverage. Do not infer an assignee from the author of a page.
+
+## Weekly updates and meeting presentations
+
+- The panel offers local weekly-update and meeting-presentation outlines as ordinary-note drafts. A draft may reference the current task or page. It does not automatically fetch every member's progress, synthesize verified findings or create a structured experiment or analysis.
+- Fill the outline with checked evidence and meaningful source links before sharing. Keep missing results and open questions visible; never present template prompts as findings. Save explicitly using the same connected-AI permissions and review policy as other notes.
+- A meeting-presentation draft organizes context, findings, evidence, questions and next steps. After saving, **발표 보기** reads the complete saved document and presents a frozen snapshot with a slide outline and arrow-key/Escape navigation. It changes no page data and does not export PPTX. Use the website's team-sharing view for its existing selection-based report rather than claiming that the local template is an aggregated team report.
 
 ## Author and edit
 
@@ -20,7 +27,7 @@
 
 ## Host support and limits
 
-- Conversation-panel and global-sidebar entrypoints depend on host extension support and refreshed tool discovery. Never claim an installed client has updated just because the MCP server or package was published. MCP 0.32.0 and plugin 0.22.0 describe this authoring contract; publication and account-level availability are separate facts.
+- Conversation-panel and global-sidebar entrypoints depend on host extension support and refreshed tool discovery. Never claim an installed client has updated just because the MCP server or package was published. MCP 0.34.0 and plugin 0.24.0 describe the research-home and task-sharing layout with the existing authoring contract; publication and account-level availability are separate facts. Fresh discovery uses `ui://research-loop/workspace-v2.html`; the old `reader-v1.html` resource remains a current-content alias. Already-open cached frames may require opening a new panel.
 - Native desktop composer mentions search current record titles and attach a scoped resource. Search is bounded to six approved projects and twenty results, with named projects prioritized. For records outside that search scope, use the panel's project picker.
 - The reader preserves lists, tables, equations and clickable term notes. Long bodies load in revision-checked ranges. Media uploads and unsupported page operations use the original website. This workspace does not embed the native ChatGPT Space editor or claim complete Space/Notion feature parity, including their real-time collaboration, comments, files or permission interfaces.
 - Hosts without UI support retain the ordinary MCP reading and writing tools. Do not install a new connection or request credentials merely to work around an unavailable panel.
