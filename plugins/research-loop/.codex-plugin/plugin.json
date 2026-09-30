@@ -1,7 +1,7 @@
 {
   "name": "research-loop",
-  "version": "0.21.0",
-  "description": "Research Loop projects, pages and AI work; local methodology figures and consistent research plots.",
+  "version": "0.22.0",
+  "description": "Research Loop pages, embedded editing and contextual ChatGPT collaboration; local methodology figures and research plots.",
   "author": {
     "name": "오정석",
     "email": "jeongseok0112@gmail.com"
@@ -18,8 +18,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Research Loop",
-    "shortDescription": "연구 프로젝트 · 실험 · 문헌 · 일정",
-    "longDescription": "Projects · research pages · experiments · literature · plans · deadlines · governed AI changes",
+    "shortDescription": "연구 페이지 작성 · 편집 · ChatGPT 협업",
+    "longDescription": "Research projects · embedded page editing · contextual ChatGPT collaboration · experiments · literature · plans · governed AI changes",
     "developerName": "오정석",
     "category": "Productivity",
     "capabilities": [
