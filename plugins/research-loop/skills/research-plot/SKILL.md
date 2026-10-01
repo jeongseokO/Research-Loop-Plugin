@@ -11,6 +11,8 @@ When a quantitative table supports an analysis, normally plot the comparison the
 
 ## Choose and render
 
+For a new or substantially revised figure, read the shared [visual quality rules](../research-loop/references/visual-quality.md). Use `style_context(profile="presentation")` for slides and inspect at final placement; the default `paper` profile preserves existing figures. Keep explanation in a separate slide headline/caption, outside the reusable image.
+
 - For Research Loop sources or attachments, follow [Research Loop](../research-loop/SKILL.md). Read `get_visualization_guide` for the chosen technique, reusing a guide already loaded. Do not load the whole catalog or unrelated pages.
 - Decide the reader question and focal comparison first. Choose axes, chart type, ordering, legend, lines, symbols and emphasis to make the relevant difference visible, with its absolute size and available uncertainty. Keep full inputs, units and missingness; highlighting is not significance. Do not force everything into bars.
 - Group higher-is-better (↑) and lower-is-better (↓) metrics separately in tables and plot panels. Label units and the delta formula (e.g. method − baseline); positive does not automatically mean better. Never silently invert a metric. A favorable counterpart needs a verified definition/denominator, explicit relabeling and traceable calculation; otherwise keep the raw metric in its own group. Context-dependent direction is not a winner ranking.

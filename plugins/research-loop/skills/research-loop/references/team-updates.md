@@ -12,3 +12,5 @@ Use one chain of evidence: canonical To Do → committed result/analysis → wee
 8. For missing figures, use the quantitative plot skill with the exact source table, units and requested comparison. The website editor's `/visualize` creates a checked PNG for supported simple numeric tables; do not treat ambiguous values, missing cells, mixed units or uncertainty notation as ordinary numbers. Keep the original table. The embedded ChatGPT panel cannot upload a locally generated plot directly; use the authorized media/page write tools for an AI-generated figure.
 
 MCP connects an active AI client to Research Loop. A queued request or valid credential does not start a closed remote Codex, prove a worker is online, or authorize new server access.
+
+For new presentation visuals, follow [visual quality](visual-quality.md) and the selected technique's `get_visualization_guide` rules. Use the presentation profile in local renderers, preserve editable sources, and inspect the assembled slide at its final size. A page figure shrunk into a slide is not automatically presentation-ready.

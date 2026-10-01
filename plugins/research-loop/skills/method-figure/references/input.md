@@ -1,6 +1,8 @@
 # Local method figure renderer
 
-`render-method-figure.py INPUT.json --output-dir DIR [--overwrite] [--font "Installed Font"] [--formats png pdf svg] [--timeout 60]`
+`render-method-figure.py INPUT.json --output-dir DIR [--overwrite] [--font "Installed Font"] [--profile paper|presentation] [--formats png pdf svg] [--timeout 60]`
+
+The default `paper` profile preserves existing rendering. `presentation` enlarges labels and arrows by 1.5 while retaining the source, layout, output bounds and clipping checks. It can reject labels that fit the paper profile: shorten labels or split the figure instead of reducing type. Inspect the final slide placement; a preset alone cannot guarantee readability. The manifest records the profile used.
 
 The renderer requires Python 3.9+ and matplotlib. Tested with Python 3.9.13 and
 matplotlib 3.9.4. It uses no model API, network fetch, browser, raw SVG input,

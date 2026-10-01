@@ -228,6 +228,25 @@ class RenderTests(unittest.TestCase):
             self.assertEqual(set(json.loads(result.stdout)["outputs"]), {"png", "sourceJson"})
             self.assertEqual(len(list((base / "output").iterdir())), 2)
 
+    def test_presentation_profile_preserves_source_and_enlarges_vector_labels(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            source = base / "minimal.json"
+            source.write_text(json.dumps(minimal()))
+            for profile in ("paper", "presentation"):
+                result = self.run_renderer(source, base / profile, "--profile", profile, "--formats", "png", "svg")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(json.loads(result.stdout)["profile"], profile)
+                self.assertEqual((base / profile / "method-source.json").read_bytes(), source.read_bytes())
+            def first_style(profile):
+                root = ET.parse(base / profile / "method-overview.svg")
+                return root.find(".//{http://www.w3.org/2000/svg}text").attrib["style"]
+            self.assertIn("9px", first_style("paper"))
+            self.assertIn("13.5px", first_style("presentation"))
+            invalid = self.run_renderer(source, base / "invalid", "--profile", "unknown")
+            self.assertNotEqual(invalid.returncode, 0)
+            self.assertFalse((base / "invalid").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

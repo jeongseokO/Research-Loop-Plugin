@@ -38,6 +38,17 @@ MAX_DELTA_ROWS = 100
 MAX_ARTISTS = 2_000
 MAX_PIXELS = 12_000_000
 MAX_IMAGE_VALUES = 2_000_000
+PRESENTATION_STYLE = {
+    "figure.figsize": (10.5, 5.6),
+    "font.size": 18,
+    "axes.labelsize": 18,
+    "axes.titlesize": 22,
+    "xtick.labelsize": 16,
+    "ytick.labelsize": 16,
+    "legend.fontsize": 16,
+    "lines.linewidth": 2.6,
+    "lines.markersize": 7,
+}
 
 
 def _bounded_list(values, limit, name):
@@ -94,7 +105,7 @@ def _select_font(font_paths):
 
 
 @contextmanager
-def style_context(*, font_paths=(), portable=True):
+def style_context(*, font_paths=(), portable=True, profile="paper"):
     """Apply house defaults, yielding the selected family name.
 
     NanumSquare is preferred when installed. Otherwise an available Korean font,
@@ -103,13 +114,18 @@ def style_context(*, font_paths=(), portable=True):
     Optional ``font_paths`` is an iterable of local font files. Both rcParams and
     temporary font registrations are restored, including when rendering fails.
     ``portable=True`` outlines SVG text and embeds TrueType fonts in PDF.
+    ``profile="presentation"`` uses a larger canvas, labels, lines and markers;
+    data, axis ranges and export limits stay unchanged. Inspect final placement.
     """
+    if profile not in ("paper", "presentation"):
+        raise ValueError("profile must be 'paper' or 'presentation'")
     manager = font_manager.fontManager
     original_fonts = list(manager.ttflist)
     original_afm = list(manager.afmlist)
     try:
         families = _select_font(font_paths)
         with mpl.rc_context(fname=str(STYLE_PATH), rc={
+            **(PRESENTATION_STYLE if profile == "presentation" else {}),
             "font.family": families,
             "font.sans-serif": families,
             "svg.fonttype": "path" if portable else "none",

@@ -9,6 +9,8 @@ Make the mechanism understandable through structure and concise labels. **Defaul
 
 ## Choose the content
 
+For new/revised visuals, follow [visual quality](../research-loop/references/visual-quality.md). For slides use `--profile presentation`; inspect final-size labels and split crowded figures.
+
 - Read the actual method/code and the requested destination. Identify inputs, transformations, state, branches and outputs; do not invent missing mechanisms. Separate training/inference or overall/detail panels only when useful.
 - For Research Loop, use the [Research Loop skill](../research-loop/SKILL.md) for identity and narrow source reads, then `get_visualization_guide(technique_id="method-overview")`. Reuse guides already read. Do not fetch unrelated project histories or rewrite the method merely to illustrate it.
 - Let forms carry meaning: data as arrays/tables/samples, space as maps/coordinates, relations as graphs, devices as parts, software as actual components. Show algorithm states/transforms, system interactions, or apparatus/conditions/observation points. Do not put everything in identical boxes.
@@ -23,7 +25,7 @@ Make the mechanism understandable through structure and concise labels. **Defaul
 3. Keep PNG, editable SVG/vector PDF and regenerable source together; request the vector formats explicitly (the bare CLI defaults to PNG/source JSON). Check exported text/formulas remain editable where required; this renderer's labels are literal, so use a suitable vector tool for actual typeset formulas. It runs one guarded worker with a 60-second wall timeout and single-thread settings. These are not OS CPU/memory quotas. Reuse source for revisions; do not load code or image base64 into context when a file path suffices.
 4. Open the actual PNG with the client's image-viewing tool. Check the mechanism, arrows, missing paths, overlap and page-width readability. Every text item must identify a component, operation, quantity or panel—not explain a finding. Move commentary to the external caption, including text disguised as a short title/label. Fix and inspect again, at most two additional renders. On size/time limits, simplify or report the limit; do not bypass it, launch parallel alternatives, or repeatedly raise the timeout. Successful rendering is not verification; report if image inspection is unavailable.
 
-Reuse style, not a previous figure's layout, components or numbers. If the bundled grammar cannot express the verified mechanism, use a suitable local vector tool with the same source-preservation and inspection requirements, not a generic four-box flowchart. Image generation is a last resort only when vector options cannot meet the need: explain why, obtain authorization before sending private sources, and verify every generated component/connection against evidence. Missing source details stay unresolved, never hallucinated; do not claim a generated raster is an editable vector.
+Reuse style, not previous content. If this grammar cannot express the verified mechanism, use another local vector tool with the same source and inspection requirements. Image generation is a last resort only when vector options cannot meet the need: explain why, obtain authorization before sending private sources, and verify every generated component/connection against evidence. Missing source details stay unresolved, never hallucinated; do not claim a generated raster is an editable vector.
 
 ## Attach when requested
 
@@ -31,4 +33,4 @@ Use [the existing attachment workflow](../research-loop/references/media.md): pr
 
 After a direct save, reread the page and confirm the intended attachment reference. If the server requires a proposal, report **awaiting review**, not saved. Do not bypass permissions, delete prior assets, or claim that an empty image block, generated code or uploaded-but-unattached file completes the requested page change.
 
-Return the figure/page and any unresolved issue briefly. State a blocker instead of repeatedly uploading or silently changing methods.
+Return the figure/page and unresolved issues briefly; do not repeatedly upload around a blocker.

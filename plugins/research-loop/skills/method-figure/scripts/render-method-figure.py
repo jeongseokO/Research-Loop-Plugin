@@ -266,13 +266,13 @@ def fit_node_text(ax, artist, width, height, lines=2):
             f"Node label {artist.get_text()!r} is too tall; shorten it")
 
 
-def draw_node(ax, node, patches):
+def draw_node(ax, node, patches, font_scale=1):
     x, y = position(node)
     color = COLORS[node.get("accent", "blue")]
     kind = node["kind"]
     if kind == "operator":
         ax.add_patch(patches.Circle((x, y), .46, fc="white", ec=color, lw=1.7, zorder=3))
-        artist = ax.text(x, y, node["label"], ha="center", va="center", fontsize=10, weight="bold", zorder=4)
+        artist = ax.text(x, y, node["label"], ha="center", va="center", fontsize=10 * font_scale, weight="bold", zorder=4)
         fit_node_text(ax, artist, .70, .70, lines=1)
         return
     rounding = .25 if kind in ("input", "output") else .09
@@ -299,16 +299,17 @@ def draw_node(ax, node, patches):
             for layer in range(3):
                 ax.add_patch(patches.FancyBboxPatch((x - .59 + layer * .06, y + .01 + layer * .12), 1.06, .20,
                              boxstyle="round,pad=0,rounding_size=.045", fc="white", ec=color, lw=.9, zorder=4 + layer))
-    artist = ax.text(x, label_y, node["label"], ha="center", va="center", fontsize=9, color="#243247", linespacing=1.08, zorder=8)
+    artist = ax.text(x, label_y, node["label"], ha="center", va="center", fontsize=9 * font_scale, color="#243247", linespacing=1.08, zorder=8)
     fit_node_text(ax, artist, WIDTH - .22, .50 if kind in ("tensor", "tokens", "cache") else .95)
 
 
-def render(spec, geometry, font, staging, formats=("png",)):
+def render(spec, geometry, font, staging, formats=("png",), profile="paper"):
     import matplotlib
     matplotlib.use("Agg")
     from matplotlib import pyplot as plt, patches
     from matplotlib.path import Path as MplPath
     panels, sizes, width, height, inches = geometry
+    font_scale = 1.5 if profile == "presentation" else 1
     settings = {"font.family": font, "svg.fonttype": "none", "pdf.fonttype": 42,
                 "text.usetex": False, "text.parse_math": False, "figure.dpi": 100,
                 "savefig.dpi": 200, "axes.unicode_minus": False}
@@ -318,7 +319,7 @@ def render(spec, geometry, font, staging, formats=("png",)):
         fig = plt.figure(figsize=inches, facecolor="white")
         try:
             if spec.get("title"):
-                fig.text(.025, 1 - .20 / height, spec["title"], va="top", fontsize=12, weight="bold", color="#243247")
+                fig.text(.025, 1 - .20 / height, spec["title"], va="top", fontsize=12 * font_scale, weight="bold", color="#243247")
             xoffset, yoffset = 0., height - (.8 if spec.get("title") else 0)
             for panel, (paths, bounds), (pw, ph) in zip(spec["panels"], panels, sizes):
                 horizontal = spec.get("layout", "horizontal") == "horizontal"
@@ -330,20 +331,20 @@ def render(spec, geometry, font, staging, formats=("png",)):
                 ax.set_aspect("equal")
                 ax.axis("off")
                 if panel.get("title"):
-                    ax.text(bounds[0] + .20, bounds[3] - .16, panel["title"], va="top", fontsize=10, weight="bold", color="#243247")
+                    ax.text(bounds[0] + .20, bounds[3] - .16, panel["title"], va="top", fontsize=10 * font_scale, weight="bold", color="#243247")
                 for edge, points in paths:
                     path = MplPath(points, [MplPath.MOVETO] + [MplPath.LINETO] * (len(points) - 1))
-                    ax.add_patch(patches.FancyArrowPatch(path=path, arrowstyle="-|>", mutation_scale=11,
-                                 lw=1.1, linestyle="--" if edge.get("dashed") else "-", color="#627187", zorder=2))
+                    ax.add_patch(patches.FancyArrowPatch(path=path, arrowstyle="-|>", mutation_scale=11 * font_scale,
+                                 lw=1.1 * font_scale, linestyle="--" if edge.get("dashed") else "-", color="#627187", zorder=2))
                     if edge.get("label"):
                         a, b = (points[1], points[2]) if len(points) > 2 else (points[0], points[1])
                         vertical = abs(a[0] - b[0]) < .1
                         ax.text((a[0] + b[0]) / 2 + (.15 if vertical else 0), (a[1] + b[1]) / 2 + (0 if vertical else .18),
-                                textwrap.fill(edge["label"], 14), fontsize=7.5, ha="left" if vertical else "center",
+                                textwrap.fill(edge["label"], 14), fontsize=7.5 * font_scale, ha="left" if vertical else "center",
                                 va="center" if vertical else "bottom", color="#536075", zorder=9,
                                 bbox={"facecolor": "white", "edgecolor": "none", "pad": 1.3})
                 for node in panel["nodes"]:
-                    draw_node(ax, node, patches)
+                    draw_node(ax, node, patches, font_scale)
                 if horizontal:
                     xoffset += pw
             fig.canvas.draw()
@@ -368,6 +369,8 @@ def main(argv=None):
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--overwrite", action="store_true", help="explicitly replace the selected renderer outputs")
     parser.add_argument("--font", help="installed font family covering every label")
+    parser.add_argument("--profile", choices=("paper", "presentation"), default="paper",
+                        help="presentation enlarges labels and arrows; crowded labels fail instead of shrinking")
     parser.add_argument("--formats", nargs="+", choices=("png", "pdf", "svg"), default=["png"],
                         help="PNG by default; request png pdf svg for publication exports")
     parser.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT, help="wall time in seconds, at most 120")
@@ -383,7 +386,7 @@ def main(argv=None):
             import matplotlib.font_manager as font_manager
             import matplotlib.ft2font as ft2font
             font = select_font(spec, args.font, font_manager, ft2font)
-            dimensions = render(spec, geometry, font, args._worker_dir, formats)
+            dimensions = render(spec, geometry, font, args._worker_dir, formats, args.profile)
             (args._worker_dir / OUTPUT_NAMES["sourceJson"]).write_bytes(raw)
             (args._worker_dir / "render-result.json").write_text(json.dumps({"font": font, "dimensions": dimensions}))
             return 0
@@ -398,7 +401,7 @@ def main(argv=None):
             source = staging / "input.json"
             source.write_bytes(raw)
             command = [str(source), "--output-dir", str(output), "--_worker-dir", str(staging),
-                       "--formats", *formats]
+                       "--profile", args.profile, "--formats", *formats]
             if args.font:
                 command += ["--font", args.font]
             result = run_python(Path(__file__).resolve(), command, timeout=args.timeout)
@@ -421,7 +424,7 @@ def main(argv=None):
                 for target in published:
                     target.unlink()
                 raise
-        print(json.dumps({"schemaVersion": 1, "font": details["font"], "outputs": outputs}, ensure_ascii=False))
+        print(json.dumps({"schemaVersion": 1, "font": details["font"], "profile": args.profile, "outputs": outputs}, ensure_ascii=False))
         return 0
     except (DiagramError, RenderLimitError, OSError, ImportError, Warning) as error:
         print(f"method-figure: {error}", file=sys.stderr)

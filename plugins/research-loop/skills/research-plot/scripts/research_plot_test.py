@@ -66,6 +66,28 @@ class PlotTests(unittest.TestCase):
                         plot.draw_delta_panel(ax, ["Sample"], [1])
                         fig.canvas.draw()
 
+    def test_presentation_profile_changes_legibility_not_data_and_restores_defaults(self):
+        original = deepcopy(dict(matplotlib.rcParams))
+        with plot.style_context(profile="presentation"):
+            fig, ax = plt.subplots(layout="constrained")
+            bars = plot.draw_delta_panel(ax, ["A", "B"], [1.2, -0.8])
+            ax.set_xlabel("Delta (points)")
+            self.assertEqual([bar.get_width() for bar in bars], [1.2, -0.8])
+            self.assertEqual(ax.xaxis.label.get_fontsize(), 18)
+            self.assertEqual(matplotlib.rcParams["legend.fontsize"], 16)
+            self.assertEqual(list(fig.get_size_inches()), [10.5, 5.6])
+            self.assert_labels_inside(ax)
+            with tempfile.TemporaryDirectory() as temporary:
+                plot.save_figure(fig, Path(temporary) / "presentation", formats=("png", "svg"))
+            with plot.style_context():
+                self.assertEqual(matplotlib.rcParams["font.size"], 12)
+            self.assertEqual(matplotlib.rcParams["font.size"], 18)
+        self.assertEqual(dict(matplotlib.rcParams), original)
+        with self.assertRaisesRegex(ValueError, "profile"):
+            with plot.style_context(profile="unknown"):
+                self.fail("invalid profile accepted")
+        self.assertEqual(dict(matplotlib.rcParams), original)
+
     def test_math_font_fallback_renders_symbols(self):
         with warnings.catch_warnings(record=True) as emitted, plot.style_context():
             warnings.simplefilter("always", UserWarning)
