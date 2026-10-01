@@ -1,7 +1,7 @@
 {
   "name": "research-loop",
-  "version": "0.28.0",
-  "description": "Research Loop workspace, task evidence and sharing drafts, embedded editing and contextual ChatGPT collaboration; local research figures and plots.",
+  "version": "0.29.0",
+  "description": "The complete Research Loop website workspace inside ChatGPT, with human account sign-in, contextual AI editing and team collaboration; local research figures and plots.",
   "author": {
     "name": "오정석",
     "email": "jeongseok0112@gmail.com"
@@ -19,7 +19,7 @@
   "interface": {
     "displayName": "Research Loop",
     "shortDescription": "Research, plan and work with AI",
-    "longDescription": "A shared workspace for research teams. Read and edit research pages, follow to-dos into experiments and analysis, review plans, and prepare scoped requests in your ChatGPT conversation. Mobile layouts provide focused reading, touch-friendly controls and an accessible request sheet. Project membership, AI permissions, review requirements and conflict protection apply to every change. Local figure-rendering scripts require a supported execution environment; remote agents are not launched automatically.",
+    "longDescription": "Use the Research Loop website workspace inside ChatGPT: research pages and attachments, Main/Sub to-dos, planning, experiments, analyses, weekly updates, presentations and team settings. Sign in to Research Loop to use your existing human permissions, including member management and final review. Explicit ChatGPT requests check the connected account and project; AI permissions remain separate. Mobile layouts include focused request sheets and touch-friendly controls. Local figure scripts require a supported execution environment. Remote agents are not launched automatically.",
     "developerName": "JUNGSUK OH",
     "category": "Productivity",
     "capabilities": [
@@ -42,11 +42,11 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Mobile workspace: compact page actions, touch-friendly navigation, and contextual ChatGPT request sheets with draft preservation. Native planning and AI collaboration retain project scopes and explicit-send protections.",
+        "release_notes": "Full website workspace inside ChatGPT with an additional Research Loop sign-in, shared editing and team settings, explicit account-checked ChatGPT requests, mobile request sheets and unsaved-draft protection. Legacy compact workspaces remain available. Native client availability and Directory review remain separate.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
-            "description": "연구 페이지를 읽고 편집하고, 할 일에서 실험·분석으로 이동하며, 계획과 AI 작업을 함께 검토하세요. 모바일에서는 화면 아래의 요청 버튼으로 ChatGPT와 대화를 이어갑니다. 저장과 요청 전송은 직접 실행하며 프로젝트 권한과 검토 절차를 유지합니다."
+            "description": "Research Loop 계정으로 로그인하고 웹사이트의 연구 페이지·첨부·할 일·계획·팀 설정을 ChatGPT 안에서 사용하세요. 저장된 페이지를 대상으로 편집, 주간 업데이트, 미팅 발표를 요청할 수 있습니다. 사용자 계정의 권한과 AI 연결 권한은 각각 유지합니다."
           }
         }
       },
@@ -69,19 +69,19 @@
               "description": "Edit an owned note while preserving unrelated structured content.",
               "prompt": "In Research Loop Review, append one paragraph to my sample note: 'Next we will compare the two conditions using the same evaluation examples.' Preserve everything already in the note and save the change.",
               "tools_triggered": "get_project_instructions, query_research_objects, get_research_page, get_page_writing_guide, patch_research_page",
-              "expected_behavior": "Read the current owned ordinary note and page revision. Apply only the requested paragraph with the existing revision and idempotency protections, then reread the page to confirm the actual result. Existing blocks, table, and term explanation survive. Report applied versus proposed accurately. If the reviewer uses the panel editor instead, get_panel_editor_context and save_research_page perform the corresponding explicit save; unsaved drafts remain on failure."
+              "expected_behavior": "Read the current owned ordinary note and page revision. Apply only the requested paragraph with the existing revision and idempotency protections, then reread the page to confirm the actual result. Existing blocks, table, and term explanation survive. Report applied versus proposed accurately. In the full workspace, the human signs in separately and saves with existing website permissions and revision protections; the legacy compact editor still uses the connected AI credential. Never confuse the two authorities."
             },
             {
               "description": "Review project plans with dates and uncertainty preserved.",
               "prompt": "Review the plans for Research Loop Review this week. Explain the next actions and show which dates or owners are not decided. Propose improvements here without changing the project.",
               "tools_triggered": "get_project_instructions, query_research_objects, get_research_page",
-              "expected_behavior": "Return only relevant project plans and supporting records, preserving stored dates/time zones and marking missing dates or owners as unspecified. Do not read or disclose unrelated private calendar details. The planning panel can call app-only get_panel_planning_context for the displayed week. A preset prepares an editable request; only explicit Send submits it to the conversation. No plan or assignment is modified."
+              "expected_behavior": "Return only relevant project plans and supporting records, preserving stored dates/time zones and marking missing dates or owners as unspecified. Do not read or disclose unrelated private calendar details. The full workspace uses the website planning UI; the legacy compact panel uses app-only get_panel_planning_context for its displayed week. A preset prepares an editable request; only explicit Send submits it to the conversation. No plan or assignment is modified."
             },
             {
               "description": "Summarize AI coordination and a discussion without duplicating another agent's work.",
               "prompt": "In Research Loop Review, inspect the sample AI work and discussion. Summarize the current owners, reported blockers, agreements, and unresolved questions here. Do not start work or post a reply.",
               "tools_triggered": "get_project_instructions, list_ai_tasks, get_ai_task, list_project_discussions, get_project_discussion",
-              "expected_behavior": "Read bounded project-scoped work and the relevant thread, attribute only recorded owners and authors, and distinguish the last report from live activity. State when pagination leaves evidence incomplete. The AI collaboration panel can use its app-only list/detail tools. Do not call claim_ai_task, update_ai_task, complete_ai_task, or a discussion write tool. Do not wake another agent."
+              "expected_behavior": "Read bounded project-scoped work and the relevant thread, attribute only recorded owners and authors, and distinguish the last report from live activity. State when pagination leaves evidence incomplete. The full workspace uses the website AI collaboration UI; the legacy compact panel uses its app-only list/detail tools. Do not call claim_ai_task, update_ai_task, complete_ai_task, or a discussion write tool. Do not wake another agent."
             }
           ],
           "negative": [
