@@ -22,7 +22,7 @@
 - Use the website workflow inside the panel: open a To Do, follow or create its experiment/analysis, choose tasks for the weekly update, and create the meeting presentation from checked evidence. Missing results, owners and dates remain unspecified.
 - For an AI-generated weekly update, read actual work within the requested period and link supporting pages. Distinguish completed work, uncertainty, blockers and next actions; do not treat a title list or template as a verified team report.
 - For presentations, read `get_page_writing_guide(section="presentation")`, `get_presentation_references` and relevant complete pages. See [team updates and presentations](team-updates.md) and [visual quality](visual-quality.md). Inspect accessible rendered examples before claiming a visual style match. PPTX text extraction is not visual slide inspection.
-- Project settings inside the full workspace accept the website's existing PPT/PPTX/PDF example uploads and style notes. The saved-page presentation supports its existing fullscreen controls and fallback. This release does not add editable PPTX export or the native ChatGPT Space editor.
+- Project settings inside the full workspace accept PPT/PPTX/PDF example uploads and style notes. **페이지 도구 → 발표 제작 · PPTX** opens the slide editor with separate deck saving, draggable elements, source imports, notes and editable PowerPoint export. Read [the presentation studio contract](presentation-studio.md) before changing an existing deck with AI tools. Fullscreen and downloads still depend on the host client; this is not the native ChatGPT Space editor.
 
 ## Host and mobile boundaries
 

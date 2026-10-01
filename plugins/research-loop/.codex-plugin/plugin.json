@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.29.0",
+  "version": "0.30.0",
   "description": "The complete Research Loop website workspace inside ChatGPT, with human account sign-in, contextual AI editing and team collaboration; local research figures and plots.",
   "author": {
     "name": "오정석",
