@@ -1,7 +1,7 @@
 {
   "name": "research-loop",
-  "version": "0.30.0",
-  "description": "The complete Research Loop website workspace inside ChatGPT, with human account sign-in, contextual AI editing and team collaboration; local research figures and plots.",
+  "version": "0.31.0",
+  "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; local research figures and plots.",
   "author": {
     "name": "오정석",
     "email": "jeongseok0112@gmail.com"
@@ -19,7 +19,7 @@
   "interface": {
     "displayName": "Research Loop",
     "shortDescription": "Research, plan and work with AI",
-    "longDescription": "Use the Research Loop website workspace inside ChatGPT: research pages and attachments, Main/Sub to-dos, planning, experiments, analyses, weekly updates, presentations and team settings. Sign in to Research Loop to use your existing human permissions, including member management and final review. Explicit ChatGPT requests check the connected account and project; AI permissions remain separate. Mobile layouts include focused request sheets and touch-friendly controls. Local figure scripts require a supported execution environment. Remote agents are not launched automatically.",
+    "longDescription": "Use the existing Research Loop website editor and project navigation inside ChatGPT. Separate notebook and team spaces preserve reading and draft context across light/dark modes. Explicit requests check the connected account and project; only selected evidence and checked stored-record excerpts enter team drafts. Delivery, saved records and pending unapplied proposals remain distinct. Human and AI permissions stay separate. Local figure scripts require a supported execution environment. Remote agents are not launched automatically.",
     "developerName": "JUNGSUK OH",
     "category": "Productivity",
     "capabilities": [
@@ -42,7 +42,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Full website workspace inside ChatGPT with an additional Research Loop sign-in, shared editing and team settings, explicit account-checked ChatGPT requests, mobile request sheets and unsaved-draft protection. Legacy compact workspaces remain available. Native client availability and Directory review remain separate.",
+        "release_notes": "Separate notebook and team spaces with light/dark surfaces, bounded source drafts and source return. Explicit account-checked AI requests and selected-only team sharing distinguish delivery, stored records and pending unapplied proposals. Full workspace v8 retains v7 compatibility; compact v6 and older remain available. Native client and Directory acceptance are separate checks.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
