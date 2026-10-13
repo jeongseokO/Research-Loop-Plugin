@@ -68,7 +68,7 @@ claude plugin install research-loop@research-loop
 2. Claude Code를 다시 시작합니다.
 3. 대화 입력창에 `/mcp`를 입력하고 Research Loop 연결의 인증 항목을 선택합니다.
 4. 브라우저에서 **본인 Research Loop 계정**으로 로그인하고 연결을 승인합니다.
-5. 새 대화에서 “Research Loop의 내 계정과 접근 가능한 프로젝트를 확인해줘”라고 요청합니다.
+5. 새 대화에서 `/research-loop:brief`를 입력하거나 “Research Loop의 내 계정과 접근 가능한 프로젝트를 확인해줘”라고 요청합니다.
 
 일반 터미널에서는 `claude ...` 명령을, Claude Code 대화 입력창에서는 `/mcp`를 사용합니다. Claude 웹·데스크톱의 커넥터와 Claude Code 플러그인은 설치 방식이 다릅니다. [Claude Code 공식 플러그인 안내](https://code.claude.com/docs/en/discover-plugins)
 
