@@ -12,8 +12,11 @@ The guide's English is instruction language only. Follow core's output-language 
 | Structured lists and indentation | `section="lists"`: parent claims, child evidence, Markdown versus block item syntax |
 | First-use technical terms, metrics, datasets or conditions | `section="annotations"`: clickable explanations, definitions, escaping and reproduction details |
 | Numbers, methods, examples, figures or sources | `section="evidence"`: comparisons, uncertainty, source records and external captions |
-| Before saving substantive writing | `section="review"`: reader-path and evidence checks |
+| A mechanism or experiment design to draw | `section="explainer"`: parts, links and steps the app lays out and steps through |
+| Before saving substantive writing | `section="review"`: the request's explicit requirements first, then reader-path and evidence checks |
 | Explicit instruction audit | `section="all"`; unnecessary for ordinary work |
+
+Experiment, result and claim pages also carry a bottom line, `fields.summary`, which the app shows before the body and in every list; `get_research_properties(type)` has its contract. The body expands it rather than repeating it.
 
 Then read only the relevant record/task/literature/meeting template. It supplies required content and storage semantics; it does not replace the writing guide. Existing project preferences, source preservation, author permissions, version checks, bounded computation and Main/Sub completion rules still apply.
 

@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.31.0",
+  "version": "0.33.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; local research figures and plots.",
   "author": {
     "name": "오정석",
@@ -42,7 +42,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Separate notebook and team spaces with light/dark surfaces, bounded source drafts and source return. Explicit account-checked AI requests and selected-only team sharing distinguish delivery, stored records and pending unapplied proposals. Full workspace v8 retains v7 compatibility; compact v6 and older remain available. Native client and Directory acceptance are separate checks.",
+        "release_notes": "Pages draw their own figures: a table can be read as an interactive chart, and a mechanism or experiment design as a step-by-step explainer the app lays out, both from data that stays editable. Smaller tool listings, a linked-repository file for code projects, and figure skills that use page-native visuals first.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
