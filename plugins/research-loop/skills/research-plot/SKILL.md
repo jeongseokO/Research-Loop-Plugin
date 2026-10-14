@@ -1,13 +1,13 @@
 ---
 name: research-plot
-description: Create or revise quantitative Research Loop plots with the shared Matplotlib house style and reusable helpers. Use for measured comparisons, trends, distributions and uncertainty, not methodology diagrams or styling the web app.
+description: Create or revise quantitative plots as image files with the shared Matplotlib house style — distributions, many-sample or many-panel figures, paper and slide figures. A comparison on a Research Loop page is drawn by the page from its table (table.chart) instead; not for methodology diagrams or styling the web app.
 ---
 
 # Research plot
 
 Make the research comparison easy to read. Use the shared style as a default, not as a restriction on the analytical form or the user's explicit choices. Render measurements from verified data with code, not an image generator.
 
-When a quantitative table supports an analysis, normally plot the comparison the reader should notice and keep the full table accessible. Reuse an unchanged plot. A figure is not needed for every table: if no useful comparison exists or rendering is unavailable, briefly report that instead of manufacturing a chart or claiming one was made. Keep dataset specimens on their canonical dataset page and link them; do not put long examples in the plot or analysis.
+On a Research Loop page, a comparison that fits a table is drawn by the page itself: keep the full table and add `table.chart` (see `get_page_writing_guide` core); render an image only for what a table chart cannot hold, or for a paper or slide file. When a quantitative table supports an analysis, normally plot the comparison the reader should notice and keep the full table accessible. Reuse an unchanged plot. A figure is not needed for every table: if no useful comparison exists or rendering is unavailable, briefly report that instead of manufacturing a chart or claiming one was made. Keep dataset specimens on their canonical dataset page and link them; do not put long examples in the plot or analysis.
 
 ## Choose and render
 

@@ -1,6 +1,6 @@
 # AI 연결 안내
 
-처음 연결한다면 **Codex 또는 Claude Code 플러그인**을 권장합니다. 사용하는 도구의 절차 하나만 따라가세요.
+처음 연결한다면 **Codex 또는 Claude Code 플러그인**을 권장합니다. ChatGPT와 Claude 앱에서는 커넥터 하나로 Research Loop 패널이 대화 안에 열립니다. 사용하는 도구의 절차 하나만 따라가세요.
 
 | 연결 방식 | 포함되는 것 | API 키 발급 |
 | --- | --- | --- |
@@ -12,7 +12,7 @@
 
 ## 1. 시작 전 준비
 
-1. [Research Loop](https://research-loop.lukeo112.chatgpt.site/)에 **본인 계정**으로 로그인합니다.
+1. [Research Loop](https://airesearchloop.com/)에 **본인 계정**으로 로그인합니다.
 2. 사용할 프로젝트를 만들거나, 받은 초대를 수락합니다.
 3. 사용할 Codex 또는 Claude Code에 로그인합니다. AI 서비스 구독과 Research Loop 계정 연결은 별개입니다.
 
@@ -68,7 +68,7 @@ claude plugin install research-loop@research-loop
 2. Claude Code를 다시 시작합니다.
 3. 대화 입력창에 `/mcp`를 입력하고 Research Loop 연결의 인증 항목을 선택합니다.
 4. 브라우저에서 **본인 Research Loop 계정**으로 로그인하고 연결을 승인합니다.
-5. 새 대화에서 “Research Loop의 내 계정과 접근 가능한 프로젝트를 확인해줘”라고 요청합니다.
+5. 새 대화에서 `/research-loop:brief`를 입력하거나 “Research Loop의 내 계정과 접근 가능한 프로젝트를 확인해줘”라고 요청합니다.
 
 일반 터미널에서는 `claude ...` 명령을, Claude Code 대화 입력창에서는 `/mcp`를 사용합니다. Claude 웹·데스크톱의 커넥터와 Claude Code 플러그인은 설치 방식이 다릅니다. [Claude Code 공식 플러그인 안내](https://code.claude.com/docs/en/discover-plugins)
 
@@ -105,12 +105,23 @@ claude mcp add --transport http --scope user research-loop https://ezmkpdnchcpju
 2. Claude Code의 `/mcp`에서 Research Loop를 선택하고 인증합니다.
 3. 본인 계정과 프로젝트가 보이는지 확인합니다. [Claude Code MCP 안내](https://code.claude.com/docs/en/mcp)
 
-### Claude 웹·데스크톱 / 다른 MCP 도구
+### Claude 웹·데스크톱·iOS
+
+Claude 앱 안에서 Research Loop 패널이 열립니다. ChatGPT의 Research Loop 앱과 같은 패널로, 기록 목록과 페이지, 표 그래프·도해·수식, 할 일과 일정, 저장한 발표, AI 협업을 패널 안에서 보고 고칠 수 있습니다.
+
+1. Claude의 **설정 → 커넥터**에서 **커스텀 커넥터 추가**를 엽니다. 메뉴의 제공 여부는 플랜·조직 정책에 따라 다릅니다.
+2. 이름을 **Research Loop**, 원격 MCP 서버 주소를 위 주소 그대로 입력합니다. 앱 주소나 GitHub 저장소 주소를 넣지 않습니다.
+3. **연결**을 눌러 Research Loop 계정으로 로그인하고 승인합니다.
+4. 새 대화에서 "Research Loop 패널을 열어줘" 또는 "내 프로젝트의 최근 기록을 보여줘"라고 요청합니다. Claude가 패널 표시 허용을 물으면 **허용**합니다.
+
+패널은 Claude의 보안 정책에 따라 웹사이트를 안에 끼워 넣지 않습니다. 첨부 파일, 달력, 팀 설정은 패널의 **사이트 열기 ↗**로 웹사이트에서 다룹니다. 같은 커넥터로 Claude 데스크톱과 iOS에서도 동일하게 열립니다.
+
+### 다른 MCP 도구
 
 1. 도구의 커넥터·MCP 설정에서 새 원격 연결을 추가합니다. 해당 메뉴의 제공 여부는 플랜·조직 정책에 따라 다릅니다.
 2. 이름을 **Research Loop**, 서버 주소를 위 주소로 입력합니다. 전송 방식을 고르는 경우 **Streamable HTTP**를 선택합니다.
 3. 연결·인증을 눌러 Research Loop 계정으로 로그인합니다. 앱 주소나 GitHub 저장소 주소를 MCP 서버 칸에 넣지 않습니다.
-4. 계정과 접근 가능한 프로젝트를 확인합니다. OAuth를 지원하지 않는 도구만 아래 API 키 절차를 사용합니다.
+4. 계정과 접근 가능한 프로젝트를 확인합니다. OAuth를 지원하지 않는 도구만 아래 API 키 절차를 사용합니다. MCP Apps를 지원하는 도구에서는 Research Loop 패널도 열립니다.
 
 ## 5. 프로젝트 접근 권한
 

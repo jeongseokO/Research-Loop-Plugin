@@ -1,11 +1,11 @@
 ---
 name: method-figure
-description: Create or revise a research methodology overview figure with editable source and a rendered image, and attach it to Research Loop when requested. Use for mechanism, architecture or algorithm diagrams, not statistical plots or general page editing.
+description: Create or revise a static methodology figure (architecture or algorithm diagram) as an image with editable source, for a paper, slides or an explicit image request. On a Research Loop page a mechanism is an explainer block instead; not for statistical plots or page editing.
 ---
 
 # Method figure
 
-Make the mechanism understandable through structure and concise labels. **Default to code-authored vectors**: Matplotlib shapes, grids, lines, text and formulas, or another suitable vector tool. Image generation is a last resort, never a source of scientific structure. No explanatory text, conclusions, commentary boxes or baked-in captions—even one sentence. Explanations belong in the external page caption. Honor the user's tools and scope; rendering does not grant project write access.
+On a Research Loop page a mechanism is an explainer block (writing guide section `explainer`); draw an image only when asked or for a paper or slides. Make the mechanism understandable through structure and concise labels. **Default to code-authored vectors** (Matplotlib shapes, lines, text and formulas, or another vector tool); image generation never supplies scientific structure. No explanatory text, conclusions or baked-in captions, even one sentence: explanations go in the external caption. Rendering does not grant project write access.
 
 ## Choose the content
 
@@ -31,6 +31,6 @@ Reuse style, not previous content. If this grammar cannot express the verified m
 
 Use [the existing attachment workflow](../research-loop/references/media.md): prepare the PNG upload using the manifest, upload binary bytes, complete, reread the destination and attach the returned permanent media. Preserve unrelated blocks, caption/alt text and current page revision. SVG/PDF/source files are local deliverables; the image API does not accept them.
 
-After a direct save, reread the page and confirm the intended attachment reference. If the server requires a proposal, report **awaiting review**, not saved. Do not bypass permissions, delete prior assets, or claim that an empty image block, generated code or uploaded-but-unattached file completes the requested page change.
+After a direct save, reread the page and confirm the attachment. A proposal is **awaiting review**, not saved. Do not bypass permissions, delete prior assets, or count an empty image block, generated code or an unattached upload as done.
 
 Return the figure/page and unresolved issues briefly; do not repeatedly upload around a blocker.

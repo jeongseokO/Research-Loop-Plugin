@@ -1,13 +1,13 @@
 {
   "name": "research-loop",
-  "version": "0.31.0",
-  "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; local research figures and plots.",
+  "version": "0.46.1",
+  "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
     "email": "jeongseok0112@gmail.com"
   },
   "repository": "https://github.com/jeongseokO/Research-Loop-Plugin",
-  "homepage": "https://research-loop.lukeo112.chatgpt.site",
+  "homepage": "https://airesearchloop.com",
   "keywords": [
     "research",
     "experiments",
@@ -32,7 +32,7 @@
       "Review this week’s research plans.",
       "Summarize the blockers in my AI tasks."
     ],
-    "websiteURL": "https://research-loop.lukeo112.chatgpt.site",
+    "websiteURL": "https://airesearchloop.com",
     "brandColor": "#1D7568",
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/icon.png",
@@ -42,7 +42,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Separate notebook and team spaces with light/dark surfaces, bounded source drafts and source return. Explicit account-checked AI requests and selected-only team sharing distinguish delivery, stored records and pending unapplied proposals. Full workspace v8 retains v7 compatibility; compact v6 and older remain available. Native client and Directory acceptance are separate checks.",
+        "release_notes": "Type is set in four weights and one size scale with a single name per size, and the research serif is asked only for the two faces it ships, so what the stylesheets say is what readers see. On every screen a deck now speaks the app's faces, Pretendard and the research serif, instead of a portable face with no Hangul, including on a phone, in a zoomed figure and inside an interactive scene. The type rules are written into the design principles that coding agents read first.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
