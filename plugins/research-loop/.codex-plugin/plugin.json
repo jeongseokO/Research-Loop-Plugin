@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.46.1",
+  "version": "0.51.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -33,6 +33,8 @@
       "Summarize the blockers in my AI tasks."
     ],
     "websiteURL": "https://airesearchloop.com",
+    "privacyPolicyURL": "https://airesearchloop.com/privacy",
+    "termsOfServiceURL": "https://airesearchloop.com/terms",
     "brandColor": "#1D7568",
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/icon.png",
@@ -42,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Type is set in four weights and one size scale with a single name per size, and the research serif is asked only for the two faces it ships, so what the stylesheets say is what readers see. On every screen a deck now speaks the app's faces, Pretendard and the research serif, instead of a portable face with no Hangul, including on a phone, in a zoomed figure and inside an interactive scene. The type rules are written into the design principles that coding agents read first.",
+        "release_notes": "Research Loop now speaks English, Japanese and French as well as Korean. Signed-out pages open in English until a device picks a language; the workspace follows the language saved on your account, so every device agrees, and accounts made before this release stay in Korean until you change it in personal settings. Dates, numbers and durations follow the language, and the ChatGPT and Claude panels speak the language of the app they open in. AIs pay about 28% fewer tokens for the tool list on every turn.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

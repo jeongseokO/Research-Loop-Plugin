@@ -18,7 +18,7 @@ Ten tools cover most sessions. Load anything else only when the current operatio
 | Orient | `who_am_i`, `get_project_instructions` |
 | Find | `get_research_brief`, `query_research_objects`, `get_research_tree` |
 | Read | `get_research_page` |
-| Write | `patch_research_page`, `save_research_page`, `create_research_object`, `patch_research_tree` |
+| Write | `patch_research_page`, `save_research_page`, `update_research_objects`, `create_research_object`, `patch_research_tree` |
 
 0. **Take the request as the specification.** Note each explicit requirement (which records, scope, sections, format, length, audience, figures, language). It outranks the guides' defaults within permissions, safety and honest evidence; ask only when a missing fact would change the result.
 1. **Orient.** `who_am_i` gives the verified owner, capabilities, approved projects and a small `ownerTasks` summary; reuse its project IDs. If disconnected, use browser OAuth; never ask for secrets in chat or replace a working connection.
@@ -29,7 +29,9 @@ Ten tools cover most sessions. Load anything else only when the current operatio
    - Local edit → `patch_research_page` with the page revision as `expected_revision`; untouched blocks stay on the server.
    - Whole rewrite → `save_research_page`, only after `get_research_page(view:full)`, preserving untouched blocks, IDs and attachments.
    - New knowledge with no owning record → `create_research_object`, after `query_research_objects` finds no existing target.
-   - Experiment, result and claim pages carry a bottom line in `fields.summary`: one standalone conclusion (≤140 characters), a verdict against the question and ≤5 evidence IDs. Link the question with `fields.questionIds`. The app shows both before the body and wherever the page is listed. Never set `verifiedAt`; a person does after checking.
+   - Experiment, result and claim pages carry a bottom line in `fields.summary`: one standalone conclusion (≤140 characters), a verdict against the prediction under test and ≤5 evidence IDs. Send it as `summary` in the same `save_research_page` or `patch_research_page` call as the body, so the two never disagree. Link the question with `fields.questionIds`. The app shows both before the body and wherever the page is listed. Never set `verifiedAt`; a person does after checking.
+   - Many records → `update_research_objects`; run problems stay apart from findings. Both in [Writes and approvals](references/writes.md).
+   - The loop: before an experiment runs, write its `fields.prediction`, the expected result and what would count for or against it; never add or change it afterwards. When a result arrives, call `record_result_meaning` once: the assessment against that prediction, what it tells the question, and the answer and remaining doubt when they change. Then record the next move if it is clear: the next experiment with its prediction, linked to the result with `link_objects` rel `follows`; a follow-up question; or the line paused or dropped with its reason via `patch_research_tree`. Explain results well; never quiz anyone or ask whether they understood.
    - Direction decisions (branch, state, turning point) → `patch_research_tree`; see [Research tree](references/tree.md).
    - Give every reviewable write a short plain-language `rationale`. Read [Writes and approvals](references/writes.md) before substantive writing or reviews; `proposed` means awaiting review, never committed.
 6. **Finish briefly:** check each requirement from step 0, then give the outcome, entry links, pending reviews, the smallest open decision and any requirement you could not meet, with the reason.
@@ -58,6 +60,7 @@ Reuse an already-read guide unless its revision changed.
 | Meeting minutes | `get_meeting_note_template`; not for ordinary notes |
 | Refresh or synthesize research | `get_research_workflow_guide` |
 | Question branches | `get_inquiry_template` |
+| A result came in | `record_result_meaning`; `get_research_brief` lists results still waiting (`questions[].loop.waitingResultIds`) |
 | Schedule or distribute work | [Scheduling](references/scheduling.md); `get_team_planning_context` for roles, capacity and consented busy times |
 | Measured comparison | Keep the full table on the page and add `table.chart`; the app draws it. No upload. |
 | Mechanism or experiment design | An explainer block (`get_page_writing_guide` section `explainer`); the app draws and steps it. |

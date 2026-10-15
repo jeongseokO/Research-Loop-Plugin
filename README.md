@@ -13,7 +13,7 @@ claude plugin install research-loop@research-loop
 
 Claude Code를 다시 시작하고 대화창에서 `/mcp` → Research Loop → 인증을 눌러 본인 계정으로 로그인합니다.
 
-**Codex · ChatGPT · MCP만 연결**은 [AI 연결 안내](CONNECTION-GUIDE.md)를 따르세요. 플러그인과 MCP 직접 연결은 둘 중 하나만 씁니다. 설치는 프로젝트 접근 승인을 대신하지 않습니다.
+**Codex · ChatGPT · MCP만 연결**은 [AI 연결 안내](CONNECTION-GUIDE.md)를 따르세요 ([English](CONNECTION-GUIDE.en.md)). 플러그인과 MCP 직접 연결은 둘 중 하나만 씁니다. 설치는 프로젝트 접근 승인을 대신하지 않습니다.
 
 ## Claude Code 명령
 
@@ -47,7 +47,7 @@ claude plugin update research-loop@research-loop
 
 Codex는 `codex plugin marketplace upgrade research-loop` 후 `codex plugin add research-loop@research-loop`입니다. 업데이트 뒤 새 대화를 시작합니다. 서버의 도구·작성 규격은 서버 배포로 바뀌지만, 설치된 플러그인 파일은 직접 업데이트해야 합니다.
 
-현재 패키지: **0.46.1** — 웹사이트·MCP 서버·패널과 같은 번호입니다. 무엇이 바뀌었는지는 [변경 내역](CHANGELOG.md)에 있습니다.
+현재 패키지: **0.51.0** — 웹사이트·MCP 서버·패널과 같은 번호입니다. 무엇이 바뀌었는지는 [변경 내역](CHANGELOG.md)에 있습니다.
 
 ## 공유 서버에서 사용
 
