@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.51.0",
+  "version": "0.52.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Research Loop now speaks English, Japanese and French as well as Korean. Signed-out pages open in English until a device picks a language; the workspace follows the language saved on your account, so every device agrees, and accounts made before this release stay in Korean until you change it in personal settings. Dates, numbers and durations follow the language, and the ChatGPT and Claude panels speak the language of the app they open in. AIs pay about 28% fewer tokens for the tool list on every turn.",
+        "release_notes": "Tables now read as scatter plots and heatmaps as well as line, bar and dot charts: a scatter places each row by a column of numbers, on a log scale when sizes span orders of magnitude, and a heatmap colours every cell on one scale with the best value in bold. Explainers gain four layouts the app places by itself (a map of relations, a tree, a timeline and a cycle), so an AI states structure instead of positions. The visualization guide starts from the reader's question and says first what a page draws without an image.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

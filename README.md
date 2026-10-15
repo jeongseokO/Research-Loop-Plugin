@@ -47,7 +47,7 @@ claude plugin update research-loop@research-loop
 
 Codex는 `codex plugin marketplace upgrade research-loop` 후 `codex plugin add research-loop@research-loop`입니다. 업데이트 뒤 새 대화를 시작합니다. 서버의 도구·작성 규격은 서버 배포로 바뀌지만, 설치된 플러그인 파일은 직접 업데이트해야 합니다.
 
-현재 패키지: **0.51.0** — 웹사이트·MCP 서버·패널과 같은 번호입니다. 무엇이 바뀌었는지는 [변경 내역](CHANGELOG.md)에 있습니다.
+현재 패키지: **0.52.0** — 웹사이트·MCP 서버·패널과 같은 번호입니다. 무엇이 바뀌었는지는 [변경 내역](CHANGELOG.md)에 있습니다.
 
 ## 공유 서버에서 사용
 

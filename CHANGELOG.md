@@ -2,6 +2,18 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.52.0 — 2026-10-15
+
+Tables now read as scatter plots and heatmaps as well as line, bar and dot charts: a scatter places each row by a column of numbers, on a log scale when sizes span orders of magnitude, and a heatmap colours every cell on one scale with the best value in bold. Explainers gain four layouts the app places by itself (a map of relations, a tree, a timeline and a cycle), so an AI states structure instead of positions. The visualization guide starts from the reader's question and says first what a page draws without an image.
+
+- 표 그림에 산점도와 히트맵이 생겼습니다. 산점도는 숫자 열 하나를 가로축으로 삼아 행마다 점을 찍고, 모델 크기처럼 자릿수가 다른 값은 로그 눈금으로 읽습니다. 점이 많지 않으면 이름이 점 옆에 붙고, 강조한 점은 강조색 원 위에 놓입니다. 셀의 ±는 가로·세로 오차 막대가 됩니다.
+- 히트맵은 표의 모든 칸을 한 색 척도로 칠하고 값을 칸 안에 적습니다. 0을 사이에 둔 변화량은 두 색으로 나뉘고, 좋은 방향을 정하면 가장 좋은 값이 굵게 보입니다. 단위가 다른 열을 섞으면 그리지 않고 이유를 알려 줍니다. 행을 가리키면 그 행의 값이 칸 색과 함께 나오고, 위아래 화살표로도 행을 옮겨 읽습니다.
+- 단계별 도해에 모양이 네 가지 더 생겼습니다. 관계도는 연결만 적으면 앱이 왼쪽에서 오른쪽으로 놓고, 계층은 각 부분의 상위만 적으면 되고, 타임라인은 시점을 적은 순서대로, 순환은 2~8개 부분이 고리를 이루며 마지막에서 처음으로 돌아갑니다. AI는 위치 대신 구조만 적고 그림은 앱이 그립니다.
+- 계층은 넓은 화면에서 위에서 아래로, 잎이 많으면 왼쪽에서 오른쪽으로, 좁은 화면에서는 들여쓴 목록처럼 그려져 이름이 잘리지 않습니다. 타임라인은 좁으면 위에서 아래로 흐릅니다. 관계도에서 여러 단을 건너는 연결은 다른 부분 위를 지나지 않고 자기 자리로 갑니다.
+- 한 단계에서 강조한 부분이 둘 이상이면 그 부분들 사이의 연결만 강조색이 됩니다. 하나만 강조하면 지금처럼 닿는 연결이 함께 강조됩니다.
+- SnapKV, StreamingLLM처럼 끊을 수 없는 이름은 상자 여백을 조금 써서 한 줄에 둡니다.
+- 시각화 가이드가 독자의 질문에서 시작합니다. "어느 조건이 더 높은가?"에는 막대 표 그림, "어떤 조합이 결과를 가장 바꾸는가?"에는 히트맵, "무엇이 무엇으로 나뉘는가?"에는 계층 도해처럼 페이지에서 바로 그리는 방법을 먼저 알려 주고, 이미지는 논문·발표용이거나 페이지가 그릴 수 없는 그림에만 씁니다. 앱의 시각화 가이드도 유형마다 페이지에서 그리는 방법을 먼저 적습니다.
+
 ## 0.51.0 — 2026-10-15
 
 Research Loop now speaks English, Japanese and French as well as Korean. Signed-out pages open in English until a device picks a language; the workspace follows the language saved on your account, so every device agrees, and accounts made before this release stay in Korean until you change it in personal settings. Dates, numbers and durations follow the language, and the ChatGPT and Claude panels speak the language of the app they open in. AIs pay about 28% fewer tokens for the tool list on every turn.
