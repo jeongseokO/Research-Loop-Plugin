@@ -2,6 +2,25 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.64.1 — 2026-10-17
+
+The cross-model trial now meets production's rules where a model can trip on them: a key reused for a different write is refused, and a week plan makes an earlier planning token stale. A provider request that never answers ends the run as an error after ten minutes instead of hanging the trial, and Claude requests cache the tool list and instructions, so later turns cost less. Token counts are unchanged.
+
+- 시험용 프로젝트가 운영과 같은 곳에서 거절합니다. 같은 키를 다른 쓰기에 다시 쓰면 운영처럼 `invalid_request`로 거절되고(지금까지는 앞의 영수증을 돌려줘 성공처럼 보였습니다), 구현 보고의 요청 키는 그 보고의 것입니다.
+- 일정 맥락이 운영과 같은 모양입니다. 끝난 일은 빠지고, 맡은 사람이 없으면 `unassigned`, 캘린더는 `disabled`, 그리고 주간 예산이 들어가 주간 계획을 세운 뒤에는 그 전에 읽은 계획 토큰이 운영처럼 낡은 것이 됩니다.
+- 공급자가 10분 동안 답하지 않는 요청은 네트워크 실패로 보고 다시 보낸 뒤, 끝내 답이 없으면 그 실행만 오류로 남깁니다. 지금까지는 시험 전체가 멈춰 있을 수 있었습니다.
+- Claude 요청은 도구 목록과 접속 지침을 프롬프트 캐시에 올립니다. 실행의 두 번째 차례부터 이 부분은 캐시 요금으로 읽히고, 세는 토큰 수는 그대로입니다.
+
+## 0.64.0 — 2026-10-17
+
+Measurement before the guidance changes. A field refused for its width now names the rule, and the MCP server counts each tool call's outcome per day by AI client, tool and rule, keeping nothing an AI wrote and no project or person. npm run guide:eval runs ten tasks in Korean and English against Claude, GPT and Gemini models through the real MCP handlers over an in-memory project, and grades what each one saved. The guidance itself is unchanged.
+
+- 거절이 규칙을 밝힙니다. AI가 쓴 짧은 칸이 너비를 넘어 거절되면 오류에 `writing.answer`, `writing.prediction`처럼 어떤 규칙인지가 붙습니다. 메시지 문장은 그대로입니다.
+- 지침 계수기. MCP 서버가 답한 도구 호출마다 결과 하나를 셉니다. 성공, 규칙별 거절(규칙이 없으면 `code:<오류 코드>`, 인자가 도구의 형식에 맞지 않으면 `schema`)이고, 하루에 AI 종류·도구·결과·규칙마다 한 줄입니다. 응답을 보낸 뒤에 기록하므로 기록이 실패해도 도구 결과는 그대로입니다. AI가 쓴 글, 인자, 프로젝트, 사람, 키는 남기지 않습니다. 주간 조회 SQL은 `docs/MCP.md`에 있습니다. 마이그레이션 `20261016140000_mcp_guidance_counts.sql`이 필요합니다.
+- 교차 모델 시험. `npm run guide:eval`이 과제 열 개(한국어 다섯, 영어 다섯, 생물·사회과학·시스템·기계학습·화학·물리·의학·소프트웨어·일정)를 모델마다 돌립니다. 모델은 실제 MCP 처리기에 연결된 메모리 속 시험 프로젝트에서 도구를 부르고, 무엇이 저장됐는지를 기계적으로 채점합니다. 과제마다 완벽한 답안의 호출이 있어, 테스트가 열 과제 모두 실제 처리기로 끝까지 해낼 수 있음을 확인합니다.
+- 비용을 먼저 봅니다. 모델마다 짧은 확인 요청을 먼저 보내 키나 모델 이름이 틀리면 그 모델만 건너뜁니다. 누적 토큰이 `--budget-tokens`에 닿으면 남은 실행은 돌리지 않고, `--dry-run`은 키 없이 과제와 모델마다 도구 목록의 크기와 토큰 하한을 보여 줍니다. 키는 결과 파일과 로그에 남지 않습니다.
+- 지침은 바꾸지 않았습니다. 접속 지침과 도구 목록은 0.63.0과 바이트 단위로 같습니다. 지침을 고치는 일은 이 시험으로 기준선을 잰 뒤 0.65.0에서 합니다.
+
 ## 0.63.0 — 2026-10-16
 
 Short fields now say one thing. Overviews show the first sentence of an answer, an open question, a prediction or a result, and the whole text stays on its page; a long prediction folds to what it expects, a to-do's completion criterion to two lines. Rows state facts instead of instructions, and sentences that repeated a label are gone. AIs are held to the same: an answer, a finding or a prediction written now must fit a width counted in columns (a Korean character takes two), and the error says what to cut; stored text passes unchanged.

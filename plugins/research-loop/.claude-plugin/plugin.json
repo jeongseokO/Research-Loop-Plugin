@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.63.0",
+  "version": "0.64.1",
   "description": "Research Loop in Claude Code: read and edit research pages, record experiments run in your repository, explain methods as step-by-step diagrams and equations with named terms, and carry queued AI requests to review.",
   "author": {
     "name": "오정석",

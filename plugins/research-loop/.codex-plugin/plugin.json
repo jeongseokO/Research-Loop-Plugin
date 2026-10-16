@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.63.0",
+  "version": "0.64.1",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Short fields now say one thing. Overviews show the first sentence of an answer, an open question, a prediction or a result, and the whole text stays on its page; a long prediction folds to what it expects, a to-do's completion criterion to two lines. Rows state facts instead of instructions, and sentences that repeated a label are gone. AIs are held to the same: an answer, a finding or a prediction written now must fit a width counted in columns (a Korean character takes two), and the error says what to cut; stored text passes unchanged.",
+        "release_notes": "The cross-model trial now meets production's rules where a model can trip on them: a key reused for a different write is refused, and a week plan makes an earlier planning token stale. A provider request that never answers ends the run as an error after ten minutes instead of hanging the trial, and Claude requests cache the tool list and instructions, so later turns cost less. Token counts are unchanged.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
