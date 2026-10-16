@@ -2,15 +2,6 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
-## 0.64.1 — 2026-10-17
-
-The cross-model trial now meets production's rules where a model can trip on them: a key reused for a different write is refused, and a week plan makes an earlier planning token stale. A provider request that never answers ends the run as an error after ten minutes instead of hanging the trial, and Claude requests cache the tool list and instructions, so later turns cost less. Token counts are unchanged.
-
-- 시험용 프로젝트가 운영과 같은 곳에서 거절합니다. 같은 키를 다른 쓰기에 다시 쓰면 운영처럼 `invalid_request`로 거절되고(지금까지는 앞의 영수증을 돌려줘 성공처럼 보였습니다), 구현 보고의 요청 키는 그 보고의 것입니다.
-- 일정 맥락이 운영과 같은 모양입니다. 끝난 일은 빠지고, 맡은 사람이 없으면 `unassigned`, 캘린더는 `disabled`, 그리고 주간 예산이 들어가 주간 계획을 세운 뒤에는 그 전에 읽은 계획 토큰이 운영처럼 낡은 것이 됩니다.
-- 공급자가 10분 동안 답하지 않는 요청은 네트워크 실패로 보고 다시 보낸 뒤, 끝내 답이 없으면 그 실행만 오류로 남깁니다. 지금까지는 시험 전체가 멈춰 있을 수 있었습니다.
-- Claude 요청은 도구 목록과 접속 지침을 프롬프트 캐시에 올립니다. 실행의 두 번째 차례부터 이 부분은 캐시 요금으로 읽히고, 세는 토큰 수는 그대로입니다.
-
 ## 0.64.0 — 2026-10-17
 
 Measurement before the guidance changes. A field refused for its width now names the rule, and the MCP server counts each tool call's outcome per day by AI client, tool and rule, keeping nothing an AI wrote and no project or person. npm run guide:eval runs ten tasks in Korean and English against Claude, GPT and Gemini models through the real MCP handlers over an in-memory project, and grades what each one saved. The guidance itself is unchanged.
