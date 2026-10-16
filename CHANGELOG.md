@@ -2,6 +2,17 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.60.1 — 2026-10-16
+
+Lists read title first. In record, note, discussion and implementation-check lists, a title is set in the serif's SemiBold at 16px, the conclusion or defining line under it at 13px in a lighter ink, and the facts that tell records apart at 12px, so the title no longer reads like one more line. An AI can now give a record only one of its type's statuses: a made-up one such as "reviewed" is refused with the statuses to use, and papers already marked that way show as Reviewed in the reader's language. Returning to a list keeps focus on the row you left.
+
+- 기록 목록에서 제목과 그 아래 설명의 크기가 거의 같아 헷갈리던 문제를 고쳤습니다. 제목은 16px 세리프 굵은 글씨, 그 아래 결론이나 정의 한 줄은 13px 회색, 기록을 구별하는 사실(학회·연도, 카테고리, 질문)은 12px로 한 단계씩 작아집니다. 문헌·질문·방법·데이터셋·실험·분석·논문과 노트 목록이 모두 같습니다.
+- 결론이 쓰인 기록은 설명 줄이 검게, 아닌 기록은 회색으로 보이던 것을 같은 색으로 맞췄습니다. 결론에는 지금처럼 뒷받침·반박·확인 중 같은 판정 단어가 붙습니다.
+- 토론 목록, 구현 확인 목록, 최근 추가의 기록 제목도 같은 크기와 굵기로 맞췄습니다. 연구 트리, 연구 흐름, 모든 기록의 한 줄 목록은 그대로입니다.
+- AI가 기록의 상태를 그 유형에 없는 말로 적지 못합니다. 예를 들어 문헌을 reviewed로 만들려 하면 서버가 planned · active · done 중에서 고르라고 알려 주며 거절합니다. 이미 reviewed로 적힌 문헌은 목록과 페이지에서 '검토됨'으로 보이고, 완료로 바꿀 수 있습니다.
+- 구현 확인 보고에서 목록으로 돌아오거나 페이지를 닫을 때, 키보드 초점이 방금 보던 행이 아니라 화면 처음으로 가는 경우가 있던 문제를 고쳤습니다.
+- 구현 확인에서 문장을 눌러 할 일 안의 그 자리를 열면 문장에 표시가 되는데, 페이지가 곧바로 다시 그려지며 표시가 사라지는 경우가 있던 문제를 고쳤습니다. 토론에서 인용한 원문을 열 때도 같습니다.
+
 ## 0.60.0 — 2026-10-16
 
 When an AI changes code for a to-do or an AI request, it now reports each instruction sentence beside the line of code that carries it and how that was checked, plus what it decided itself, changes nobody asked for and what it could not check. The server checks what it can without trusting the AI. A new Implementation check tab in AI collaboration lets the researcher decide each item beside its code and send the decisions back to the same AI as one request.
