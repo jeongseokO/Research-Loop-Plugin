@@ -2,6 +2,31 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.60.0 — 2026-10-16
+
+When an AI changes code for a to-do or an AI request, it now reports each instruction sentence beside the line of code that carries it and how that was checked, plus what it decided itself, changes nobody asked for and what it could not check. The server checks what it can without trusting the AI. A new Implementation check tab in AI collaboration lets the researcher decide each item beside its code and send the decisions back to the same AI as one request.
+
+- AI 협업에 구현 확인 탭이 생겼습니다. AI가 할 일이나 AI 요청을 하며 코드를 바꾸면, 끝내기 전에 지시의 문장마다 그 일을 하는 코드 줄과 확인 결과를 여기에 보고합니다. 결정할 것이 있는 보고가 위에 오고, 탭에 내 결정을 기다리는 보고의 수가 나옵니다.
+- 보고는 지시의 문장을 왼쪽에, 그 문장을 하는 코드를 오른쪽에 둡니다. 그 일을 하는 한 줄에 형광펜이 칠해지고, 바뀐 줄에는 +와 −가 붙습니다. 할 일에 그대로 있는 문장은 연구자의 글씨체로, 대화에서 AI가 옮겨 적은 문장은 'AI가 옮긴 말'로 보입니다.
+- 지시와 다르게 했거나 지시에 없던 것을 AI가 정한 곳, 일부만 했거나 빠뜨린 곳, 결과나 평가에 닿는 요청 밖 변경을 하나씩 정합니다. 이대로 두면 두 줄로 접히고, 바꾸게·마저 하게·되돌리게 하면 덧붙일 말을 적을 수 있으며 AI가 든 다른 선택지를 눌러 채울 수 있습니다. 확인 못 한 것은 확인하게 할 수 있습니다.
+- 정한 것은 한 번에 보냅니다. 그 일을 한 AI의 작업 대기열에 요청 하나로 들어갑니다. AI가 다시 보고하면 같은 기록의 다음 보고가 되고, 그대로인 항목의 결정은 이어지며 바뀐 항목은 '새로 바뀜'으로 다시 기다립니다. 보낸 요청을 AI가 하지 않고 다시 보고하면 그렇다고 알려 줍니다.
+- 서버가 AI를 믿지 않고 직접 확인합니다. 문장이 할 일에 그대로 있는지, 보고가 설명하지 않은 파일이 있는지, 요청 밖에서 테스트·평가 코드를 바꿨는지 봅니다. 요청 밖에서 평가 코드를 바꾸고 알리지 않은 보고는 받지 않습니다.
+- 결정은 일을 맡긴 사람과 Owner·Semi-Owner가 합니다. 결정을 기다리는 보고는 알림 하나로 오고, 보고를 열거나 마지막 항목을 정하면 읽음이 됩니다.
+- AI용 도구 report_implementation과 get_implementation_report, 쓰기 지침의 구현 절이 생겼습니다. Claude Code·Codex 플러그인에는 git에서 코드 줄을 그대로 옮겨 오는 도우미(scripts/code-excerpt.mjs)가 들어 있습니다.
+
+## 0.53.0 — 2026-10-16
+
+A question's page now reads as the rounds that tested it, in order: prediction, result, meaning and next move, with the step that waits holding what to do. Each prediction shows whether it was written before its result, keeps the sentence a result was read against if it changed afterwards, and is not read as a prediction if first written after. The server no longer lets an AI change a prediction once a result exists. An answered question no longer shows steps it never went through.
+
+- 질문 페이지가 그 질문을 시험한 회차들로 열립니다. 실험 하나가 한 회차이고, 예측 · 결과 · 해석 · 다음이 한 줄씩 순서대로 놓입니다. 한 회차의 다음 수가 다음 회차가 됐으면 두 회차를 가는 선으로 잇습니다. 지난 회차는 접히지만, 아직 기다리는 것이 있는 회차는 접히지 않습니다.
+- 회차가 기다리는 칸에 할 일이 있습니다. 아무도 읽지 않은 결과에는 해석 기록, 실행 전인데 예측이 없는 실험에는 예측 적기, 아직 아무 실험도 없는 질문에는 실험 계획하기가 있습니다. 실험 계획하기는 실험을 질문에 이어 만들고, 실행 전에 예측을 함께 적게 합니다.
+- 예측 아래에 그 예측이 결과보다 먼저 쓰였는지가 나옵니다. 결과 전에 적었으면 날짜와 함께 '결과 전에 적음', 결과가 나온 뒤 고쳤으면 '결과 뒤 고침'과 함께 결과가 비교된 원래 문장을, 결과 뒤에 처음 적었으면 '결과 뒤 적음'을 보여 주고 그 결과는 예측대로가 아니라 질문에 대한 뒷받침·반대 근거로 읽습니다.
+- 결과가 나온 실험의 예측은 AI가 더는 바꿀 수 없습니다. 가설의 예측도 그 가설을 시험한 실험에 결과가 나오면 마찬가지입니다. 서버가 거절하면서, 바뀐 기대는 다음 실험에, 바뀐 가설은 새 가설로 적으라고 알려 줍니다. 사람은 여전히 고칠 수 있고, 고치면 페이지에 결과 뒤 고침으로 남습니다.
+- 브리핑과 연구 흐름은 지금 회차를 같은 모양으로 보여 줍니다. 진행률처럼 읽히던 고리는 없앴습니다.
+- 결과 해석 창이 짧아졌습니다. 위에 회차가 그대로 있고 판정, 이 결과가 말해 주는 것, 다음 수 순서로 적습니다. 지금까지의 답과 남은 의문은 접혀 있다가 답 정리를 고르면 열립니다.
+- 답 정리만 한 질문이 거치지 않은 단계까지 모두 지난 것처럼 보이던 문제를 고쳤습니다. 같은 실험의 나중 결과를 앞 결과의 다음 수로 세던 문제도 고쳤습니다.
+- 사이트 검사를 비롯한 스크립트가 macOS에서 심볼릭 링크 경로로 실행되면 아무것도 하지 않고 성공으로 끝나던 문제를 고쳤습니다. 플러그인의 이미지 업로드 도우미도 같습니다.
+
 ## 0.52.0 — 2026-10-15
 
 Tables now read as scatter plots and heatmaps as well as line, bar and dot charts: a scatter places each row by a column of numbers, on a log scale when sizes span orders of magnitude, and a heatmap colours every cell on one scale with the best value in bold. Explainers gain four layouts the app places by itself (a map of relations, a tree, a timeline and a cycle), so an AI states structure instead of positions. The visualization guide starts from the reader's question and says first what a page draws without an image.

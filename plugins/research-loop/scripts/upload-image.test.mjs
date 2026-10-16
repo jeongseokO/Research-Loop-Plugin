@@ -31,3 +31,16 @@ test('CLI errors never reveal raw ticket contents or local file paths',()=>{
     assert.equal(result.stdout,'');
   }
 });
+test('runs when started through a symlinked plugin folder instead of exiting 0 having done nothing',async()=>{
+  const { mkdtempSync, symlinkSync, rmSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { join, dirname } = await import('node:path');
+  const scratch=mkdtempSync(join(tmpdir(),'rl-upload-'));
+  try {
+    const linked=join(scratch,'linked-scripts');
+    symlinkSync(dirname(fileURLToPath(new URL('./upload-image.mjs',import.meta.url))),linked,'dir');
+    const result=spawnSync(process.execPath,[join(linked,'upload-image.mjs'),'/synthetic/figure.png'],{input:'not json',encoding:'utf8'});
+    assert.equal(result.status,1);
+    assert.match(result.stderr,/Invalid|failed/);
+  } finally { rmSync(scratch,{recursive:true,force:true}); }
+});

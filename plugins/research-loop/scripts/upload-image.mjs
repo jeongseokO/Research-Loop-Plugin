@@ -2,7 +2,9 @@
 // Pass the prepare result JSON through stdin, never a signed URL as an argument.
 import { readFile, stat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { pathToFileURL } from 'node:url';
+import { realpathSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 class UploadError extends Error {}
 
@@ -53,7 +55,16 @@ async function main() {
     nextStep:'Call complete_research_media_upload, then save_research_page with its persistent media reference.'})+'\n');
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+// Compared as real paths: started through a symlinked plugin folder, or with another case on a
+// case-insensitive disk, the helper must still upload rather than exit 0 having done nothing.
+const realPath = (file) => { try { return realpathSync.native(file); } catch { return resolve(file); } };
+function startedDirectly() {
+  if (!process.argv[1]) return false;
+  const started = realPath(resolve(process.argv[1])), self = realPath(fileURLToPath(import.meta.url));
+  return started === self || ((process.platform === 'darwin' || process.platform === 'win32') && started.toLowerCase() === self.toLowerCase());
+}
+
+if (startedDirectly()) {
   main().catch((error)=>{
     // Known application messages only. Never include raw network errors or URLs.
     const message = error instanceof UploadError

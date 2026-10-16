@@ -50,6 +50,7 @@ Reuse an already-read guide unless its revision changed.
 | Create or rename a to-do | `get_page_writing_guide(section="tasks")`; [Task workflow](references/tasks.md): name the target and action, keep scope and state |
 | Assigned human work, meeting actions | [Task workflow](references/tasks.md); `get_research_task_context` for one assignment (`get_my_research_tasks` only to find its ID) |
 | Queued AI requests | [AI work](references/ai-work.md): `list_ai_tasks` once, claim before work, never redo claimed/review/completed work |
+| Changed code for a to-do, AI request or page | Before finishing: `get_page_writing_guide(section="implementation")`, then `report_implementation`; the [excerpt helper](../../scripts/code-excerpt.mjs) copies the lines and changed files from git. |
 | Weekly update or talk from team work | [Team updates and presentations](references/team-updates.md) |
 | Write or review a page | [Writes and approvals](references/writes.md); [Writing design](references/writing.md) |
 | Follow-up after committed edits | `get_research_impacts` with changed IDs; `get_research_review` per candidate |
