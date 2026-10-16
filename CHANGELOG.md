@@ -2,6 +2,48 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.63.0 — 2026-10-16
+
+Short fields now say one thing. Overviews show the first sentence of an answer, an open question, a prediction or a result, and the whole text stays on its page; a long prediction folds to what it expects, a to-do's completion criterion to two lines. Rows state facts instead of instructions, and sentences that repeated a label are gone. AIs are held to the same: an answer, a finding or a prediction written now must fit a width counted in columns (a Korean character takes two), and the error says what to cut; stored text passes unchanged.
+
+- 브리핑, 연구 흐름, 위쪽의 큰 방향 막대, 회차 요약, 다음 할 일이 지금까지의 답·남은 의문·예측·결과를 첫 문장으로 보여 줍니다. 연구 흐름에서 지금 다루는 질문의 답만 두 문장입니다. 온전한 글은 질문과 기록의 페이지에 그대로 있습니다.
+- 실험 페이지의 예측과 판단 기준이 길면 무엇을 예상하는지 한 문장과 '전체 보기'로 보입니다. 할 일 목록의 완료 기준은 두 줄까지 보이고, 가리키거나 고치면 다 열립니다. 두 줄 아래로 세 번째 줄 윗부분이 비치던 문제도 고쳤습니다.
+- 접힌 글의 미리보기가 문장이 끝나는 자리에서 끝나고, '전체 보기'가 마지막 낱말 뒤에 붙습니다. 지금까지는 긴 미리보기 옆으로 밀려 '전체 보 / 기'처럼 세로로 끊겼습니다.
+- 다음 할 일의 아래 줄이 방법 대신 사실을 말합니다. '밀린 일 2개 정리'에는 어떤 일인지, 오래 실행 중인 실험에는 '12일째 실행 중', 근거가 없는 주장에는 '연결된 근거 없음'이 붙습니다. 팀원의 AI가 물은 질문은 누가 물었는지만 적습니다.
+- 반복되던 안내 문장을 뺐습니다. '큰 할 일 추가'와 '하위 할 일 추가' 옆의 설명, 연구 흐름의 빈 단계 문장(이제 '아직 없음'), 브리핑과 연구 흐름의 회차에 붙던 예측 안내와 '예측 없이 실행했습니다'입니다. 예측을 왜 미리 적는지는 질문 페이지가 계속 말합니다.
+- 기록 페이지 위의 연구 트리 줄이 가지 이름과 '지금'만 보여 줍니다. 앞 걸음은 새 가지·수정·다시 실험처럼 보통의 다음 걸음이 아닐 때만 적고, 트리에 없는 기록에는 '트리에 놓기'만 있습니다.
+- AI가 지금 쓰는 짧은 칸에 길이 한도가 생겼습니다. 지금까지의 답, 결과가 질문에 말해 주는 것, 질문의 배경은 240칸, 남은 의문은 160칸, 예측과 판단 기준은 300칸, 할 일의 완료 기준은 200칸입니다. 한글은 두 칸, 영문은 한 칸으로 세서 언어마다 거의 같은 폭입니다. 넘으면 저장하지 않고 몇 칸인지와 나머지를 어디로 옮길지 알려 줍니다. 이미 저장된 글은 그대로 다시 보내면 통과하므로, 예전에 쓴 노트와 할 일도 고치지 않고 이어서 쓸 수 있습니다.
+- AI 지침에 '짧은 칸은 한 가지 생각, 주장 먼저'를 넣고, 완료 기준을 '끝나면 무엇이 남는가' 한 문장으로 쓰게 바꿨습니다(쓰기 지침 36판). 범위와 증거가 모자랄 때의 처리는 설명으로 옮깁니다. 접속할 때 보내는 지침과 도구 목록은 정해 둔 크기 안에 있습니다.
+
+## 0.62.0 — 2026-10-16
+
+The landing downloads about 40% fewer bytes. Its text now comes from a handful of font files instead of dozens of slices: the interface's own face holds its Latin, symbols and every Hangul syllable its messages write, and one small serif slice per weight holds the landing's examples. In Korean the page went from 36 font files (760 KB) to 6 (298 KB), in English from 16 (392 KB) to 3 (104 KB). The to-do page lines up every table and group heading on one set of columns where no text runs into the next, and wraps long titles. A pointed-at symbol's ring in an equation is no longer clipped.
+
+- 처음 여는 소개 페이지가 훨씬 가벼워졌습니다. 한국어 페이지가 글꼴 파일 36개(760 KB)를 받던 것을 6개(298 KB)로, 영어 페이지는 16개(392 KB)를 3개(104 KB)로 줄였습니다. 페이지 전체로는 한국어 1.11 MB → 653 KB, 영어 758 KB → 472 KB입니다.
+- 화면 글꼴(Pretendard)에서 앱이 실제로 쓰는 글자만 두 파일로 잘라 냈습니다. 하나는 네 언어의 라틴 문자와 기호, 다른 하나는 앱의 모든 한국어 문구에 쓰인 음절과 자주 쓰이는 음절입니다. 그 밖의 한글은 지금처럼 필요할 때 받습니다.
+- 소개 페이지의 연구 예시에 쓰인 명조(마루 부리) 글자만 담은 작은 파일을 따로 만들어, 예시 몇 줄 때문에 명조 파일 15개를 받던 일이 없어졌습니다.
+- 글꼴에 없던 기호(◎ ⠿ ↶ ↷ ⑂ ✕)를 아이콘으로 바꿨습니다. 연구 트리의 '지금' 표시, 끌어서 옮기는 손잡이, 되돌리기와 다시 하기입니다. 기기마다 다른 글꼴로 그려지거나 쓸데없는 파일을 받는 일이 없습니다.
+- 할 일 페이지의 모든 표와 묶음 제목이 같은 열을 씁니다. 담당자, 진행, 근거와 동작 버튼, 삭제가 페이지 위아래로 한 줄에 섭니다. 묶음 제목의 체크와 제목, 담당자, 진행(하위 할 일 몇 개 완료), 버튼도 그 아래 행과 같은 자리에 있습니다. 진행할 것이 하나도 없으면 진행 열은 자리를 차지하지 않습니다.
+- 창이 좁아(약 860px 아래) 열이 제목을 누르면 행이 카드로 바뀝니다. 마우스를 쓰는 기기에서는 분석·편집 버튼이 제목 줄에 함께 놓여, 빈 줄이 생기지 않습니다. 제목 아래 줄은 모두 제목 글자가 시작하는 자리에서 시작합니다.
+- 할 일 표에서 '묶음 담당'이 옆 칸의 근거 제목 위에 겹쳐 찍히던 문제를 고쳤습니다. 칸마다 내용이 그 칸 안에서 줄을 바꾸고, 긴 이름은 말줄임으로 줄어듭니다. 내 진행 상태도 메뉴 안에서 '결..'처럼 잘리지 않고 글자로 다 보입니다.
+- 하위 할 일의 근거 칸에 자기가 속한 묶음(상위 할 일)의 제목이 근거로 뜨던 문제를 고쳤습니다. 묶음과 그 하위 할 일은 서로의 근거로 세지 않습니다.
+- 하위 할 일의 '묶음 담당'은 그 묶음에 담당자가 있을 때만 보입니다.
+- 긴 할 일 제목이 잘리지 않고 줄을 바꿔 다 보입니다. Enter는 지금처럼 저장하고, 제목에 줄바꿈이 들어오면 띄어쓰기로 바뀝니다.
+- 수식에서 기호를 가리킬 때 그리는 테두리가 줄 맨 앞에서 잘리거나 옆의 = 기호에 닿던 문제를 고쳤습니다.
+- 연구 흐름으로 가는 탭 이름을 '흐름'에서 사이드바·페이지 제목과 같은 '연구 흐름'으로 맞췄습니다.
+- 긴 페이지 끝의 보이지 않는 안내 문구가 페이지를 늘려, 화면 뒤쪽이 스크롤되던 문제를 고쳤습니다.
+
+## 0.61.0 — 2026-10-16
+
+An implementation report now opens with what it amounts to, in a sentence or two, and a map: the instruction's sentences on the left, the changed code on the right, a line from each sentence to the file that carries it, and the changes nobody asked for standing apart with no line. Pointing at a row lights what it is joined to, and every row opens its item. The list draws each report as its sentences and the changes beyond them. Equations with a term in a bare superscript showed their TeX source; they are typeset again.
+
+- 구현 확인 보고가 네 개의 숫자 칸 대신 두 가지로 시작합니다. 먼저 보고가 무엇을 뜻하는지 한두 문장으로 말하고(지시 몇 문장이 의도대로 됐고 몇 문장이 결정을 기다리는지, 요청 밖 변경 중 몇 곳이 결과나 평가에 닿는지, 보고에 설명이 없는 파일이 있는지), 이어서 지도를 보여 줍니다. 결정을 기다리는 부분에는 형광펜이 칠해집니다.
+- 지도는 지시의 문장을 왼쪽에, 바뀐 코드를 오른쪽에 두고 문장마다 그 일을 하는 파일로 선을 잇습니다. 요청 밖 변경은 선 없이 따로 서 있어서, 지시하지 않은 곳에서 무엇이 바뀌었는지가 한눈에 보입니다. AI가 정한 곳의 선은 진하게, 지시와 다르거나 일부만 한 곳은 경고색으로, 의도대로 된 곳은 옅게 그립니다. 문장 끝의 동그라미는 어떻게 확인했는지(테스트 통과, 실행, 코드만 읽음)를 채운 정도로 보여 줍니다.
+- 행에 마우스를 올리면 그 문장과 선, 이어진 파일이 밝아지고 나머지는 흐려집니다. 파일에 올리면 그 파일이 맡은 문장이 모두 밝아집니다. 행을 누르면 아래의 그 항목으로 가서 잠깐 표시되고, 의도대로 된 문장은 코드가 펼쳐진 채로 열립니다. 휴대폰에서는 두 열이 위아래로 놓이고 문장마다 파일 이름과 줄이 붙습니다.
+- 구현 확인 목록의 각 행이 보고를 작은 칸으로 그립니다. 문장마다 한 칸, 그다음 결과나 평가에 닿는 요청 밖 변경과 설명 없는 파일이 이어지고, 이미 정한 항목은 흐려집니다. 이 그림은 DB 마이그레이션 `20261016120000_implementation_list_items`를 적용한 뒤에 보이고, 그 전에는 지금처럼 숫자로 보입니다.
+- 마이그레이션을 SQL Editor에 붙일 SQL을 만들어 주는 `npm run -s migration:sql`이 생겼습니다. 파일 내용을 한 트랜잭션으로 감싸, 앞선 마이그레이션이 기록에 없거나 이미 적용된 경우 아무것도 바꾸지 않고 멈추고, 끝에서 마이그레이션 기록에 스스로를 남깁니다.
+- 수식에서 `\sum_{c=1}^d`처럼 중괄호 없이 쓴 위첨자 자리의 기호를 용어로 표시하면, 수식 전체가 그려지지 않고 원문 TeX가 보이던 문제를 고쳤습니다. 다른 이유로 표시가 거부되더라도 표시만 빼고 수식을 그리며, 앱이 넣는 내부 표시는 화면에 나오지 않습니다.
+
 ## 0.60.1 — 2026-10-16
 
 Lists read title first. In record, note, discussion and implementation-check lists, a title is set in the serif's SemiBold at 16px, the conclusion or defining line under it at 13px in a lighter ink, and the facts that tell records apart at 12px, so the title no longer reads like one more line. An AI can now give a record only one of its type's statuses: a made-up one such as "reviewed" is refused with the statuses to use, and papers already marked that way show as Reviewed in the reader's language. Returning to a list keeps focus on the row you left.
