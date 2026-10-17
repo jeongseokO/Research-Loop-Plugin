@@ -2,6 +2,33 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.64.3 — 2026-10-17
+
+Some Claude Code versions end a run that met the plan's usage limit with the limit message as an ordinary answer. The cross-model trial now reads such a message, given before any tool call, as the limit: the run is set aside and Claude Code's remaining runs are skipped, instead of each counting as the model failing its task. The guidance is unchanged.
+
+- 사용 한도를 보통 답처럼 내놓는 Claude Code도 한도로 봅니다. 일부 버전은 한도에 닿은 실행을 오류가 아니라 답("You've hit your limit …")으로 끝내는데, 지금까지는 그 실행과 뒤의 실행이 모두 모델이 과제를 못 한 것으로 셈됐습니다. 도구를 하나도 부르기 전의 한도 문구는 이제 CLI의 한도로 보고, 그 실행은 수치에서 빼고 남은 실행은 건너뜁니다.
+- 실제 Claude Code에 시험 도구를 하나 부르는 각본 응답을 이 기계 안에서 돌려, 권한 설정 아래에서 도구 호출이 통하고, 시험 서버가 그 호출을 기록하고, 토큰이 실행 전체로 합산되는 것을 확인했습니다.
+- 지침 시험의 기준선은 이 버전으로 잽니다(`git checkout v0.64.3`).
+
+## 0.64.2 — 2026-10-17
+
+The cross-model trial now runs through Claude Code and Codex logged in with your own subscription: npm run guide:eval -- --hosts claude,codex. No API key is used or billed. Each task runs once in an empty folder, with the trial server as the CLI's only MCP server and the CLI's own tools, instruction files and memory off. A login that bills per token is refused before the first run, and a usage limit stops that CLI's remaining runs. The guidance itself is unchanged.
+
+- 교차 모델 시험이 구독으로 돕니다. `npm run guide:eval -- --hosts claude,codex`가 과제마다 Claude Code(`claude -p`)와 Codex(`codex exec`)를 한 번씩 띄웁니다. API 키도 토큰 과금도 없고, 각 CLI에 로그인된 구독의 사용량만 씁니다. 모델은 `--hosts claude:opus,codex:<모델>`처럼 고릅니다.
+- 과금될 일은 미리 막습니다. CLI는 키 환경 변수를 지운 채 실행되고, 시작 전에 로그인을 확인해 API 키나 클라우드 공급자 로그인이면 그 CLI를 돌리지 않습니다. CLI가 사용량 한도를 알리면 그 CLI의 남은 실행은 건너뜁니다.
+- 실행마다 격리합니다. 저장소 밖의 빈 폴더에서 CLI를 띄우고, 시험용 MCP 서버 하나만 연결하며, CLI 자체 도구(셸·파일·웹)와 CLAUDE.md·메모리·사용자 설정은 끕니다. Codex는 `~/.codex/AGENTS.md`를 끄는 설정이 없어 그 파일이 있으면 돌리지 않습니다. 실제 두 CLI가 보내려던 요청을 이 기계 안에서 받아 확인했습니다.
+- 모델 탓이 아닌 멈춤은 수치에서 뺍니다. 사용 한도, CLI가 더한 도구, 한 실행에 시험 서버가 둘 뜬 경우(Codex의 하위 에이전트)는 `멈춘 실행`에 이유와 함께 적고 모델별 수치에는 넣지 않습니다.
+- 지침은 바꾸지 않았습니다. 도구 목록과 접속 지침은 0.64.1과 바이트 단위로 같습니다. 0.65.0의 지침 개편은 이 시험으로 기준선을 잰 뒤 같은 날 같은 방법으로 비교합니다.
+
+## 0.64.1 — 2026-10-17
+
+The cross-model trial now meets production's rules where a model can trip on them: a key reused for a different write is refused, and a week plan makes an earlier planning token stale. A provider request that never answers ends the run as an error after ten minutes instead of hanging the trial, and Claude requests cache the tool list and instructions, so later turns cost less. Token counts are unchanged.
+
+- 시험용 프로젝트가 운영과 같은 곳에서 거절합니다. 같은 키를 다른 쓰기에 다시 쓰면 운영처럼 `invalid_request`로 거절되고(지금까지는 앞의 영수증을 돌려줘 성공처럼 보였습니다), 구현 보고의 요청 키는 그 보고의 것입니다.
+- 일정 맥락이 운영과 같은 모양입니다. 끝난 일은 빠지고, 맡은 사람이 없으면 `unassigned`, 캘린더는 `disabled`, 그리고 주간 예산이 들어가 주간 계획을 세운 뒤에는 그 전에 읽은 계획 토큰이 운영처럼 낡은 것이 됩니다.
+- 공급자가 10분 동안 답하지 않는 요청은 네트워크 실패로 보고 다시 보낸 뒤, 끝내 답이 없으면 그 실행만 오류로 남깁니다. 지금까지는 시험 전체가 멈춰 있을 수 있었습니다.
+- Claude 요청은 도구 목록과 접속 지침을 프롬프트 캐시에 올립니다. 실행의 두 번째 차례부터 이 부분은 캐시 요금으로 읽히고, 세는 토큰 수는 그대로입니다.
+
 ## 0.64.0 — 2026-10-17
 
 Measurement before the guidance changes. A field refused for its width now names the rule, and the MCP server counts each tool call's outcome per day by AI client, tool and rule, keeping nothing an AI wrote and no project or person. npm run guide:eval runs ten tasks in Korean and English against Claude, GPT and Gemini models through the real MCP handlers over an in-memory project, and grades what each one saved. The guidance itself is unchanged.

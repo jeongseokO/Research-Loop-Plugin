@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.64.0",
+  "version": "0.64.3",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Measurement before the guidance changes. A field refused for its width now names the rule, and the MCP server counts each tool call's outcome per day by AI client, tool and rule, keeping nothing an AI wrote and no project or person. npm run guide:eval runs ten tasks in Korean and English against Claude, GPT and Gemini models through the real MCP handlers over an in-memory project, and grades what each one saved. The guidance itself is unchanged.",
+        "release_notes": "Some Claude Code versions end a run that met the plan's usage limit with the limit message as an ordinary answer. The cross-model trial now reads such a message, given before any tool call, as the limit: the run is set aside and Claude Code's remaining runs are skipped, instead of each counting as the model failing its task. The guidance is unchanged.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
