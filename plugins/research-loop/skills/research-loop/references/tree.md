@@ -2,7 +2,7 @@
 
 Use the tree to recover research direction and decisions, not duplicate every page.
 
-1. Read project instructions and `get_research_tree_template` once for this task. Start with the small `get_research_tree` summary.
+1. Read project instructions and `get_guide(topic:tree)` once for this task. The tree tools are in the tree group, outside the tool list: `call_tool_read` and `call_tool_write` call them, and `describe_tools(group:"tree")` gives their arguments. Start with the small `get_research_tree` summary.
 2. Read only the affected branch or record with `view:nodes` and `branch_id` or `object_id`. Use `view:unplaced` for placement and `view:story` for turning points. Collections are partial: continue with `nextOffset` and `projectRevision` only when needed.
 3. Open pages establishing the changed outcome or relationship. Titles, recency and generic links do not prove causality or a conclusion. Preserve human annotations; missing evidence means an undecided relationship.
 4. Prefer `patch_research_tree`: send only changed fields for affected records. Other annotations and nodes stay intact. An unplaced record needs an explicit parent and relationship. Read every `view:curation` page before an intentional full replacement with `save_research_tree`; never rebuild it from a summary.

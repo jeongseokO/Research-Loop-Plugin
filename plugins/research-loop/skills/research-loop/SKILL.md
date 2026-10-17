@@ -11,14 +11,15 @@ These instructions are in English. Write in the user's language unless another i
 
 ## Core loop
 
-Ten tools cover most sessions. Load anything else only when the current operation needs it (next section).
+The tool list holds the core tools. The rest are in groups: `describe_tools(group)` gives their arguments, and `call_tool_read` (tools that only read) or `call_tool_write` calls one by name, as in `call_tool_read({name: "get_research_tree", arguments: {project_id}})`. Load the rest only when the current operation needs it (next section).
 
 | Step | Tools |
 | --- | --- |
 | Orient | `who_am_i`, `get_project_instructions` |
-| Find | `get_research_brief`, `query_research_objects`, `get_research_tree` |
+| Find | `get_research_brief`, `query_research_objects`; `get_research_tree` (tree) |
 | Read | `get_research_page` |
-| Write | `patch_research_page`, `save_research_page`, `update_research_objects`, `create_research_object`, `patch_research_tree` |
+| Write | `patch_research_page`, `save_research_page`, `create_research_object`, `update_research_object`; `update_research_objects` (records), `patch_research_tree` (tree) |
+| Before writing | `get_guide(topic)` |
 
 0. **Take the request as the specification.** Note each explicit requirement (which records, scope, sections, format, length, audience, figures, language). It outranks the guides' defaults within permissions, safety and honest evidence; ask only when a missing fact would change the result.
 1. **Orient.** `who_am_i` gives the verified owner, capabilities, approved projects and a small `ownerTasks` summary; reuse its project IDs. If disconnected, use browser OAuth; never ask for secrets in chat or replace a working connection.
@@ -29,7 +30,7 @@ Ten tools cover most sessions. Load anything else only when the current operatio
    - Local edit → `patch_research_page` with the page revision as `expected_revision`; untouched blocks stay on the server.
    - Whole rewrite → `save_research_page`, only after `get_research_page(view:full)`, preserving untouched blocks, IDs and attachments.
    - New knowledge with no owning record → `create_research_object`, after `query_research_objects` finds no existing target.
-   - Experiment, result and claim pages carry a bottom line in `fields.summary`: one standalone conclusion (≤140 characters), a verdict against the prediction under test and ≤5 evidence IDs. Send it as `summary` in the same `save_research_page` or `patch_research_page` call as the body, so the two never disagree. Link the question with `fields.questionIds`. The app shows both before the body and wherever the page is listed. Never set `verifiedAt`; a person does after checking.
+   - Experiment, result and claim pages carry a bottom line in `fields.summary`: one standalone conclusion (≤140 characters), a verdict against the prediction under test and ≤5 evidence IDs. Send it as `summary` in the same `save_research_page` or `patch_research_page` call as the body, so the two never disagree. Link the question with `fields.questionIds`. Never set `verifiedAt`; a person does after checking.
    - Many records → `update_research_objects`; run problems stay apart from findings. Both in [Writes and approvals](references/writes.md).
    - The loop: before an experiment runs, write its `fields.prediction`, the expected result and what would count for or against it; never add or change it afterwards. When a result arrives, call `record_result_meaning` once: the assessment against that prediction, what it tells the question, and the answer and remaining doubt when they change. Then record the next move if it is clear: the next experiment with its prediction, linked to the result with `link_objects` rel `follows`; a follow-up question; or the line paused or dropped with its reason via `patch_research_tree`. Explain results well; never quiz anyone or ask whether they understood.
    - Direction decisions (branch, state, turning point) → `patch_research_tree`; see [Research tree](references/tree.md).
@@ -47,29 +48,25 @@ Reuse an already-read guide unless its revision changed.
 | Operation | Guidance |
 | --- | --- |
 | Panel in ChatGPT or the Claude apps | `open_research_panel` only when an interactive view helps or the user asks; [Panel](references/panel.md). In a terminal or any host without MCP Apps, name the page so the user can open it on the website. |
-| Create or rename a to-do | `get_page_writing_guide(section="tasks")`; [Task workflow](references/tasks.md): name the target and action, keep scope and state |
+| Create or rename a to-do | `get_guide(topic:writing, section:tasks)`; [Task workflow](references/tasks.md): name the target and action, keep scope and state |
 | Assigned human work, meeting actions | [Task workflow](references/tasks.md); `get_research_task_context` for one assignment (`get_my_research_tasks` only to find its ID) |
 | Queued AI requests | [AI work](references/ai-work.md): `list_ai_tasks` once, claim before work, never redo claimed/review/completed work |
-| Changed code for a to-do, AI request or page | Before finishing: `get_page_writing_guide(section="implementation")`, then `report_implementation`; the [excerpt helper](../../scripts/code-excerpt.mjs) copies the lines and changed files from git. |
+| Changed code for a to-do, AI request or page | Before finishing: `get_guide(topic:writing, section:implementation)`, then `report_implementation`; the [excerpt helper](../../scripts/code-excerpt.mjs) copies the lines and changed files from git. |
 | Weekly update or talk from team work | [Team updates and presentations](references/team-updates.md) |
 | Write or review a page | [Writes and approvals](references/writes.md); [Writing design](references/writing.md) |
 | Follow-up after committed edits | `get_research_impacts` with changed IDs; `get_research_review` per candidate |
 | Review a proposal | `list_change_requests`, then `get_change_request` for that one |
-| Metadata, bottom line, dataset catalog | `get_research_properties(type)`; `type="dataset"` for benchmarks, columns and linked samples |
-| Method / dataset / experiment / result / claim / paper / rebuttal | `get_research_record_template(type)` |
-| Literature | `get_literature_review_template` |
-| Meeting minutes | `get_meeting_note_template`; not for ordinary notes |
-| Refresh or synthesize research | `get_research_workflow_guide` |
-| Question branches | `get_inquiry_template` |
+| A record's template, properties, bottom line, dataset catalog | `get_guide(topic:record, type)`; `type:dataset` for benchmarks, columns and linked samples |
+| Literature, meeting minutes (not ordinary notes), refresh or synthesis, question branches | `get_guide` with topic `literature`, `meeting`, `workflow` or `question` |
 | A result came in | `record_result_meaning`; `get_research_brief` lists results still waiting (`questions[].loop.waitingResultIds`) |
 | Schedule or distribute work | [Scheduling](references/scheduling.md); `get_team_planning_context` for roles, capacity and consented busy times |
 | Measured comparison | Keep the full table on the page and add `table.chart`; the app draws it. No upload. |
-| Mechanism or experiment design | An explainer block (`get_page_writing_guide` section `explainer`); the app draws and steps it. |
-| Equation the reader must understand | An equation block (`get_page_writing_guide` section `equation`): LaTeX, every symbol named, the derivation as steps, values to try; the app typesets, lights and steps it. |
-| Figure a page cannot draw, image upload | [Media](references/media.md); `get_visualization_guide` for one technique; [research-plot](../research-plot/SKILL.md) for distributions and paper plots, [method-figure](../method-figure/SKILL.md) for static paper figures |
+| Mechanism or experiment design | An explainer block (`get_guide(topic:writing, section:explainer)`); the app draws and steps it. |
+| Equation the reader must understand | An equation block (`get_guide(topic:writing, section:equation)`): LaTeX, every symbol named, the derivation as steps, values to try; the app typesets, lights and steps it. |
+| Figure a page cannot draw, image upload | [Media](references/media.md); `get_guide(topic:visualization, section)` for one technique; [research-plot](../research-plot/SKILL.md) for distributions and paper plots, [method-figure](../method-figure/SKILL.md) for static paper figures |
 | Discussion | `get_project_discussion` and the relevant evidence |
 | Ask a teammate, or answer one | `create_project_discussion` with `ask_user_ids` (IDs from `get_my_research_tasks` members): it first returns their records that may answer. `list_project_discussions(for_me:true)` when `who_am_i` reports questions; answer from records with their IDs. Rank (PI, 박사, 석사, 인턴) is display only. |
-| Full server manual (rare) | `get_research_loop_guide` |
+| Full server manual (rare) | `get_guide(topic:manual)`, then one `section` |
 
 ## Invariants
 

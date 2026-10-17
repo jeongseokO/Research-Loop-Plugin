@@ -1,6 +1,6 @@
 # Figures, plots and diagrams
 
-Apply this reference when creating or substantially revising a visual. Reuse an unchanged, adequate figure. Read only the selected technique with `get_visualization_guide`; its `visual_quality` field carries the shared rules for MCP-only clients. Instructions are in English; write labels and captions in the user's language while preserving established names and notation.
+Apply this reference when creating or substantially revising a visual. Reuse an unchanged, adequate figure. Read only the selected technique with `get_guide(topic:visualization, section)`; its `visual_quality` field carries the shared rules for MCP-only clients. Instructions are in English; write labels and captions in the user's language while preserving established names and notation.
 
 ## 1. Define the visual's job
 

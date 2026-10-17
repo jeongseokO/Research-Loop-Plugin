@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.64.3",
+  "version": "0.65.1",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Some Claude Code versions end a run that met the plan's usage limit with the limit message as an ordinary answer. The cross-model trial now reads such a message, given before any tool call, as the limit: the run is set aside and Claude Code's remaining runs are skipped, instead of each counting as the model failing its task. The guidance is unchanged.",
+        "release_notes": "Code excerpts for implementation reports no longer read through a symbolic link, so a report cannot carry a file from outside the repository, and a new file nobody asked for (a checkpoint link, a large result file, a nested repository, a Korean file name) no longer stops the excerpt. The ChatGPT request dialog opens on a blank, focused request: suggestions only fill it, and the send button or Cmd/Ctrl+Enter sends. Account and task-assignment emails are in English, in one layout.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
@@ -70,7 +70,7 @@
             {
               "description": "Edit an owned note while preserving unrelated structured content.",
               "prompt": "In Research Loop Review, append one paragraph to my sample note: 'Next we will compare the two conditions using the same evaluation examples.' Preserve everything already in the note and save the change.",
-              "tools_triggered": "get_project_instructions, query_research_objects, get_research_page, get_page_writing_guide, patch_research_page",
+              "tools_triggered": "get_project_instructions, query_research_objects, get_research_page, get_guide, patch_research_page",
               "expected_behavior": "Read the current owned ordinary note and page revision. Apply only the requested paragraph with the existing revision and idempotency protections, then reread the page to confirm the actual result. Existing blocks, table, and term explanation survive. Report applied versus proposed accurately. In the full workspace, the human signs in separately and saves with existing website permissions and revision protections; the legacy compact editor still uses the connected AI credential. Never confuse the two authorities."
             },
             {

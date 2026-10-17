@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Copies the code lines a report_implementation call points at, exactly as git holds them, so an
-// AI never retypes code from memory. Read-only: it runs git show, diff and ls-files, nothing else.
+// AI never retypes code from memory. Read-only: git metadata and bounded working-tree file reads.
 //
 //   node code-excerpt.mjs [--repo DIR] [--base COMMIT] [--head COMMIT] FILE:LINE[:START-END] ...
 //
@@ -8,12 +8,12 @@
 // with its line counts) and one location per FILE:LINE, ready for an intent's or an unrequested
 // change's "location". Uncommitted changes report head "working-tree".
 import { execFileSync } from 'node:child_process';
-import { readFileSync, realpathSync } from 'node:fs';
-import { basename, resolve } from 'node:path';
+import { closeSync, constants, fstatSync, lstatSync, openSync, readSync, realpathSync } from 'node:fs';
+import { basename, isAbsolute, relative, resolve, sep, win32 } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 class ExcerptError extends Error {}
-const LIMITS = { lines: 12, chars: 2400, removed: 6, removedChars: 300 };
+const LIMITS = { lines: 12, chars: 2400, removed: 6, removedChars: 300, fileBytes: 5 * 1024 * 1024 };
 
 function git(cwd, args) {
   try { return execFileSync('git', args, { cwd, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] }); }
@@ -68,11 +68,75 @@ export function window(mark, total, start, end) {
   return [first, last];
 }
 
+function repositoryPath(file) {
+  if (isAbsolute(file) || win32.isAbsolute(file) || /^[a-z]:/i.test(file) || file.split(/[\\/]/).includes('..')) {
+    throw new ExcerptError(`"${file}" must be a path inside the repository.`);
+  }
+}
+
+function readWorkingFile(root, file) {
+  repositoryPath(file);
+  const path = resolve(root, file);
+  let current = root;
+  for (const part of relative(root, path).split(sep)) {
+    current = resolve(current, part);
+    if (lstatSync(current).isSymbolicLink()) throw new ExcerptError(`${file} uses a symbolic link; working-tree files must stay inside the repository.`);
+  }
+  if (!lstatSync(path).isFile()) throw new ExcerptError(`${file} must be a regular file.`);
+  const descriptor = openSync(path, constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0));
+  try {
+    const stat = fstatSync(descriptor);
+    if (!stat.isFile()) throw new ExcerptError(`${file} must be a regular file.`);
+    if (stat.size > LIMITS.fileBytes) throw new ExcerptError(`${file} exceeds the ${LIMITS.fileBytes}-byte working-tree file limit.`);
+    // Read at most one byte beyond the limit, even if a file grows after the size check.
+    const buffer = Buffer.alloc(LIMITS.fileBytes + 1);
+    let length = 0;
+    while (length < buffer.length) {
+      const count = readSync(descriptor, buffer, length, buffer.length - length, null);
+      if (count === 0) break;
+      length += count;
+    }
+    if (length > LIMITS.fileBytes) throw new ExcerptError(`${file} exceeds the ${LIMITS.fileBytes}-byte working-tree file limit.`);
+    return buffer.toString('utf8', 0, length);
+  } finally { closeSync(descriptor); }
+}
+
+/** Lines git counts in a text: its newlines, and a last line that has none. */
+const lineCount = (text) => (text.match(/\n/g)?.length ?? 0) + (text && !text.endsWith('\n') ? 1 : 0);
+
+/**
+ * Lines git would count for a new file nobody asked to excerpt, so it never stops the excerpt of the
+ * code: a link is the one line git stores (its target, which is never followed), a binary file or a
+ * nested repository none, and a large file is counted as it streams past, never held whole.
+ */
+function untrackedLines(root, file) {
+  const path = resolve(root, file);
+  let current = root;
+  for (const part of relative(root, path).split(sep)) {
+    current = resolve(current, part);
+    if (lstatSync(current).isSymbolicLink()) return current === path ? 1 : 0;
+  }
+  if (!lstatSync(path).isFile()) return 0;
+  const descriptor = openSync(path, constants.O_RDONLY | (constants.O_NOFOLLOW ?? 0));
+  try {
+    const buffer = Buffer.allocUnsafe(64 * 1024);
+    let lines = 0, last = 0x0a;
+    for (let seen = 0, count; (count = readSync(descriptor, buffer, 0, buffer.length, null)) > 0; seen += count) {
+      const chunk = buffer.subarray(0, count);
+      // git calls a file binary when a NUL falls in its first 8,000 bytes, and counts no lines in it.
+      if (seen < 8000 && chunk.subarray(0, 8000 - seen).includes(0)) return 0;
+      for (let at = chunk.indexOf(0x0a); at !== -1; at = chunk.indexOf(0x0a, at + 1)) lines++;
+      last = chunk[count - 1];
+    }
+    return lines + (last === 0x0a ? 0 : 1);
+  } finally { closeSync(descriptor); }
+}
+
 function parseTarget(argument) {
   const match = /^(.+?):(\d+)(?::(\d+)-(\d+))?$/.exec(argument);
   if (!match) throw new ExcerptError(`"${argument}" is not FILE:LINE or FILE:LINE:START-END.`);
   const file = match[1].replace(/^\.\//, '');
-  if (file.startsWith('/') || file.split('/').includes('..')) throw new ExcerptError(`"${file}" must be a path inside the repository.`);
+  repositoryPath(file);
   return { file, mark: Number(match[2]), start: match[3] ? Number(match[3]) : undefined, end: match[4] ? Number(match[4]) : undefined, key: argument };
 }
 
@@ -83,20 +147,34 @@ export function excerpt({ repo = '.', base, head, targets }) {
   const headRef = workingTree ? 'working-tree' : git(root, ['rev-parse', '--short=12', head ?? 'HEAD']).trim();
   const baseRef = git(root, ['rev-parse', '--short=12', base ?? (workingTree ? 'HEAD' : `${headRef}~1`)]).trim();
   const range = workingTree ? [baseRef] : [baseRef, headRef];
-  const untracked = workingTree ? git(root, ['ls-files', '--others', '--exclude-standard']).split('\n').filter(Boolean) : [];
-  const read = (file) => workingTree ? readFileSync(resolve(root, file), 'utf8') : git(root, ['show', `${headRef}:${file}`]);
-  const files = git(root, ['diff', '--numstat', '--no-renames', ...range]).split('\n').filter(Boolean).map((line) => {
+  const parsedTargets = targets.map(parseTarget);
+  const requestedFiles = new Set(parsedTargets.map((target) => target.file));
+  // -z: file names exactly as they are; without it git quotes any name outside ASCII ("\354\213…").
+  const untracked = workingTree ? git(root, ['ls-files', '--others', '--exclude-standard', '-z']).split('\0').filter(Boolean) : [];
+  const read = (file) => workingTree ? readWorkingFile(root, file) : git(root, ['show', `${headRef}:${file}`]);
+  const files = git(root, ['diff', '--numstat', '-z', '--no-renames', ...range]).split('\0').filter(Boolean).map((line) => {
     const [added, removed, ...path] = line.split('\t');
     return { path: path.join('\t'), added: Number(added) || 0, removed: Number(removed) || 0 };
   });
-  for (const file of untracked) files.push({ path: file, added: read(file).split('\n').length - (read(file).endsWith('\n') ? 1 : 0), removed: 0 });
+  // A new file asked for is read whole, under every check; any other is only counted.
+  const untrackedText = new Map();
+  for (const file of untracked) {
+    if (!requestedFiles.has(file)) { files.push({ path: file, added: untrackedLines(root, file), removed: 0 }); continue; }
+    const text = read(file);
+    untrackedText.set(file, text);
+    files.push({ path: file, added: lineCount(text), removed: 0 });
+  }
   let remote = '';
   try { remote = git(root, ['remote', 'get-url', 'origin']); } catch { /* no remote */ }
 
   const locations = {};
-  for (const target of targets.map(parseTarget)) {
+  for (const target of parsedTargets) {
     let text;
-    try { text = read(target.file); } catch { throw new ExcerptError(`${target.file} is not in ${headRef === 'working-tree' ? 'the working tree' : headRef}.`); }
+    try { text = untrackedText.get(target.file) ?? read(target.file); }
+    catch (error) {
+      if (workingTree && error instanceof ExcerptError) throw error;
+      throw new ExcerptError(`${target.file} is not in ${headRef === 'working-tree' ? 'the working tree' : headRef}.`);
+    }
     const all = text.replace(/\r\n?/g, '\n').replace(/\n$/, '').split('\n');
     if (target.mark < 1 || target.mark > all.length) throw new ExcerptError(`${target.file} has ${all.length} lines; line ${target.mark} is not one of them.`);
     let [start, end] = window(target.mark, all.length, target.start, target.end);

@@ -1,5 +1,7 @@
 # Private scheduling
 
+The scheduling tools are in the planning group, outside the tool list: `call_tool_read` calls the context reads, `call_tool_write` the writes; `describe_tools(group:"planning")` gives their arguments.
+
 Read `get_my_planning_context` before authorized schedule changes. It combines current work across the human owner's active projects with cached busy intervals from their primary Google calendar, only after opt-in. The read itself makes no Google request and does not replay project history.
 
 1. Check `complete`, timezone, accepted versus tentative work, deadlines and missing estimates. Parent goals organize child tasks; do not count their hours again. Finished individual assignments are not remaining work even if the shared task stays open.

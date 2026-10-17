@@ -2,6 +2,28 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.65.1 — 2026-10-17
+
+Code excerpts for implementation reports no longer read through a symbolic link, so a report cannot carry a file from outside the repository, and a new file nobody asked for (a checkpoint link, a large result file, a nested repository, a Korean file name) no longer stops the excerpt. The ChatGPT request dialog opens on a blank, focused request: suggestions only fill it, and the send button or Cmd/Ctrl+Enter sends. Account and task-assignment emails are in English, in one layout.
+
+- 구현 보고에 코드를 옮겨 오는 도우미(`scripts/code-excerpt.mjs`)가 작업 트리의 심볼릭 링크를 따라가지 않습니다. 저장소 밖 파일(예: `~/.ssh` 아래)이 링크를 타고 보고에 실려 팀 프로젝트에 저장되던 길을 막았습니다. 발췌할 파일은 저장소 안의 5 MB 이하 일반 파일이어야 합니다.
+- 발췌를 요청하지 않은 새 파일은 git처럼 세기만 합니다. 체크포인트·데이터 링크(링크는 git이 저장하는 대로 1줄), 큰 결과 파일, 저장소 안의 다른 저장소(0줄), 바이너리 파일(0줄)이 있어도 발췌가 멈추지 않습니다. 한글 이름 파일이 있으면 발췌가 멈추고 바뀐 한글 파일이 따옴표 붙은 이름으로 적히던 문제도 고쳤습니다.
+- ChatGPT 요청 창이 빈 입력칸에 커서를 둔 채 열리고, 같은 대상을 다시 열면 쓰던 요청이 남아 있습니다. 쉽게 설명·근거 확인·개선안은 칸을 채우기만 하고, 보내기는 버튼이나 ⌘/Ctrl+Enter로만 합니다. Enter는 줄바꿈이고 한글을 조합하는 중에는 보내지 않으며, 저장하지 않은 편집이 있거나 전달 중일 때는 단축키도 동작하지 않습니다. 선택한 글의 인용은 글을 골랐을 때만 '인용 범위'에 나옵니다.
+- 계정 메일(가입 확인, 초대, 로그인 링크, 이메일 변경, 비밀번호 재설정, 재인증 코드, 보안 알림 일곱 가지)과 작업 배정 메일이 같은 영어 양식을 씁니다. 작업 메일은 배정한 사람과 할 일 제목을 이스케이프하고 https 링크만 넣으며, 텍스트 본문도 함께 보냅니다.
+- 배포: 작업 메일은 `task-email-worker` 함수를 배포해야 바뀝니다. 계정 메일 템플릿은 지금 값을 백업한 뒤 Supabase의 Email Templates 화면이나 Management API로 직접 넣고(`supabase/templates/README.md`), 보안 알림은 알림마다 켜야 나갑니다. 새 마이그레이션은 없습니다.
+
+## 0.65.0 — 2026-10-17
+
+A model now carries 18 tools on every turn instead of 75: the core tools and three meta tools. The other tools sit in eight groups; describe_tools gives their arguments, and call_tool_read or call_tool_write calls them through the same handler, checks and permissions. One get_guide replaces eleven guide tools. A first sentence that overviews show must fit 180 columns and a new title 120, and writes return what overviews will show, with advice on a missing bottom line, a title in codes or run ids up front.
+
+- 모델이 매 차례 받는 도구 목록이 75개, 약 74,000자에서 18개, 약 24,000자로 줄었습니다. 핵심 도구 15개와 메타 도구 3개(`describe_tools`, `call_tool_read`, `call_tool_write`)만 목록에 두고, 나머지 49개는 records·questions·tree·planning·ai_tasks·reviews·discussions·projects 여덟 그룹에 있습니다. `describe_tools(group)`이 인자를 알려 주고, `call_tool_read`·`call_tool_write`는 직접 부를 때와 같은 처리기·입력 검사·권한으로 부릅니다. 어느 도구든 이름으로 부르면 지금처럼 동작하고, 패널이 부르는 도구는 그대로 목록에 있습니다.
+- 가이드 도구 열한 개가 `get_guide({topic, section?, type?})` 하나가 됐습니다. 주제는 writing, record, question, tree, meeting, task_analysis, literature, visualization, workflow, manual이고 예전 도구와 같은 내용을 돌려줍니다. 예전 이름도 계속 동작합니다.
+- 개요가 보여 주는 첫 문장은 쓰는 자리에서 지킵니다. 질문의 답, 결과의 뜻, 예측의 첫 문장은 180칸, AI가 새로 짓거나 바꾸는 제목은 120칸 안이어야 하고, 넘으면 규칙(`lead.*`, `title.width`)과 잰 폭·한계를 붙여 거절합니다. 저장된 글을 그대로 다시 보내면 통과하고, 패널에서 사람이 고친 제목은 저장 한도만 봅니다.
+- 쓰기가 개요에 어떻게 보일지 돌려줍니다. 연구 기록을 쓰는 도구는 결과에 `readBack`(개요에 나갈 글)과 `advice`(핵심 결론이 없음, 코드뿐인 제목, 맨 앞의 실행 ID·경로)를 싣습니다. 조언은 쓰기를 막지 않고, 지침 계수기가 `advised`로 셉니다.
+- 접속 지침이 목록에 없는 도구를 부르는 법과 쓰기 전에 읽을 `get_guide` 주제를 알려 줍니다(2,139자에서 2,125자로). 도구 설명·가이드·오류와 앱의 AI 요청 문구(네 언어)도 `get_guide`를 가리킵니다.
+- 지침 시험은 `call_tool_*` 호출을 그것이 닿은 도구로 채점하고, 쓰기가 받은 조언 가운데 마지막 상태에서 고친 몫을 모델별로 보여 줍니다. 기준선(v0.64.3)과 같은 날 `npm run guide:eval -- --hosts claude,codex`로 비교합니다.
+- 새 마이그레이션은 없습니다. MCP 함수만 배포합니다.
+
 ## 0.64.3 — 2026-10-17
 
 Some Claude Code versions end a run that met the plan's usage limit with the limit message as an ordinary answer. The cross-model trial now reads such a message, given before any tool call, as the limit: the run is set aside and Claude Code's remaining runs are skipped, instead of each counting as the model failing its task. The guidance is unchanged.
