@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.65.1",
+  "version": "0.66.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Code excerpts for implementation reports no longer read through a symbolic link, so a report cannot carry a file from outside the repository, and a new file nobody asked for (a checkpoint link, a large result file, a nested repository, a Korean file name) no longer stops the excerpt. The ChatGPT request dialog opens on a blank, focused request: suggestions only fill it, and the send button or Cmd/Ctrl+Enter sends. Account and task-assignment emails are in English, in one layout.",
+        "release_notes": "When an AI tool signs in again, the approval screen now asks which AI it is: a new one, or one of yours, which keeps its name, permissions and project approvals while the connection it used before stops working. Until now each sign-in that registered a new client added another AI without project approvals. The interface's own words were rewritten to read as a person writes them: no sentences glued to labels, no arrows on links, short statuses.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

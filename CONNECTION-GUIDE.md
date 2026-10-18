@@ -52,7 +52,13 @@ codex plugin add research-loop@research-loop
 codex mcp login research-loop-plugin --scopes email --oauth-client-registration dcr
 ```
 
-**VS Code Remote SSH 사용 시:** 로컬 컴퓨터와 원격 서버의 설치·로그인은 서로 다를 수 있습니다. Codex가 실행되는 환경에서 설치하고, `/mcp` 등 해당 환경의 연결 목록을 확인하세요. 로그인 후 `127.0.0.1` 연결 오류가 나면 API 키를 반복 발급하지 말고, 실제 callback 주소의 포트를 로컬 브라우저에서 해당 환경으로 전달할 수 있는지 확인합니다. 고정 포트를 임의로 추측하지 마세요. 조직 관리 설정이 설치를 막는다면 관리자에게 문의합니다.
+**원격 서버(SSH, VS Code Remote)에서:** 설치와 로그인은 Codex가 실행되는 서버에서 따로 합니다. 서버에는 브라우저가 없으니 `--no-browser`로 로그인합니다.
+
+```sh
+codex mcp login research-loop-plugin --no-browser --scopes email --oauth-client-registration dcr
+```
+
+출력된 주소를 내 컴퓨터의 브라우저에서 열고 승인하면, `127.0.0.1`로 시작하는 주소에서 페이지가 열리지 않습니다. 그 주소를 통째로 복사해 서버의 터미널에 붙여 넣으면 로그인이 끝납니다. 포트 전달은 필요 없습니다.
 
 설치 형식과 명령은 [OpenAI 플러그인 문서](https://developers.openai.com/plugins/build/plugins), 원격 연결·OAuth는 [Codex MCP 문서](https://learn.chatgpt.com/docs/extend/mcp?surface=cli)를 참고합니다.
 
@@ -146,25 +152,18 @@ OAuth로 연결했다면 이 단계는 필요 없습니다. 여기서 말하는 
 
 API 키가 노출됐거나 더 쓰지 않는 AI는 **내 AI → AI 삭제**로 제거하고 필요한 연결만 다시 만듭니다. 삭제하면 해당 AI 연결은 더 이상 사용할 수 없습니다.
 
-## 7. 업데이트와 중복 연결 정리
+## 7. 업데이트와 로그인 유지
 
-MCP 서버 지침은 서버에서 제공되지만, 설치된 플러그인 파일·아이콘은 별도로 업데이트해야 합니다.
+새 버전은 따로 받지 않습니다.
 
-**Codex CLI**
+- **Codex**는 시작할 때 마켓플레이스를 확인해 플러그인을 새 버전으로 바꿉니다. 열려 있던 Codex는 다시 열면 새 버전을 씁니다(VS Code는 창 새로고침). 바뀌지 않으면 Codex 자체를 최신으로 올리세요.
+- **Claude Code**는 자동 업데이트를 한 번 켜 둡니다. 대화창에서 `/plugin` → Marketplaces → research-loop → Enable auto-update.
 
-```sh
-codex plugin marketplace upgrade research-loop
-codex plugin add research-loop@research-loop
-```
+업데이트하려고 플러그인을 지우고 다시 설치하지 마세요. 다시 설치하면 로그인을 새로 해야 합니다. 로컬 폴더에서 설치한 플러그인(`research-loop@personal`)은 자동으로 바뀌지 않으니, 위의 마켓플레이스 설치로 한 번 옮깁니다.
 
-**Claude Code 터미널**
+다시 로그인할 때는 승인 화면의 **연결할 AI**에서 쓰던 AI를 고르세요. 이름, 권한, 프로젝트 승인이 그대로 이어집니다. **새 AI**를 고르면 '내 AI'에 연결이 하나 더 생깁니다.
 
-```sh
-claude plugin marketplace update research-loop
-claude plugin update research-loop@research-loop
-```
-
-업데이트 후 도구를 다시 열고 새 대화를 시작합니다. 개인용 `research-loop@personal`이나 수동 MCP 연결이 함께 있다면, 새 연결이 작동하는지 확인한 뒤 옛 연결을 비활성화하세요. 작동 중인 연결을 확인 없이 먼저 지우지 않습니다.
+웹사이트에서 로그아웃해도 AI 연결은 유지됩니다. 비밀번호를 바꾸거나 '내 AI'에서 연결을 지우면 끊기고, 그때는 해당 환경에서 다시 로그인합니다.
 
 ## 8. 연결이 안 될 때
 
@@ -176,6 +175,8 @@ claude plugin update research-loop@research-loop
 | 편집했는데 반영되지 않음 | AI가 ‘적용 완료’가 아니라 ‘검토 요청’을 보냈는지 확인 → 알림에서 요청 확인 |
 | `instructions_required` | AI가 현재 프로젝트 작업 지침을 다시 읽은 뒤, 여전히 필요한 작업만 재시도 |
 | 서비스 계정 연결 설정 누락 | 서비스 운영 설정 문제. 사용자에게 Supabase 설정이나 반복 키 발급을 요구하지 말고 관리자에게 문의 |
-| 옛 지침·아이콘이 계속 보임 | 플러그인 갱신 → Codex/Claude Code 재시작 → 새 대화. 기존 대화의 지침은 남을 수 있음 |
+| 다시 로그인하라고 함 | 비밀번호를 바꿨거나 '내 AI'에서 연결을 지웠는지 확인 → 그 환경에서 다시 로그인(원격 서버는 `--no-browser`)하고, 승인 화면에서 쓰던 AI를 고름 |
+| '내 AI'에 같은 AI가 여러 개 있음 | 다시 로그인할 때 **새 AI**로 승인한 연결입니다. 쓰지 않는 연결은 '내 AI'에서 삭제하고, 다음 로그인부터는 쓰던 AI를 고름 |
+| 옛 지침·아이콘이 계속 보임 | Codex/Claude Code를 다시 열고 새 대화. 기존 대화의 지침은 남을 수 있음. Claude Code는 자동 업데이트가 켜져 있는지 확인 |
 
 문의할 때는 사용한 도구·버전, 실패한 단계, 오류 문구를 알려주세요. API 키·OAuth 토큰·비밀번호·비공개 연구 내용은 보내지 마세요. [지원 문의](mailto:jeongseok0112@gmail.com)

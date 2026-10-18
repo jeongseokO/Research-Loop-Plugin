@@ -2,6 +2,40 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.66.0 — 2026-10-18
+
+When an AI tool signs in again, the approval screen now asks which AI it is: a new one, or one of yours, which keeps its name, permissions and project approvals while the connection it used before stops working. Until now each sign-in that registered a new client added another AI without project approvals. The interface's own words were rewritten to read as a person writes them: no sentences glued to labels, no arrows on links, short statuses.
+
+- AI가 다시 로그인하면 승인 화면이 **연결할 AI**를 묻습니다. **새 AI**로 추가하거나 내 OAuth AI 중 하나를 고릅니다. 고른 AI는 같은 AI 그대로라 이름, 권한, 프로젝트 승인, 기록이 이어지고, 그 AI를 쓰던 이전 연결은 끊깁니다. 지금까지는 Codex처럼 로그인할 때마다 OAuth client를 새로 등록하는 도구가 다시 로그인하면 '내 AI'에 프로젝트 승인 없는 AI가 하나씩 늘었습니다.
+- 목록에는 같은 앱의 AI가 먼저, 최근에 쓴 순서로 나옵니다. 기본은 새 AI이고, 기존 AI를 고르면 그 AI의 권한이 아래 권한 칸에 채워지며 무엇이 이어지고 무엇이 끊기는지 한 줄로 보입니다. 승인하는 연결이 이미 내 AI 중 하나라면 묻지 않습니다.
+- '내 AI'에 같은 AI가 여러 개 있다면 다시 로그인할 때 생긴 것입니다. 쓰지 않는 것은 '내 AI'에서 지우고, 다음 로그인부터 쓰던 AI를 고르세요. 연결 안내의 문제 해결 표에도 적었습니다.
+- 화면의 말을 사람이 쓰듯 고쳤습니다. 라벨 뒤에 가운뎃점으로 문장을 잇지 않고, '이름 — 설명'과 링크 끝의 화살표를 없앴습니다. 상태 메시지는 무엇이 일어났고 무엇을 하면 되는지만 씁니다("전달 결과 미확인 · 자동 재요청하지 않습니다…" 대신 "요청이 전달됐는지 확인하지 못했습니다. 다시 보내기 전에 AI 협업의 대기열을 확인하세요."). 제목 아래 설명 문장은 빼고, 주의할 점은 누를 때 보입니다. 영어, 일본어, 프랑스어도 함께 고쳤습니다.
+- 소개 페이지의 문구를 새로 썼고("AI와 함께 쓰는 연구 노트"), 예시 창의 설명은 창 아래에 둡니다. 발표 화면에서 메모나 원문 창을 열 때 뒤를 흐리게 하던 효과는 어둡게만 가립니다.
+- 이 규칙은 `docs/design-principles.md`의 '화면의 말'에 있고, `src/ui/copyStyle.test.ts`가 모든 화면 문구를 검사합니다.
+- 배포: 새 마이그레이션 `20261018100000_continue_oauth_agent.sql`을 먼저 적용합니다(`npm run -s migration:sql -- 20261018100000`). 패널 문구가 바뀌어 MCP 함수도 다시 올립니다.
+
+## 0.65.3 — 2026-10-18
+
+Signing out of the website no longer signs out the AIs connected to your account: it ends that browser's session only, so Codex and Claude Code on other computers stay connected. The plugin no longer needs updating by hand: Codex picks up a new version when it starts, and Claude Code does once auto-update is on for this marketplace. On a remote server, `codex mcp login --no-browser` signs in without port forwarding. You can delete your account yourself from personal settings.
+
+- 웹사이트에서 로그아웃하면 그 브라우저의 세션만 끝납니다. 지금까지는 Supabase의 기본값대로 계정의 모든 세션을 지워서, 다른 컴퓨터의 Codex·Claude Code 연결까지 끊겼고 다음 토큰 갱신에서 다시 로그인해야 했습니다. 비밀번호를 바꾸면 다른 세션이 모두 끝나는 것은 Supabase 서버의 동작이라 그대로입니다.
+- 플러그인은 손으로 업데이트하지 않습니다. Codex는 시작할 때 Git 마켓플레이스를 확인해 새 버전을 받고, Claude Code는 이 마켓플레이스의 자동 업데이트를 켜 두면 받습니다. 연결 안내와 플러그인 README가 그렇게 말하고, 다시 설치하라는 안내는 뺐습니다. VS Code나 앱에서 다시 설치하면 Codex가 로그인을 새로 시작하고 '내 AI'에 연결이 하나 더 생깁니다.
+- 원격 서버에서는 `codex mcp login research-loop-plugin --no-browser`로 로그인합니다. 나온 주소를 내 컴퓨터 브라우저에서 열어 승인하고, 열리지 않는 `127.0.0.1` 주소를 서버의 터미널에 붙여 넣으면 끝납니다. '내 AI'의 원격 서버 안내도 같은 방식입니다.
+- 개인 설정에서 계정을 바로 삭제합니다. 운영자에게 메일을 보내던 절차 대신, 삭제 버튼이 이 계정이 정할 것을 묻고 창을 엽니다: 한 문장, 떠나는 공유 프로젝트, 내가 소유한 공유 프로젝트를 보관할지 지울지, 내보내기 링크, 비밀번호. 비밀번호는 세션을 남기지 않는 클라이언트로 다시 로그인해 확인하고, 서버는 5분 안에 비밀번호로 로그인한 토큰일 때만 지웁니다. 개인정보처리방침의 삭제 항목과 시행일(2026-10-25)을 고쳤습니다.
+- 설정 화면들의 제목 아래 설명 문장을 뺐습니다. 버튼이 하는 일은 라벨에, 되돌리기 어려운 일의 결과는 누를 때 여는 확인 창에 있습니다. Google Calendar의 상태는 단어로, 알림은 문장으로 바뀌었고, 빈 목록은 '아직 없음'이라고 씁니다.
+- 배포: 새 Edge Function `delete-account`를 올립니다(`npx supabase functions deploy delete-account`, `supabase/config.toml`의 `verify_jwt = true`를 따름). 새 마이그레이션은 없습니다.
+
+## 0.65.2 — 2026-10-17
+
+A release tag now deploys the website and publishes the plugin only after every CI check passes on the tagged commit. Under an equation's result, readers see the exact expression its sliders compute, and an AI that writes one gives two or three values worked out from the TeX: a save computes the expression there and refuses a disagreement. The guidance trial now grades whether a run wrote the request's facts, such as a result's direction and numbers, apart from whether it finished.
+
+- 릴리스 태그를 올리면 그 커밋에서 CI 네 가지(웹, Deno, SQL, e2e)가 모두 통과한 뒤에만 웹사이트를 배포하고 플러그인을 냅니다. 지금까지는 태그와 함께 배포 워크플로가 따로 돌아서, 0.65.1은 SQL 테스트와 e2e 대부분이 그 커밋에서 돌지 않은 채 나갔습니다. Cloudflare의 Workers Builds가 켜져 있으면 이 순서를 건너뛰고 바로 배포하므로 꺼 둡니다(Workers → 설정 → Builds → 연결 끊기). `npm run check:site -- --wait 2400`이 CI와 배포를 기다렸다가 확인합니다.
+- 수식의 결과 아래에 실제로 계산하는 식이 그대로 나옵니다(`계산식 B × 3 × s / (2 + s)`). 위의 식이 일반 규칙이고 슬라이더는 그 한 경우를 계산할 때(레이어 셋, 바깥 둘의 민감도 1) 무엇을 계산하는지 읽는 사람이 바로 봅니다.
+- AI가 계산식을 쓰면 TeX로 손수 계산한 점검값 두세 개(`evaluate.checks`)를 함께 보내야 합니다. 서버는 그 점에서 계산식을 계산해 1% 넘게 어긋나면 두 값을 밝혀 저장을 거절합니다("B=0.6, s=6에서 계산식은 1인데 점검값은 1.35"). 점검값은 블록에 남아, 페이지를 통째로 다시 쓸 때도 다시 계산하지 않고 대조됩니다. 앱에서 사람이 수식을 고칠 때는 점검값을 요구하지 않고, 남아 있는 점검값만 계산식과 맞는지 봅니다.
+- 데모의 예산 식과 가이드 예시가 보여 주는 식 그대로 계산합니다. 예산 슬라이더는 0.4까지이고, 식에 없던 상한(1)을 뺐습니다. 가이드(개정 38)는 계산식의 모든 부분이 TeX에 있거나 라벨·캡션이 말해야 한다고 적고, 소개 페이지의 식은 `196 * …` 대신 `1.96 * … * 100`으로 씁니다.
+- 지침 시험에 '충실' 판정이 생겼습니다. 결과의 방향, 핵심 수치, 날짜, 프로젝트 규칙처럼 요청과 기록의 사실을 그대로 옮겼는지를 과제마다 기계적으로 봅니다. 결과를 거꾸로 적고도 완료로 세던 실행은 이제 완료이되 충실하지 않은 실행으로 나옵니다. `summary.md`의 모델별 표에 충실 열이 있고, 완료의 정의는 그대로라 이전 기준선과 비교됩니다.
+- 배포: 새 마이그레이션 `20261017100000_equation_checks.sql`을 MCP 함수보다 먼저 적용합니다(`npm run -s migration:sql -- 20261017100000`).
+
 ## 0.65.1 — 2026-10-17
 
 Code excerpts for implementation reports no longer read through a symbolic link, so a report cannot carry a file from outside the repository, and a new file nobody asked for (a checkpoint link, a large result file, a nested repository, a Korean file name) no longer stops the excerpt. The ChatGPT request dialog opens on a blank, focused request: suggestions only fill it, and the send button or Cmd/Ctrl+Enter sends. Account and task-assignment emails are in English, in one layout.

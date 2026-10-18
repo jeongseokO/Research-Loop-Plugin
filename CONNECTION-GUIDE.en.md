@@ -52,7 +52,13 @@ If no sign-in window opens, connect with the command below. The plugin's server 
 codex mcp login research-loop-plugin --scopes email --oauth-client-registration dcr
 ```
 
-**With VS Code Remote SSH:** your local computer and the remote server may have different installs and sign-ins. Install where Codex runs, and check that environment's connection list, such as `/mcp`. If you get a `127.0.0.1` connection error after signing in, don't keep issuing API keys: check whether the port in the actual callback address can be forwarded from your local browser to that environment. Don't guess a fixed port. If your organization's managed settings block the install, ask your administrator.
+**On a remote server (SSH, VS Code Remote):** install and sign in on the server where Codex runs. The server has no browser, so sign in with `--no-browser`.
+
+```sh
+codex mcp login research-loop-plugin --no-browser --scopes email --oauth-client-registration dcr
+```
+
+Open the printed address in your own computer's browser and approve. The browser then fails to load an address that starts with `127.0.0.1`: copy that whole address and paste it into the server's terminal to finish signing in. No port forwarding is needed.
 
 For the install format and commands, see the [OpenAI plugin docs](https://developers.openai.com/plugins/build/plugins); for remote connections and OAuth, the [Codex MCP docs](https://learn.chatgpt.com/docs/extend/mcp?surface=cli).
 
@@ -146,25 +152,18 @@ If you connected with OAuth, skip this step. The key here is not an OpenAI or An
 
 If a key was exposed, or you no longer use an AI, remove it with **My AI → Delete AI** and recreate only the connections you need. Once deleted, that AI connection stops working.
 
-## 7. Updates and duplicate connections
+## 7. Updates and staying signed in
 
-The MCP server's guidance comes from the server, but the installed plugin's files and icon are updated separately.
+You don't fetch new versions yourself.
 
-**Codex CLI**
+- **Codex** checks the marketplace when it starts and moves the plugin to the new version. A Codex that was already open uses it once you reopen it (in VS Code, reload the window). If it doesn't change, update Codex itself.
+- **Claude Code** needs auto-update turned on once: in a conversation, `/plugin` → Marketplaces → research-loop → Enable auto-update.
 
-```sh
-codex plugin marketplace upgrade research-loop
-codex plugin add research-loop@research-loop
-```
+Don't uninstall and reinstall the plugin to update it: a reinstall means signing in again. A plugin installed from a local folder (`research-loop@personal`) doesn't update by itself, so move it once to the marketplace install above.
 
-**Claude Code terminal**
+When you sign in again, pick the AI you were using under **Connect as** on the approval screen. Its name, permissions and project approvals carry over. Choosing **New AI** adds one more connection to **My AI**.
 
-```sh
-claude plugin marketplace update research-loop
-claude plugin update research-loop@research-loop
-```
-
-After updating, reopen the tool and start a new conversation. If a personal `research-loop@personal` or a manual MCP connection is also there, check that the new connection works, then disable the old one. Don't delete a working connection before checking.
+Signing out of the website keeps your AI connections. Changing your password or deleting a connection under **My AI** ends them; then sign in again in that environment.
 
 ## 8. When it doesn't connect
 
@@ -176,6 +175,8 @@ After updating, reopen the tool and start a new conversation. If a personal `res
 | An edit didn't take effect | Whether the AI sent a review request rather than "applied" → check the request in Notifications |
 | `instructions_required` | Have the AI read the current project's working guidelines again, then retry only what is still needed |
 | Service account connection settings missing | A problem with how the service is run. Don't ask users for Supabase settings or repeated keys: contact the administrator |
-| Old guidance or icon keeps showing | Update the plugin → restart Codex or Claude Code → new conversation. An existing conversation may keep its old guidance |
+| Asked to sign in again | Whether you changed your password or deleted the connection under My AI → sign in again in that environment (`--no-browser` on a remote server) and pick the AI you were using on the approval screen |
+| The same AI appears several times in My AI | Those connections were approved as **New AI** when signing in again. Delete the ones you don't use under My AI, and pick the AI you were using next time |
+| Old guidance or icon keeps showing | Reopen Codex or Claude Code and start a new conversation. An existing conversation may keep its old guidance. In Claude Code, check that auto-update is on |
 
 When you contact us, say which tool and version you used, the step that failed and the error message. Don't send API keys, OAuth tokens, passwords or unpublished research. [Contact support](mailto:jeongseok0112@gmail.com)
