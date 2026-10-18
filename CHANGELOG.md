@@ -2,6 +2,19 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.67.0 — 2026-10-18
+
+A question's page puts the evidence it cites under its answer, counter-evidence first, and folds every round before the last three, saying how many still wait to be read. The briefing lists first the changes to what a checked conclusion or an open question cites, and says which. A judgment a person confirmed leads its page. Requests for AI now say to ask the AI to check its queue, which is what makes it take them. The usage history switch says what it counts. The trial's fidelity checks read what a run wrote, not only its numbers.
+
+- 질문 페이지는 '지금까지의 답' 바로 아래에 '이 질문의 근거'를 둡니다. 질문이 인용한 기록을 모두 반대 근거, 불확실, 지지, 계획 순으로 보여 줘서, 근거가 6개를 넘어도 반대 근거가 지지 근거 뒤로 접히지 않습니다. 회차에도 나오는 결과는 여기서는 답에 대해 무엇을 말하는지로, 회차에서는 예측과 나란히 읽힙니다.
+- 회차는 최근 3개만 펼치고 그 앞은 하나로 접어 위에 둡니다. 접힌 묶음에는 해석을 기다리는 결과 수나, 질문이 지금 머문 회차의 상태를 적습니다. 0.66.2는 해석을 기다리는 회차를 모두 펼쳐서, 그런 회차가 많으면 다시 전부 펼쳐졌습니다.
+- 브리핑의 '지난 방문 이후'는 확인한 결론이나 열린 질문이 근거로 인용한 기록의 변경을 먼저 보여 주고, 제목 아래에 이유를 적습니다('…'에서 확인한 결론의 근거, 메인 질문의 근거, 질문 '…'의 근거). 인용은 먼저 보이는 이유일 뿐, 결론이나 답이 바뀌었다는 뜻은 아닙니다.
+- 사람이 확인한 판단이 있으면 선택 이력이 그 페이지 본문 앞에 옵니다. 판단이 없거나 제안·저장 대기뿐이면 전처럼 끝의 정보 묶음에 있습니다. 쓰던 판단 초안은 다른 사람이 첫 판단을 확인해 자리가 바뀌어도 그대로 따라갑니다.
+- AI 요청 문구를 바로잡았습니다. 0.66.2의 '다음 세션에 가져갑니다'는 지킬 수 없는 약속이었습니다. AI는 접속할 때 대기열을 알려 받지만 처리까지 정해져 있지는 않아서, 이제 'AI에게 대기열을 확인해 달라고 하면 가져갑니다'라고 씁니다.
+- 내 사용 기록 스위치 아래에 무엇을 세는지 한 줄을 둡니다. 화면과 작업 종류별 횟수만 세고, 연구 내용은 남기지 않으며, 로그아웃하면 지워집니다.
+- 시험(trial)의 충실 판정이 숫자만이 아니라 쓴 내용을 봅니다. ml-notebook-en은 LongBench의 3.1점 감소를 그 변화에 이어 적었는지, 반대 주장이 섞이지 않았는지 보고, med-literature-ko는 재입원율이 센서군 18.4%, 일반 진료군 27.1%에 바르게 붙었는지 봅니다. 0.67.0 전 기준선과는 충실률을 그대로 비교하지 않습니다.
+- 배포: 마이그레이션은 없습니다. 이번 버전 번호를 알리도록 MCP 함수를 다시 올립니다.
+
 ## 0.66.2 — 2026-10-18
 
 The privacy policy taking effect on October 25 states the basis for each kind of information, how it is destroyed, and each overseas recipient's contact and legal basis, and corrects three facts: Resend sends sign-up and password emails, the data is stored in Seoul, and Supabase contracts through Supabase Pte. Ltd. The previous policy stays readable. Invitations forget the invited address once used. Wording that lost a condition in 0.66.0 states it again, earlier rounds fold past a waiting one, equation checks must try each variable off 0 and ±1, and the briefing counts the reader's days.

@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.66.2",
+  "version": "0.67.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "The privacy policy taking effect on October 25 states the basis for each kind of information, how it is destroyed, and each overseas recipient's contact and legal basis, and corrects three facts: Resend sends sign-up and password emails, the data is stored in Seoul, and Supabase contracts through Supabase Pte. Ltd. The previous policy stays readable. Invitations forget the invited address once used. Wording that lost a condition in 0.66.0 states it again, earlier rounds fold past a waiting one, equation checks must try each variable off 0 and ±1, and the briefing counts the reader's days.",
+        "release_notes": "A question's page puts the evidence it cites under its answer, counter-evidence first, and folds every round before the last three, saying how many still wait to be read. The briefing lists first the changes to what a checked conclusion or an open question cites, and says which. A judgment a person confirmed leads its page. Requests for AI now say to ask the AI to check its queue, which is what makes it take them. The usage history switch says what it counts. The trial's fidelity checks read what a run wrote, not only its numbers.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
