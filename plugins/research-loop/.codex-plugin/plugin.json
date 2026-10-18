@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.66.1",
+  "version": "0.66.2",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "The AI connection page now scrolls, so a long list of AIs no longer hides the Allow button, and when the browser stays on the page after you allow or decline, the page says so within three seconds instead of showing the hand-off forever. AIs with the same name are told apart by when they were last used. Rows of the research tree beside many live branches shorten their tags instead of losing the title or running past the card.",
+        "release_notes": "The privacy policy taking effect on October 25 states the basis for each kind of information, how it is destroyed, and each overseas recipient's contact and legal basis, and corrects three facts: Resend sends sign-up and password emails, the data is stored in Seoul, and Supabase contracts through Supabase Pte. Ltd. The previous policy stays readable. Invitations forget the invited address once used. Wording that lost a condition in 0.66.0 states it again, earlier rounds fold past a waiting one, equation checks must try each variable off 0 and ±1, and the briefing counts the reader's days.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

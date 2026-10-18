@@ -2,6 +2,20 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.66.2 — 2026-10-18
+
+The privacy policy taking effect on October 25 states the basis for each kind of information, how it is destroyed, and each overseas recipient's contact and legal basis, and corrects three facts: Resend sends sign-up and password emails, the data is stored in Seoul, and Supabase contracts through Supabase Pte. Ltd. The previous policy stays readable. Invitations forget the invited address once used. Wording that lost a condition in 0.66.0 states it again, earlier rounds fold past a waiting one, equation checks must try each variable off 0 and ±1, and the briefing counts the reader's days.
+
+- 개인정보 처리방침(10월 25일 시행)에 법이 공개를 요구하는 항목을 채웠습니다. 정보마다 처리 근거(계약 이행 또는 정당한 이익)를 적었고, 파기 방법과 국외 이전받는 회사의 연락처, 이전 시기와 방법, 근거를 넣었습니다. 실제와 달랐던 세 가지도 바로잡았습니다. 가입·비밀번호 메일도 Resend로 나가고, 데이터베이스는 서울에 저장되며, Supabase의 계약 회사는 Supabase Pte. Ltd.(싱가포르)입니다. 탈퇴 뒤 공동 기록에 남는 계정 번호와 되돌릴 수 없게 바꾼 이메일 값도 사실대로 적었습니다. 이름은 법에 맞춰 '개인정보 처리방침'이 되었고, 첫 화면의 링크는 다른 안내보다 굵게 보입니다.
+- 이전 방침(10월 15일~24일)은 `/privacy/ko/2026-10-15`, `/privacy/2026-10-15`에서 그대로 읽을 수 있고, 새 방침의 변경 이력이 그곳을 가리킵니다.
+- 가입 문구는 "이용약관에 동의하게 됩니다"까지입니다. 개인정보 처리방침은 동의를 받는 문서가 아니라 공개하는 문서이고, 서비스는 동의가 아니라 계약 이행을 근거로 처리하므로 링크로 보여주기만 합니다.
+- 초대는 수락되거나 취소되면 초대받은 이메일 주소와 메시지를 바로 지우고, 30일 뒤에는 기록째 지웁니다. 수락되지 않은 채 기한이 지난 초대는 소유자의 멤버 목록에 30일 동안 남았다가 지워집니다. 매일 새벽에 도는 정리 작업이 맡습니다.
+- 0.66.0에서 문구를 줄이다 빠진 조건을 되살렸습니다. AI 요청은 "AI를 연결하면 가져갑니다"가 아니라 "다음 세션에 가져갑니다"이고, 선택 이력의 검토는 승인되어도 Owner나 Semi-Owner가 그 화면에서 확인해야 현재 판단이 됩니다. 예측이 없는 회차는 "예측 없이 실행했습니다"가 아니라 "실행 전 예측 기록 없음"이라고 씁니다. 앱이 아는 것은 기록이 없다는 데까지이기 때문입니다. 디자인 원칙에 이런 조건은 줄여도 남긴다는 줄을 더했습니다.
+- 질문 페이지는 오래된 회차 하나가 해석을 기다려도 나머지 정리된 회차를 접습니다. 지금까지는 맨 앞 회차 하나가 기다리면 나머지도 모두 펼쳐졌습니다. 기다리는 회차는 접힌 묶음 밖에 제 번호로 남습니다.
+- 수식의 점검값은 다른 값을 가질 수 있는 변수마다 한 번은 0과 ±1이 아닌 값을 써야 합니다. 여러 식이 거기서 같은 값을 내서(x²와 x³은 0과 1에서 같습니다) 그런 점만으로는 확인되는 것이 없었습니다. 지침은 revision 39입니다.
+- 브리핑의 '지난 14일 작업 423건'은 기록과 날짜의 짝을 센 값이라 작업 개수로 읽혔습니다. 이제 비율만 보여주고, 날짜도 UTC가 아니라 읽는 사람의 날짜로 셉니다.
+- 배포: 마이그레이션 `20261018120000_forget_used_invitations.sql`을 먼저 적용합니다(`npm run -s migration:sql -- 20261018120000`). 수식 점검과 패널이 바뀌어 MCP 함수도 다시 올립니다.
+
 ## 0.66.1 — 2026-10-18
 
 The AI connection page now scrolls, so a long list of AIs no longer hides the Allow button, and when the browser stays on the page after you allow or decline, the page says so within three seconds instead of showing the hand-off forever. AIs with the same name are told apart by when they were last used. Rows of the research tree beside many live branches shorten their tags instead of losing the title or running past the card.
