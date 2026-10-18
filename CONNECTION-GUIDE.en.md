@@ -176,6 +176,7 @@ Signing out of the website keeps your AI connections. Changing your password or 
 | `instructions_required` | Have the AI read the current project's working guidelines again, then retry only what is still needed |
 | Service account connection settings missing | A problem with how the service is run. Don't ask users for Supabase settings or repeated keys: contact the administrator |
 | Asked to sign in again | Whether you changed your password or deleted the connection under My AI → sign in again in that environment (`--no-browser` on a remote server) and pick the AI you were using on the approval screen |
+| Sign-in ends with `Address in use (os error 98)` | Another program holds the port that receives the sign-in. If your config fixes `mcp_oauth_callback_port`, see who holds that port with `ss -ltnp`, and sign in on another port this once: `codex -c mcp_oauth_callback_port=5556 mcp login research-loop-plugin --no-browser` |
 | The same AI appears several times in My AI | Those connections were approved as **New AI** when signing in again. Delete the ones you don't use under My AI, and pick the AI you were using next time |
 | Old guidance or icon keeps showing | Reopen Codex or Claude Code and start a new conversation. An existing conversation may keep its old guidance. In Claude Code, check that auto-update is on |
 

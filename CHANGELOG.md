@@ -2,6 +2,17 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.66.1 — 2026-10-18
+
+The AI connection page now scrolls, so a long list of AIs no longer hides the Allow button, and when the browser stays on the page after you allow or decline, the page says so within three seconds instead of showing the hand-off forever. AIs with the same name are told apart by when they were last used. Rows of the research tree beside many live branches shorten their tags instead of losing the title or running past the card.
+
+- 승인 화면이 스크롤됩니다. 이 앱은 문서 전체가 아니라 화면마다 스크롤하는데, 승인 화면은 높이의 하한만 있어 스스로 스크롤하지 못했습니다. 그래서 AI 목록이 길면 권한과 허용 버튼이 창 아래로 잘렸습니다. 이제 창보다 긴 승인 화면은 위에서부터 시작하고 화면 자체가 스크롤됩니다.
+- 허용하거나 거절한 뒤 3초 안에 AI 쪽 페이지로 넘어가지 않으면, 'AI로 돌아가는 중' 대신 '연결을 허용했습니다'와 다음 할 일을 보여줍니다: AI에서 연결됐는지 확인하고 창을 닫고, 안 됐으면 AI에서 다시 로그인. AI의 주소가 늦게 답하거나 답하지 않으면 브라우저가 이 페이지에 남는데, 지금까지는 로딩만 보여서 연결이 끝났는지 알 수 없었습니다. '승인 후 돌아갈 곳'은 버튼 이름에 맞춰 '허용하면 돌아갈 곳'이 되었습니다.
+- 연결할 AI 목록이 마지막으로 쓴 시각까지 보여줍니다. 같은 날 다시 로그인해 생긴 같은 이름의 AI를 구별할 수 있습니다. 이름이 앱 이름과 같으면 앱 이름을 한 번만 씁니다.
+- 연구 트리에서 살아 있는 가지가 많으면 선이 폭을 많이 차지해 줄의 글자가 쓸 자리가 좁아집니다. 지금까지는 태그와 관련 기록이 줄어들지 않아 제목이 사라지고, '지금' 표시와 관련 기록이 카드 끝에서 잘렸습니다. 이제 줄마다 남은 폭에 맞춰 덜 중요한 것부터 줄입니다: 갈래 종류는 기호만 남기고, 가지 이름은 줄였다가 숨기고, '중요'와 '지금'은 기호만 남기고, 관련 기록은 줄였다가 수를 줄입니다. 제목은 말줄임표로 끝날 뿐 사라지지 않습니다. 소개 페이지의 예시 트리도 휴대폰 폭에서 제목이 보입니다.
+- 원격 서버에서 로그인이 `Address in use (os error 98)`로 끝나면 설정에 고정한 콜백 포트를 다른 프로그램이 쓰는 것입니다. 연결 안내의 문제 해결 표에 확인 방법과 다른 포트로 로그인하는 명령을 적었습니다.
+- 배포: 웹사이트만 바뀝니다. 마이그레이션과 MCP 함수는 그대로입니다.
+
 ## 0.66.0 — 2026-10-18
 
 When an AI tool signs in again, the approval screen now asks which AI it is: a new one, or one of yours, which keeps its name, permissions and project approvals while the connection it used before stops working. Until now each sign-in that registered a new client added another AI without project approvals. The interface's own words were rewritten to read as a person writes them: no sentences glued to labels, no arrows on links, short statuses.

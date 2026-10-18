@@ -176,6 +176,7 @@ API 키가 노출됐거나 더 쓰지 않는 AI는 **내 AI → AI 삭제**로 �
 | `instructions_required` | AI가 현재 프로젝트 작업 지침을 다시 읽은 뒤, 여전히 필요한 작업만 재시도 |
 | 서비스 계정 연결 설정 누락 | 서비스 운영 설정 문제. 사용자에게 Supabase 설정이나 반복 키 발급을 요구하지 말고 관리자에게 문의 |
 | 다시 로그인하라고 함 | 비밀번호를 바꿨거나 '내 AI'에서 연결을 지웠는지 확인 → 그 환경에서 다시 로그인(원격 서버는 `--no-browser`)하고, 승인 화면에서 쓰던 AI를 고름 |
+| 로그인이 `Address in use (os error 98)`로 끝남 | 로그인을 받을 포트를 다른 프로그램이 쓰고 있음. 설정에 `mcp_oauth_callback_port`를 고정했다면 그 포트를 누가 쓰는지 `ss -ltnp`로 보고, 이번 로그인만 다른 포트로: `codex -c mcp_oauth_callback_port=5556 mcp login research-loop-plugin --no-browser` |
 | '내 AI'에 같은 AI가 여러 개 있음 | 다시 로그인할 때 **새 AI**로 승인한 연결입니다. 쓰지 않는 연결은 '내 AI'에서 삭제하고, 다음 로그인부터는 쓰던 AI를 고름 |
 | 옛 지침·아이콘이 계속 보임 | Codex/Claude Code를 다시 열고 새 대화. 기존 대화의 지침은 남을 수 있음. Claude Code는 자동 업데이트가 켜져 있는지 확인 |
 
