@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.67.0",
+  "version": "0.67.1",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "A question's page puts the evidence it cites under its answer, counter-evidence first, and folds every round before the last three, saying how many still wait to be read. The briefing lists first the changes to what a checked conclusion or an open question cites, and says which. A judgment a person confirmed leads its page. Requests for AI now say to ask the AI to check its queue, which is what makes it take them. The usage history switch says what it counts. The trial's fidelity checks read what a run wrote, not only its numbers.",
+        "release_notes": "AIs now have one rule set for explaining a visual: say how to read it, what changes, what it means for the research and what is not verified, beside the visual and again in the final reply; keep interactions computed from one state and toy examples labelled. MCP clients read it as get_guide(topic:writing, section:visuals) and the plugin bundles it as a reference. Writers of numbers without a figure are not sent to it.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

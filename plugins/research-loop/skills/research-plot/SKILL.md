@@ -11,7 +11,7 @@ On a Research Loop page, a comparison that fits a table is drawn by the page its
 
 ## Choose and render
 
-For a new or substantially revised figure, read the shared [visual quality rules](../research-loop/references/visual-quality.md). Use `style_context(profile="presentation")` for slides and inspect at final placement; the default `paper` profile preserves existing figures. Keep explanation in a separate slide headline/caption, outside the reusable image.
+For a new or substantially revised figure, read [Visual explanations](../research-loop/references/visual-explanations.md) for format and interpretation, then the shared [visual quality rules](../research-loop/references/visual-quality.md) for production. Use `style_context(profile="presentation")` for slides and inspect at final placement; the default `paper` profile preserves existing figures. Keep explanation in a separate slide headline/caption and accompanying prose, outside the reusable image.
 
 - For Research Loop sources or attachments, follow [Research Loop](../research-loop/SKILL.md). Read `get_guide(topic:visualization, section)` for the chosen technique, reusing a guide already loaded. Do not load the whole catalog or unrelated pages.
 - Decide the reader question and focal comparison first. Choose axes, chart type, ordering, legend, lines, symbols and emphasis to make the relevant difference visible, with its absolute size and available uncertainty. Keep full inputs, units and missingness; highlighting is not significance. Do not force everything into bars.
@@ -29,5 +29,7 @@ Open the actual PNG at the intended page width. Check glyphs/math, label collisi
 Use the bounded helper limits described in usage. Validate input file size and row count before loading research data; do not load an entire dataset merely to inspect its shape. Large evidence stays in its source/table; create an explicitly described aggregate or smaller panels for the figure. A limit error means simplify or report the limit, not raise it or launch concurrent replacements. Do not start a render while another guarded render is running. Limit visual revision to two additional renders, then report the remaining layout issue.
 
 Keep source data and rendering code beside the exports so the plot can be revised. The helper closes the figure by default, including failed exports. Attach only when requested using the [existing upload workflow](../research-loop/references/media.md); preserve the destination revision and unrelated blocks. Optional PDF/SVG remain local deliverables; the page image API accepts raster files. Confirm the saved media reference and distinguish approval-pending from applied.
+
+In the final reply, give the plot's reading, the comparison it shows, what it means for the research and its limits; a link or caption alone is not the explanation.
 
 If Python/Matplotlib is unavailable, use the existing [local setup](../method-figure/references/setup.md) only as needed. Do not silently install global dependencies, download fonts or send research to a third party. MCP-only clients do not have these local helpers: apply the returned style with available tools or report the missing execution capability.

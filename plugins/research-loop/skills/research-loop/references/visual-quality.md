@@ -2,6 +2,8 @@
 
 Apply this reference when creating or substantially revising a visual. Reuse an unchanged, adequate figure. Read only the selected technique with `get_guide(topic:visualization, section)`; its `visual_quality` field carries the shared rules for MCP-only clients. Instructions are in English; write labels and captions in the user's language while preserving established names and notation.
 
+Use [Visual explanations](visual-explanations.md) for choosing between interactive explanations and measured plots, checking interactions, and pairing the visual with its reading, research meaning and limits. This reference adds production details; it does not replace that explanation in the final reply.
+
 ## 1. Define the visual's job
 
 - Name the question, source evidence, focal comparison and destination before drawing. Identify whether it is a measured result, mechanism, conceptual illustration or original source figure.
@@ -49,7 +51,7 @@ Apply this reference when creating or substantially revising a visual. Reuse an 
 3. Distinguish portable outlined SVG from editable text. Use `portable=False` for text-preserving plot SVG when matching fonts are available; the method renderer retains SVG text. Reopen the output in its intended consumer before promising editability.
 4. Inspect the actual export and the assembled slide/page: glyphs, contrast, hierarchy, alignment, collisions, arrow paths, clipping, scale/uncertainty and source fidelity. Check a full-slide view and the intended narrow view. Successful rendering alone does not pass this check.
 5. Fix observed defects and inspect again within the existing bounded rendering workflow (at most two additional visual revisions). Report any remaining or unchecked issue. Never waive source correctness or claim a visual check that did not occur.
-6. Add a concise external caption explaining the comparison, material conditions and uncertainty. Add distinct alt text describing the essential structure/pattern. Preserve links to complete evidence. For synthetic examples, state clearly in the caption and surrounding document that they are demonstrations, not research results.
+6. Add a concise external caption explaining the comparison, material conditions and uncertainty, with nearby prose when needed. Add distinct alt text describing the essential structure/pattern. Preserve links to complete evidence. For synthetic examples, state clearly in the caption and surrounding document that they are demonstrations, not research results.
 
 These are Research Loop production defaults informed by the user's preferences, not experimental proof of a universally best style. Project examples take priority where compatible with accurate evidence and readable output.
 

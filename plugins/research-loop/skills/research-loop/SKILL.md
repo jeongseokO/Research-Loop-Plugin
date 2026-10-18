@@ -73,6 +73,6 @@ Reuse an already-read guide unless its revision changed.
 - Preserve unrelated content; never replace a page from a partial read. Project, page and assignment revisions differ.
 - Respect capabilities and immutable authorship; applied and approval-pending differ, and approval is never bypassed. Only the human accepts or declines assignments. AI may report verified accepted work done with a current checkpoint; Sub completion first reconciles its Main report. Main completion stays with the human unless they explicitly instruct it for that Main.
 - A task is not permission for new costly experiments, assignments or schedule changes. Never expose credentials or private cross-project planning.
-- Pages open with the question or purpose; parent claims carry indented evidence; unfamiliar terms get first-use clickable notes. New figures hold labels and data only; the explanation goes in the caption.
+- Pages open with the question or purpose; parent claims carry indented evidence; unfamiliar terms get first-use clickable notes. New figures: labels and data only; [explain](references/visual-explanations.md) nearby and in final replies.
 - Reconcile only verified changes; keep unchecked dependencies and unapplied proposals pending. No relevant change, no write.
 - Report progress on the existing assignment, not a new status note; `review_required` needs a version-checked checkpoint. Notifications do not wake other AIs.

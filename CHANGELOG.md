@@ -2,6 +2,16 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.67.1 — 2026-10-18
+
+AIs now have one rule set for explaining a visual: say how to read it, what changes, what it means for the research and what is not verified, beside the visual and again in the final reply; keep interactions computed from one state and toy examples labelled. MCP clients read it as get_guide(topic:writing, section:visuals) and the plugin bundles it as a reference. Writers of numbers without a figure are not sent to it.
+
+- AI가 그림이나 인터랙티브 설명을 만들 때 따를 규칙을 한곳에 모았습니다. 그림이 무엇에 답하는지, 어떻게 읽는지, 무엇이 보이거나 바뀌는지, 방법이나 결정에 무슨 뜻인지, 무엇이 확인되지 않았는지를 그림 옆과 최종 답변에 함께 씁니다. 파일·위젯·링크만으로는 설명이 아닙니다.
+- 인터랙션은 관계를 더 잘 보여 줄 때만 쓰고, 계산되는 값은 같은 입력 상태에서 함께 바뀌게, 손으로 그린 단계는 그렇다고 밝히게 했습니다. 개념 예시·실측·실행 안 한 제안을 구분하고, 도식이 효과를 입증하지 않는다는 점(설명 분산 ≠ 과제 성능, FLOPs 감소 ≠ 실측 속도)을 적습니다.
+- MCP에서는 `get_guide(topic:writing, section:visuals)`로, 플러그인에서는 `visual-explanations.md` 참조로 같은 원본을 읽습니다. explainer·equation 지침과 시각화 지침이 이곳을 가리키고, 숫자나 표만 쓰는 작업은 그림이 있을 때만 읽습니다.
+- Codex가 만든 변경을 검토해 넣었습니다. AI가 읽는 문서에서 관리용 문장을 빼고, 섹션을 3,938자에서 2,254자로 줄였습니다.
+- 배포: 마이그레이션은 없습니다. 지침이 바뀌었으니 MCP 함수를 다시 올립니다.
+
 ## 0.67.0 — 2026-10-18
 
 A question's page puts the evidence it cites under its answer, counter-evidence first, and folds every round before the last three, saying how many still wait to be read. The briefing lists first the changes to what a checked conclusion or an open question cites, and says which. A judgment a person confirmed leads its page. Requests for AI now say to ask the AI to check its queue, which is what makes it take them. The usage history switch says what it counts. The trial's fidelity checks read what a run wrote, not only its numbers.

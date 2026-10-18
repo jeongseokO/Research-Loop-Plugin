@@ -5,7 +5,7 @@ description: Create or revise a static methodology figure (architecture or algor
 
 # Method figure
 
-On a Research Loop page a mechanism is an explainer block (writing guide section `explainer`); draw an image only when asked or for a paper or slides. Make the mechanism understandable through structure and concise labels. **Default to code-authored vectors** (Matplotlib shapes, lines, text and formulas, or another vector tool); image generation never supplies scientific structure. No explanatory text, conclusions or baked-in captions, even one sentence: explanations go in the external caption. Rendering does not grant project write access.
+On a Research Loop page a mechanism is an explainer block (writing guide section `explainer`); draw an image only when asked or for a paper or slides. Make the mechanism understandable through structure and concise labels. **Default to code-authored vectors** (Matplotlib shapes, lines, text and formulas, or another vector tool); image generation never supplies scientific structure. Keep explanations outside images; [explain](../research-loop/references/visual-explanations.md) in captions and final replies. Rendering does not grant project write access.
 
 ## Choose the content
 

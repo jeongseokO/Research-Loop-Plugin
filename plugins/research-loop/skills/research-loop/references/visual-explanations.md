@@ -1,0 +1,11 @@
+# Visual explanations: help the reader connect the picture to the research
+
+Read when a visual explains something, in chat, on a page or in a figure file. The visual and its prose answer one research question; neither replaces the other.
+
+- Say in prose the question the visual answers, how to read it (axes, colours, arrows, controls), what is observed or changes, what that means for the method or decision, and what is unverified. Fit length and order to the question: no fixed headings, no retelling of every label or step.
+- Put that reading beside the visual, in page text or the external caption, and give it again briefly in the final chat reply: a file, widget, link, tooltip or alt text alone is not the explanation. Image files carry labels and data, not explanatory paragraphs.
+- Use interaction only when changing a condition, following a mechanism or stepping through a calculation shows the relation better than a static figure, table or sentence. An explainer's steps are authored, not simulated, and chat HTML or scripts do not run on a page; in chat, follow the host's own visual tool if it has one.
+- Across states keep unchanged objects where they were, and scales, identities and colours fixed. Move something only when its position is the change: a new query direction leaves the reference samples in place, so the reader sees which scores and selections change.
+- Expose only the controls the question needs, each with its name, range and current value. Computed values (scores, selections, outputs) come from the same current inputs and update together; authored or schematic states say so. Never pass off motion or fixed outcomes as live computation.
+- Label each piece as a toy example, a measurement or an unrun proposal, with its source and scope. A schematic explains a mechanism but does not show it helps: explained variance is not task performance, and fewer FLOPs are not a measured speedup. Keep adverse and inconclusive evidence; a missing measurement stays unknown.
+- When you make a visual, look at the rendered result at its real size; for interaction, try the default, a meaningful change and the edges, and check that labels, values and outputs agree. Say which checks you did not do.
