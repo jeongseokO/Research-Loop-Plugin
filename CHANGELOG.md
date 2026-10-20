@@ -2,6 +2,18 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.68.0 — 2026-10-20
+
+AIs can now mark the sentences a reader must not miss: [sentence]{.key} for the answer a section must keep, .support for evidence, .counter for a contrary result or risk, .unverified for an assumption or unrun check. Each has one look (marker, green, double red, wavy amber) and keeps the text colour. The writing guide allows one key and three marks per section, one per paragraph, one sentence each, and the MCP server refuses an AI write that adds marks past that. People mark and clear them in the editor.
+
+- AI가 페이지의 중요한 문장을 네 가지 뜻으로 칠합니다. 핵심은 형광펜과 굵게, 근거는 초록 밑줄, 반대·위험은 빨간 이중 밑줄, 미확인은 주황 물결 밑줄입니다. 글자색은 그대로라 링크(색 글자)나 용어 설명(회색 점선)과 헷갈리지 않고, 마우스를 올리면 이름이 뜹니다.
+- 너무 많이 칠하지 않게 한도를 둡니다. `##` 절마다 핵심 1개와 강조 3개, 문단이나 목록 항목마다 1개, 강조 하나에 한 문장까지이고, 제목·캡션·표·인용·콜아웃·코드에는 칠하지 않습니다. 쓰기 지침(revision 41)이 이렇게 안내하고, MCP 서버는 AI의 페이지 쓰기가 한도를 넘으면 규칙 이름(`emphasis.key` 등)과 함께 거절합니다. 사람이 칠해 둔 강조는 그대로 두고, AI의 쓰기가 강조를 늘릴 때만 거절합니다. 사람이 한도보다 많이 칠한 문단도 AI가 고칠 수 있습니다.
+- 편집기에서 직접 칠하고 지울 수 있습니다. 도구 막대의 '강조'나 ⌘/Ctrl+Shift+H로 메뉴를 열고 1–4로 칠하고 0으로 지웁니다. 아무것도 고르지 않았으면 커서가 있는 문장을 칠합니다. 사람이 칠하는 강조에는 개수 제한이 없습니다.
+- 편집기에서 굵게 쓴 문장의 일부만 강조하거나 링크를 걸고 저장하면 별표(**)가 그대로 보이던 문제를 고쳤습니다.
+- 한 줄 미리보기와 슬라이드에는 표시 없이 글만 남습니다. 화면 낭독기는 '반대·위험: …'처럼 이름을 먼저 읽고, 복사한 글에는 이름이 섞이지 않습니다.
+- 차트 문법은 쓰기 지침의 핵심에서 evidence 섹션으로 옮겼습니다. 차트를 그릴 때만 필요한 내용이라, 핵심 지침이 8,074자에서 8,050자로 줄었습니다.
+- 배포: 마이그레이션은 없습니다. MCP 함수(검사, 지침, 패널), 사이트, 플러그인을 다시 올립니다.
+
 ## 0.67.1 — 2026-10-18
 
 AIs now have one rule set for explaining a visual: say how to read it, what changes, what it means for the research and what is not verified, beside the visual and again in the final reply; keep interactions computed from one state and toy examples labelled. MCP clients read it as get_guide(topic:writing, section:visuals) and the plugin bundles it as a reference. Writers of numbers without a figure are not sent to it.

@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.67.1",
+  "version": "0.68.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "AIs now have one rule set for explaining a visual: say how to read it, what changes, what it means for the research and what is not verified, beside the visual and again in the final reply; keep interactions computed from one state and toy examples labelled. MCP clients read it as get_guide(topic:writing, section:visuals) and the plugin bundles it as a reference. Writers of numbers without a figure are not sent to it.",
+        "release_notes": "AIs can now mark the sentences a reader must not miss: [sentence]{.key} for the answer a section must keep, .support for evidence, .counter for a contrary result or risk, .unverified for an assumption or unrun check. Each has one look (marker, green, double red, wavy amber) and keeps the text colour. The writing guide allows one key and three marks per section, one per paragraph, one sentence each, and the MCP server refuses an AI write that adds marks past that. People mark and clear them in the editor.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
