@@ -2,6 +2,20 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.69.0 — 2026-10-20
+
+Notes an AI writes as an A-to-Z explanation can now be bound like a book: a cover note's fields.series orders 2–40 notes. The cover lists the parts before its body; each part shows its series and place under its title, unfolds the contents, and ends with the previous and next parts. People reorder or take parts out on the cover, and the notes stay. The writing guide (42) tells AIs to write such explanations as a series, and the MCP server refuses a series that breaks a rule, naming it.
+
+- AI에게 어떤 개념을 처음부터 끝까지, 단계별로 설명해 달라고 하면 보통 노트 여러 편으로 나눠 씁니다. 이제 이 노트들을 책처럼 시리즈로 묶습니다. 표지 노트 하나가 2–40편의 순서를 가지고, 데이터베이스 변경은 없습니다.
+- 표지에서는 본문 앞의 목차에서 편마다 번호, 제목, 한 줄 설명을 보고 '1편부터 읽기'로 시작합니다. 각 편에는 제목 아래에 시리즈 이름과 '2/3편', 그 자리에서 펼치는 목차가 있고, 본문 끝에 이전 편과 다음 편이 있습니다. 첫 편의 이전과 마지막 편의 다음은 표지로 갑니다. 편을 넘겨도 읽기 창의 위치와 전체 화면은 그대로입니다.
+- 표지의 '순서 편집'에서 편을 위아래로 옮기거나 뺍니다. 키보드로도 똑같이 쓸 수 있고, 빼도 노트는 지워지지 않습니다. 남는 편이 2개보다 적으면 '시리즈 풀기'로 풉니다. 편집하는 사이 다른 곳에서 순서가 바뀌었으면 저장하지 않고 알려 줍니다.
+- 보관되었거나 찾을 수 없는 편은 목차에 흐리게 남고, 번호와 이전·다음에서는 빠집니다. 표지를 보관하면 시리즈가 풀립니다.
+- 노트 목록에서는 표지에 '시리즈 · 3편', 각 편에 '시리즈 이름 · 2편' 라벨이 붙습니다. 시리즈 이름으로 검색하면 그 편들도 나옵니다.
+- AI 지침: 쓰기 지침 42의 핵심에 여러 편으로 나눠야 하는 설명은 시리즈로 쓴다는 내용을 넣었고(8,093자), 쓰는 법은 노트 속성 안내(revision 10)에 있습니다. 각 편을 먼저 쓰고 표지는 마지막에 쓰며, 편 제목에 번호를 넣지 않고 본문에 목차나 다음 편 링크를 넣지 않습니다. 이미 있는 노트도 AI에게 부탁하면 시리즈로 묶습니다.
+- MCP 서버는 규칙에 어긋난 시리즈를 규칙 이름(`series.shape`, `series.cover`, `series.chapter`, `series.nested`, `series.taken`)과 함께 거절합니다. 노트 만들기와 고치기, 일괄 고치기, 변경 제안에서 모두 검사합니다.
+- 데모 프로젝트에 3편짜리 시리즈를 넣었습니다.
+- 배포: 마이그레이션은 없습니다. MCP 함수(검사와 지침)와 사이트를 다시 올립니다.
+
 ## 0.68.0 — 2026-10-20
 
 AIs can now mark the sentences a reader must not miss: [sentence]{.key} for the answer a section must keep, .support for evidence, .counter for a contrary result or risk, .unverified for an assumption or unrun check. Each has one look (marker, green, double red, wavy amber) and keeps the text colour. The writing guide allows one key and three marks per section, one per paragraph, one sentence each, and the MCP server refuses an AI write that adds marks past that. People mark and clear them in the editor.
