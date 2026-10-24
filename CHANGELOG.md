@@ -2,15 +2,6 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
-## 0.70.2 — 2026-10-24
-
-The research library's latest edits now continue past the first eight: a More button under the list opens twenty older records at a time, newest first, and the heading shows how many of how many are listed. The keyboard moves on to the first record that opened. The list starts again from eight when the project or the search words change. Nothing new is loaded; the records are the ones the app already holds.
-
-- '모든 기록' 화면의 '최근 수정한 기록'이 8개에서 멈추던 것을 고쳤습니다. 목록 아래 '더 보기'를 누를 때마다 20개씩 더 보이고, 제목 줄 오른쪽에 '31개 중 8개'처럼 개수가 나옵니다.
-- '더 보기'를 누르면 새로 열린 첫 기록으로 키보드 초점이 옮겨 가서, 읽던 곳에서 이어 볼 수 있습니다.
-- 프로젝트를 바꾸거나 검색어를 바꾸면 다시 8개부터 보입니다. 이미 불러온 기록 목록이라 펼칠 때 페이지를 새로 받지 않습니다.
-- 배포: 마이그레이션과 MCP 함수 변경은 없습니다. 사이트만 다시 올립니다.
-
 ## 0.70.1 — 2026-10-24
 
 Bold and italics now close before Korean, Japanese and Chinese text even right after a parenthesis or quote, so **활용(exploitation)**이다 renders bold instead of showing its asterisks. Pages, notes, the editor and the plugin panel read Markdown with the CJK-friendly rule, and saved pages need no edit. The writing guide (43) now asks AIs to mark each section's one answer or decision as its key sentence, within the same limits.
