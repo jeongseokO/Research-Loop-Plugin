@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.69.0",
+  "version": "0.70.2",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Notes an AI writes as an A-to-Z explanation can now be bound like a book: a cover note's fields.series orders 2–40 notes. The cover lists the parts before its body; each part shows its series and place under its title, unfolds the contents, and ends with the previous and next parts. People reorder or take parts out on the cover, and the notes stay. The writing guide (42) tells AIs to write such explanations as a series, and the MCP server refuses a series that breaks a rule, naming it.",
+        "release_notes": "The research library's latest edits now continue past the first eight: a More button under the list opens twenty older records at a time, newest first, and the heading shows how many of how many are listed. The keyboard moves on to the first record that opened. The list starts again from eight when the project or the search words change. Nothing new is loaded; the records are the ones the app already holds.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

@@ -2,6 +2,36 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.70.2 — 2026-10-24
+
+The research library's latest edits now continue past the first eight: a More button under the list opens twenty older records at a time, newest first, and the heading shows how many of how many are listed. The keyboard moves on to the first record that opened. The list starts again from eight when the project or the search words change. Nothing new is loaded; the records are the ones the app already holds.
+
+- '모든 기록' 화면의 '최근 수정한 기록'이 8개에서 멈추던 것을 고쳤습니다. 목록 아래 '더 보기'를 누를 때마다 20개씩 더 보이고, 제목 줄 오른쪽에 '31개 중 8개'처럼 개수가 나옵니다.
+- '더 보기'를 누르면 새로 열린 첫 기록으로 키보드 초점이 옮겨 가서, 읽던 곳에서 이어 볼 수 있습니다.
+- 프로젝트를 바꾸거나 검색어를 바꾸면 다시 8개부터 보입니다. 이미 불러온 기록 목록이라 펼칠 때 페이지를 새로 받지 않습니다.
+- 배포: 마이그레이션과 MCP 함수 변경은 없습니다. 사이트만 다시 올립니다.
+
+## 0.70.1 — 2026-10-24
+
+Bold and italics now close before Korean, Japanese and Chinese text even right after a parenthesis or quote, so **활용(exploitation)**이다 renders bold instead of showing its asterisks. Pages, notes, the editor and the plugin panel read Markdown with the CJK-friendly rule, and saved pages need no edit. The writing guide (43) now asks AIs to mark each section's one answer or decision as its key sentence, within the same limits.
+
+- 괄호나 따옴표로 끝나는 굵은 글 바로 뒤에 조사가 붙으면 별표(**)가 그대로 보이던 문제를 고쳤습니다. 예: `**활용(exploitation)**이다`. 페이지, 노트, 편집기, 플러그인 패널이 한·중·일 문장에 맞춘 규칙으로 읽고, 영어 문장은 지금과 같습니다. 저장된 글은 고치지 않아도 굵게 보입니다.
+- AI가 중요한 문장을 거의 칠하지 않던 문제: 쓰기 지침 43이 절마다 답이나 결정이 있으면 그 문장을 핵심(형광펜)으로 칠하라고 안내하고, 검토 단계에서 확인합니다. 한도(절마다 핵심 1개, 강조 3개)와 서버 검사는 그대로입니다.
+- 배포: 마이그레이션은 없습니다. MCP 함수(지침, 패널)와 사이트를 다시 올립니다.
+
+## 0.70.0 — 2026-10-23
+
+Slides no longer cut words, and PPTX export no longer refuses. Text, lists, tables, captions and titles are measured with glyph widths taken from the fonts, set smaller down to a floor, and past it drawn whole and marked. A checks list in the studio names each place to fix, with one-click fixes: grow the box, or continue on the next slide. PPTX files use Pretendard with Korean attributes, soft wraps, point line spacing and tables shaped like the screen, and the studio says what went in overflowing.
+
+- 슬라이드의 글이 상자 경계에서 잘리지 않습니다. 글·목록·도형·표·캡션·제목이 정한 크기로 들어가지 않으면 하한(본문·표 12pt, 제목 24pt)까지 줄이고, 그래도 넘치면 상자 밖까지 다 보이게 그린 뒤 '넘침'으로 표시합니다.
+- 글자 폭을 어림하지 않고 글꼴 파일에서 잰 표로 잽니다. 줄은 화면 글꼴(Pretendard)로 나누고, 크기와 들어감은 PowerPoint·Google Slides가 대신 쓸 수 있는 글꼴까지 가장 넓은 폭으로 판정해, 어느 글꼴로 열어도 줄이 늘지 않습니다. 한글 줄은 전보다 상자를 더 채웁니다.
+- 표는 내용에 맞춰 열 너비를 나누고 숫자 열은 오른쪽으로 정렬합니다. 그림 캡션은 필요한 만큼 여러 줄이 되고 그만큼 그림이 작아집니다(캡션이 상자의 40%를 넘으면 표시). 차트 항목 이름이 길면 16px까지 줄이고 두 줄로 씁니다.
+- 편집 화면 머리의 '점검 N'에서 고칠 곳과 다듬을 곳을 한 번에 보고, 줄을 누르면 그 슬라이드의 그 상자로 갑니다. 고칠 곳이 있는 슬라이드에는 점이, 상자에는 주의 테두리와 꼬리표가 붙습니다. 상자를 고르면 '상자 키우기'나 '다음 슬라이드로 잇기'로 바로 고칩니다. 잇기는 들어가는 만큼 남기고 나머지를 바로 뒤 새 슬라이드로 옮깁니다(목록은 항목, 표는 행, 글은 문단이나 문장 단위).
+- PPTX 내보내기는 맞춤 때문에 거부하지 않습니다. 글꼴은 Pretendard(세리프 슬라이드는 MaruBuri)이고, 한글 문자 집합과 ko-KR 언어를 적으며, 강제 줄바꿈 없이 문단만 나누고, 줄 간격은 화면과 같은 pt 값입니다. 표의 열 너비·선·정렬도 화면과 같습니다. 내보낸 뒤 머리 아래 띠가 넘친 곳과 읽지 못한 그림을 슬라이드 링크와 함께 알립니다.
+- 음수 막대의 값이 아래 항목 이름과 겹치던 문제와, 고치는 중인 슬라이드의 썸네일이 바로 바뀌지 않던 문제를 고쳤습니다.
+- 80장 발표를 그리는 시간이 8.19ms에서 3.27ms로 줄었습니다.
+- 배포: 마이그레이션과 저장 형식 변경은 없습니다. 사이트와 MCP 함수(패널)를 다시 올립니다.
+
 ## 0.69.0 — 2026-10-20
 
 Notes an AI writes as an A-to-Z explanation can now be bound like a book: a cover note's fields.series orders 2–40 notes. The cover lists the parts before its body; each part shows its series and place under its title, unfolds the contents, and ends with the previous and next parts. People reorder or take parts out on the cover, and the notes stay. The writing guide (42) tells AIs to write such explanations as a series, and the MCP server refuses a series that breaks a rule, naming it.
