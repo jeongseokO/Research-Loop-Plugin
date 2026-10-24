@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.70.0",
+  "version": "0.71.1",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Slides no longer cut words, and PPTX export no longer refuses. Text, lists, tables, captions and titles are measured with glyph widths taken from the fonts, set smaller down to a floor, and past it drawn whole and marked. A checks list in the studio names each place to fix, with one-click fixes: grow the box, or continue on the next slide. PPTX files use Pretendard with Korean attributes, soft wraps, point line spacing and tables shaped like the screen, and the studio says what went in overflowing.",
+        "release_notes": "Rebuilds the embedded AI panels using the exact locked dependencies so their checked-in output matches a fresh CI installation. The scheduled legal revisions, independent Google AI approvals, and Free/Paid project limits from 0.71.0 are unchanged.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

@@ -2,6 +2,41 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.71.1 — 2026-10-24
+
+Rebuilds the embedded AI panels using the exact locked dependencies so their checked-in output matches a fresh CI installation. The scheduled legal revisions, independent Google AI approvals, and Free/Paid project limits from 0.71.0 are unchanged.
+
+- 로컬에 설치된 번들러가 잠금 파일보다 새 버전이어서 CI의 패널 원본 대조가 실패하던 문제를 해결했습니다. 잠금 파일대로 다시 설치하고 정식 릴리스 명령으로 패널을 생성합니다.
+- 0.71.0의 법률 문서·별도 동의·프로젝트 한도 동작과 시행 일정은 그대로 유지합니다.
+- 공급자에게 확인해야 하는 전체 처리국 문의 원고를 미발송 상태로 남겼습니다.
+
+## 0.71.0 — 2026-10-24
+
+Google busy times reach a connected AI only after a separate, recorded approval, including for existing users. New account entitlements prepare limits of two active owned projects for Free and ten for operator-invited Paid accounts, with archived projects excluded and enforcement deferred until the announced date. Korean and English legal revisions, a change notice, preserved previous texts, and current Google data guidance explain the actual service and verified operations.
+
+- Google 바쁜 시간 가져오기와 본인 AI 전달을 분리하고 기존 이용자도 다시 선택하도록 합니다. 본인·팀 AI 전달은 고지 버전과 승인 시각을 기록하며, 재연결·중단 때 초기화합니다.
+- Free 소유 프로젝트 2개, 운영자 직접 초대 혜택 Paid 계정 10개 한도를 DB에서 적용합니다. 보관함과 다른 사람 소유 프로젝트 참여는 제외하며 기존 프로젝트는 삭제하거나 강제 보관하지 않습니다. 실제 결제는 도입하지 않습니다.
+- 한영 개인정보 처리방침·이용약관 개정안과 사전 공지, Google 별도 고지 및 이전 공개본을 제공합니다. 한도 적용은 공지된 시행일 이후 시작합니다.
+- Docker를 복구하고 별도 PostgreSQL 17 Supabase에서 신규 마이그레이션과 전체 SQL 검사를 검증합니다.
+- 배포: 새 마이그레이션 3개, MCP Edge 함수와 웹을 함께 올립니다. 운영자 권한과 한도 시행 시각은 확인한 운영 설정으로 별도 지정합니다.
+
+## 0.70.2 — 2026-10-24
+
+The research library's latest edits now continue past the first eight: a More button under the list opens twenty older records at a time, newest first, and the heading shows how many of how many are listed. The keyboard moves on to the first record that opened. The list starts again from eight when the project or the search words change. Nothing new is loaded; the records are the ones the app already holds.
+
+- '모든 기록' 화면의 '최근 수정한 기록'이 8개에서 멈추던 것을 고쳤습니다. 목록 아래 '더 보기'를 누를 때마다 20개씩 더 보이고, 제목 줄 오른쪽에 '31개 중 8개'처럼 개수가 나옵니다.
+- '더 보기'를 누르면 새로 열린 첫 기록으로 키보드 초점이 옮겨 가서, 읽던 곳에서 이어 볼 수 있습니다.
+- 프로젝트를 바꾸거나 검색어를 바꾸면 다시 8개부터 보입니다. 이미 불러온 기록 목록이라 펼칠 때 페이지를 새로 받지 않습니다.
+- 배포: 마이그레이션과 MCP 함수 변경은 없습니다. 사이트만 다시 올립니다.
+
+## 0.70.1 — 2026-10-24
+
+Bold and italics now close before Korean, Japanese and Chinese text even right after a parenthesis or quote, so **활용(exploitation)**이다 renders bold instead of showing its asterisks. Pages, notes, the editor and the plugin panel read Markdown with the CJK-friendly rule, and saved pages need no edit. The writing guide (43) now asks AIs to mark each section's one answer or decision as its key sentence, within the same limits.
+
+- 괄호나 따옴표로 끝나는 굵은 글 바로 뒤에 조사가 붙으면 별표(**)가 그대로 보이던 문제를 고쳤습니다. 예: `**활용(exploitation)**이다`. 페이지, 노트, 편집기, 플러그인 패널이 한·중·일 문장에 맞춘 규칙으로 읽고, 영어 문장은 지금과 같습니다. 저장된 글은 고치지 않아도 굵게 보입니다.
+- AI가 중요한 문장을 거의 칠하지 않던 문제: 쓰기 지침 43이 절마다 답이나 결정이 있으면 그 문장을 핵심(형광펜)으로 칠하라고 안내하고, 검토 단계에서 확인합니다. 한도(절마다 핵심 1개, 강조 3개)와 서버 검사는 그대로입니다.
+- 배포: 마이그레이션은 없습니다. MCP 함수(지침, 패널)와 사이트를 다시 올립니다.
+
 ## 0.70.0 — 2026-10-23
 
 Slides no longer cut words, and PPTX export no longer refuses. Text, lists, tables, captions and titles are measured with glyph widths taken from the fonts, set smaller down to a floor, and past it drawn whole and marked. A checks list in the studio names each place to fix, with one-click fixes: grow the box, or continue on the next slide. PPTX files use Pretendard with Korean attributes, soft wraps, point line spacing and tables shaped like the screen, and the studio says what went in overflowing.
