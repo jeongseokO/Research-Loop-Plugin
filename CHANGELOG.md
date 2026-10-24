@@ -2,14 +2,6 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
-## 0.70.1 — 2026-10-24
-
-Bold and italics now close before Korean, Japanese and Chinese text even right after a parenthesis or quote, so **활용(exploitation)**이다 renders bold instead of showing its asterisks. Pages, notes, the editor and the plugin panel read Markdown with the CJK-friendly rule, and saved pages need no edit. The writing guide (43) now asks AIs to mark each section's one answer or decision as its key sentence, within the same limits.
-
-- 괄호나 따옴표로 끝나는 굵은 글 바로 뒤에 조사가 붙으면 별표(**)가 그대로 보이던 문제를 고쳤습니다. 예: `**활용(exploitation)**이다`. 페이지, 노트, 편집기, 플러그인 패널이 한·중·일 문장에 맞춘 규칙으로 읽고, 영어 문장은 지금과 같습니다. 저장된 글은 고치지 않아도 굵게 보입니다.
-- AI가 중요한 문장을 거의 칠하지 않던 문제: 쓰기 지침 43이 절마다 답이나 결정이 있으면 그 문장을 핵심(형광펜)으로 칠하라고 안내하고, 검토 단계에서 확인합니다. 한도(절마다 핵심 1개, 강조 3개)와 서버 검사는 그대로입니다.
-- 배포: 마이그레이션은 없습니다. MCP 함수(지침, 패널)와 사이트를 다시 올립니다.
-
 ## 0.70.0 — 2026-10-23
 
 Slides no longer cut words, and PPTX export no longer refuses. Text, lists, tables, captions and titles are measured with glyph widths taken from the fonts, set smaller down to a floor, and past it drawn whole and marked. A checks list in the studio names each place to fix, with one-click fixes: grow the box, or continue on the next slide. PPTX files use Pretendard with Korean attributes, soft wraps, point line spacing and tables shaped like the screen, and the studio says what went in overflowing.
