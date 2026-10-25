@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "looks": {
+    "vivid": {
+      "family": "sans",
+      "background": "FFFFFF",
+      "strong": "0F1419",
+      "body": "2A3038",
+      "muted": "6B7480",
+      "axis": "8C949F",
+      "rule": "D9DDE3",
+      "bar": "CBD2DB",
+      "support": "2A3038",
+      "value": "4A515C",
+      "accents": [
+        "2457D6",
+        "0E7C66",
+        "B4232C",
+        "5B3FC4"
+      ],
+      "ramp": [
+        "2A3038",
+        "60666E",
+        "959CA5",
+        "CBD2DB"
+      ]
+    },
+    "paper": {
+      "family": "serif",
+      "background": "FFFFFF",
+      "strong": "1B2A41",
+      "body": "2E3A4A",
+      "muted": "6A7381",
+      "axis": "1B2A41",
+      "rule": "D9DDE3",
+      "bar": "AEB8C6",
+      "support": "2E3A4A",
+      "value": "1B2A41",
+      "accents": [
+        "8B2332",
+        "2F5D50",
+        "5A4A2F",
+        "1F5AA6"
+      ],
+      "ramp": [
+        "2E3A4A",
+        "596473",
+        "838E9D",
+        "AEB8C6"
+      ]
+    },
+    "stage": {
+      "family": "sans",
+      "background": "0F1B2E",
+      "strong": "F2F5FA",
+      "body": "C9D2E0",
+      "muted": "8593AA",
+      "axis": "2A3A56",
+      "rule": "2A3A56",
+      "bar": "33445F",
+      "support": "C9D2E0",
+      "value": "AEB9CB",
+      "accents": [
+        "FFB547",
+        "5CC8FF",
+        "7EE0A8",
+        "FF8A7A"
+      ],
+      "ramp": [
+        "C9D2E0",
+        "97A3B5",
+        "65738A",
+        "33445F"
+      ]
+    },
+    "report": {
+      "family": "sans",
+      "background": "FFFFFF",
+      "strong": "102A2A",
+      "body": "1F2937",
+      "muted": "6B7280",
+      "axis": "6B7280",
+      "rule": "D1DBD7",
+      "bar": "BFCFCD",
+      "support": "1F2937",
+      "value": "4B5563",
+      "accents": [
+        "0E5A5A",
+        "24508F",
+        "7A3B12",
+        "4B4E9A"
+      ],
+      "ramp": [
+        "1F2937",
+        "546069",
+        "8A989B",
+        "BFCFCD"
+      ]
+    }
+  },
+  "purposes": {
+    "talk": {
+      "label": 18,
+      "tick": 16
+    },
+    "progress": {
+      "label": 16,
+      "tick": 14
+    },
+    "memo": {
+      "label": 14,
+      "tick": 12
+    },
+    "journal": {
+      "label": 16,
+      "tick": 14
+    }
+  },
+  "boxes": {
+    "talk": {
+      "claim-figure": {
+        "w": 653,
+        "h": 384
+      },
+      "figure": {
+        "w": 1136,
+        "h": 352
+      },
+      "comparison": {
+        "w": 556,
+        "h": 280
+      },
+      "big-number": {
+        "w": 556,
+        "h": 336
+      }
+    },
+    "progress": {
+      "claim-figure": {
+        "w": 653,
+        "h": 387
+      },
+      "figure": {
+        "w": 1136,
+        "h": 355
+      },
+      "comparison": {
+        "w": 556,
+        "h": 283
+      },
+      "big-number": {
+        "w": 556,
+        "h": 339
+      }
+    },
+    "memo": {
+      "claim-figure": {
+        "w": 653,
+        "h": 263
+      },
+      "figure": {
+        "w": 1136,
+        "h": 231
+      },
+      "comparison": {
+        "w": 556,
+        "h": 159
+      },
+      "big-number": {
+        "w": 556,
+        "h": 215
+      }
+    },
+    "journal": {
+      "claim-figure": {
+        "w": 653,
+        "h": 387
+      },
+      "figure": {
+        "w": 1136,
+        "h": 355
+      },
+      "comparison": {
+        "w": 556,
+        "h": 283
+      },
+      "big-number": {
+        "w": 556,
+        "h": 339
+      }
+    }
+  }
+}

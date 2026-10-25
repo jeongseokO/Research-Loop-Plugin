@@ -299,5 +299,131 @@ class PlotTests(unittest.TestCase):
             self.assertEqual(struct.unpack(">II", png[16:24]), (900, 600))
 
 
+LOOKS_FILE = Path(plot.__file__).resolve().parent.parent / "assets" / "slide-looks.json"
+
+
+class SlideTests(unittest.TestCase):
+    """A slide figure wears its deck's look and fills its slot at the slide's own sizes."""
+
+    def setUp(self):
+        self.looks = json.loads(LOOKS_FILE.read_text(encoding="utf-8"))
+
+    def tearDown(self):
+        plt.close("all")
+
+    def test_a_look_dresses_the_figure_and_everything_is_restored(self):
+        original = deepcopy(dict(matplotlib.rcParams))
+        fonts = list(font_manager.fontManager.ttflist)
+        with plot.slide_context("stage", accent="5cc8ff") as style:
+            self.assertEqual(style.background, "#0F1B2E")
+            for key in ("figure.facecolor", "axes.facecolor", "savefig.facecolor"):
+                self.assertEqual(to_rgba(matplotlib.rcParams[key]), to_rgba("#0F1B2E"), key)
+            self.assertEqual(style.focus, "#5CC8FF")
+            self.assertEqual(matplotlib.rcParams["axes.prop_cycle"].by_key()["color"][0], "#5CC8FF")
+            self.assertEqual(matplotlib.rcParams["axes.prop_cycle"].by_key()["color"][1:], list(style.ramp))
+            self.assertEqual(style.ramp, tuple(f"#{color}" for color in self.looks["looks"]["stage"]["ramp"]))
+            self.assertEqual(style.categories, ("#5CC8FF", "#FFB547", "#7EE0A8", "#FF8A7A"))
+            self.assertEqual(to_rgba(matplotlib.rcParams["axes.edgecolor"]), to_rgba("#2A3A56"))
+            self.assertEqual(to_rgba(matplotlib.rcParams["axes.labelcolor"]), to_rgba(style.body))
+            self.assertEqual(to_rgba(matplotlib.rcParams["xtick.labelcolor"]), to_rgba(style.muted))
+            self.assertEqual(to_rgba(matplotlib.rcParams["grid.color"]), to_rgba(style.rule))
+            self.assertFalse(matplotlib.rcParams["axes.spines.top"])
+            self.assertFalse(matplotlib.rcParams["axes.spines.right"])
+            self.assertTrue(matplotlib.rcParams["axes.spines.left"])
+            self.assertEqual(matplotlib.rcParams["lines.linewidth"], 2.4)
+            self.assertFalse(matplotlib.rcParams["legend.frameon"])
+            # A sequential map runs from the ground to the accent.
+            self.assertEqual(to_rgba(style.sequential(0.0)), to_rgba("#0F1B2E"))
+            self.assertEqual(to_rgba(style.sequential(1.0)), to_rgba("#5CC8FF"))
+        self.assertEqual(dict(matplotlib.rcParams), original)
+        self.assertEqual(font_manager.fontManager.ttflist, fonts)
+
+    def test_every_slot_takes_its_box_at_ninety_six_pixels_an_inch(self):
+        for slot in ("claim-figure", "figure", "comparison", "big-number"):
+            with self.subTest(slot=slot), plot.slide_context("vivid", slot=slot, purpose="progress") as style:
+                box = self.looks["boxes"]["progress"][slot]
+                self.assertEqual(style.figsize, (box["w"] / 96, box["h"] / 96))
+                fig, _ = plt.subplots()
+                self.assertEqual(tuple(fig.get_size_inches()), style.figsize)
+                plt.close(fig)
+
+    def test_axis_names_take_the_purpose_caption_size(self):
+        with plot.slide_context("vivid", purpose="talk") as style:
+            fig, ax = plt.subplots()
+            ax.set_xlabel("Budget (%)")
+            self.assertEqual(ax.xaxis.label.get_fontsize(), 18)
+            self.assertEqual((style.label_size, style.tick_size), (18, 16))
+            self.assertEqual(matplotlib.rcParams["legend.fontsize"], 16)
+        with plot.slide_context("report", purpose="memo") as style:
+            self.assertEqual((style.label_size, style.tick_size), (14, 12))
+
+    def test_unknown_names_say_what_is_possible(self):
+        cases = [({"look": "neon"}, "vivid, paper, stage, report"), ({"look": "vivid", "slot": "hero"}, "claim-figure, figure, comparison, big-number"),
+                 ({"look": "vivid", "purpose": "keynote"}, "talk, progress, memo, journal"), ({"look": "vivid", "accent": "FFFFFF"}, "#2457D6")]
+        for arguments, possible in cases:
+            with self.subTest(arguments=arguments), self.assertRaisesRegex(ValueError, possible):
+                with plot.slide_context(**arguments):
+                    self.fail("an unknown name was accepted")
+
+    def test_the_plugin_faces_are_the_ones_chosen(self):
+        with plot.slide_context("vivid") as style:
+            self.assertEqual(style.family, "Research Loop Sans")
+            self.assertEqual(matplotlib.rcParams["font.family"][0], "Research Loop Sans")
+            fig, ax = plt.subplots()
+            label = ax.set_xlabel("Budget")
+            self.assertEqual(font_manager.FontProperties(fname=font_manager.findfont(label.get_fontproperties())).get_name(), "Research Loop Sans")
+        with plot.slide_context("paper") as style:
+            self.assertEqual(style.family, "Research Loop Serif")
+        names = {entry.name for entry in font_manager.fontManager.ttflist}
+        self.assertNotIn("Research Loop Sans", names)
+
+    def test_a_figure_without_a_hangul_face_warns(self):
+        manager = font_manager.fontManager
+        latin = [entry for entry in manager.ttflist if entry.name == "DejaVu Sans"]
+        with patch.object(manager, "ttflist", list(latin)):
+            manager._findfont_cached.cache_clear()
+            with self.assertWarnsRegex(UserWarning, "Korean"):
+                with plot.slide_context("vivid"):
+                    pass
+        manager._findfont_cached.cache_clear()
+
+    def test_figure_record_hashes_repository_files_and_refuses_paths_outside(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "repo"
+            (root / "results").mkdir(parents=True)
+            (root / "figures").mkdir()
+            (root / "results" / "kv.csv").write_text("budget,loss\n10,4.2\n", encoding="utf-8")
+            (root / "figures" / "kv.py").write_text("print('plot')\n", encoding="utf-8")
+            (Path(temporary) / "secret.csv").write_text("x\n", encoding="utf-8")
+            record = plot.figure_record(["results/kv.csv"], "figures/kv.py", look="vivid", slot="claim-figure", commit="ABC1234", root=root)
+            self.assertEqual(list(record), ["data", "code", "commit", "tool", "look", "slot", "date"])
+            self.assertEqual(record["data"], [{"name": "results/kv.csv", "sha256": hashlib.sha256(b"budget,loss\n10,4.2\n").hexdigest()}])
+            self.assertEqual(record["code"]["sha256"], hashlib.sha256(b"print('plot')\n").hexdigest())
+            self.assertEqual((record["commit"], record["look"], record["slot"]), ("abc1234", "vivid", "claim-figure"))
+            self.assertEqual(record["tool"], f"matplotlib {matplotlib.__version__}")
+            self.assertRegex(record["date"], r"^\d{4}-\d{2}-\d{2}$")
+            for name in ("../secret.csv", "/etc/hosts", "~/kv.csv", "C:\\data\\kv.csv", "results/../../secret.csv", ""):
+                with self.subTest(name=name), self.assertRaises(ValueError):
+                    plot.figure_record([name], look="vivid", slot="figure", root=root)
+            for arguments in ({"look": "neon", "slot": "figure"}, {"look": "vivid", "slot": "hero"}, {"look": "vivid", "slot": "figure", "commit": "xyz"}):
+                with self.subTest(arguments=arguments), self.assertRaises(ValueError):
+                    plot.figure_record(["results/kv.csv"], root=root, **arguments)
+            with self.assertRaises(FileNotFoundError):
+                plot.figure_record(["results/missing.csv"], look="vivid", slot="figure", root=root)
+            with self.assertRaisesRegex(ValueError, "8"):
+                plot.figure_record(["results/kv.csv"] * 9, look="vivid", slot="figure", root=root)
+
+    def test_a_slide_figure_is_saved_on_its_look_ground(self):
+        with tempfile.TemporaryDirectory() as temporary, plot.slide_context("stage") as style:
+            fig, ax = plt.subplots()
+            ax.plot([0, 1, 2], [1, 3, 2])
+            manifest = plot.save_figure(fig, Path(temporary) / "stage", background=style.background)
+            pixels = plt.imread(Path(temporary) / manifest["outputs"]["png"]["path"])
+            for corner in (pixels[0, 0], pixels[-1, -1]):
+                self.assertTrue(all(abs(float(value) - expected) <= 1 / 255 for value, expected in zip(corner[:3], to_rgba("#0F1B2E")[:3])))
+            with self.assertRaises(ValueError):
+                plot.save_figure(plt.subplots()[0], Path(temporary) / "bad", background="not a colour")
+
+
 if __name__ == "__main__":
     unittest.main()

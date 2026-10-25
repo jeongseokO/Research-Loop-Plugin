@@ -2,6 +2,135 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.81.0 — 2026-10-26
+
+A deck can now take a lab's own PowerPoint template. Imported in the deck editor, the template is read in the browser and previewed on the deck's cover and current slide; used, every slide flows into its title and body places on its own ground and art, and the exported PPTX is written on the template's own master, with titles, page numbers and footers in its placeholders and words in its theme fonts.
+
+- 발표 편집 화면 '발표 전체'의 모양 목록 끝에 '연구실 양식'이 생겼습니다. 'PowerPoint 양식 가져오기'로 연구실의 .pptx나 .potx를 고르면 브라우저 안에서 읽고(서버에 보내지 않습니다), 이 발표의 표지와 지금 슬라이드를 그 양식에 그려 보여 줍니다. 찾은 레이아웃·그림·제목 서체와, 화면이 그리지 못하는 그림·효과·도형의 수도 말합니다.
+- '이 양식 쓰기'를 누르면 모든 슬라이드가 양식의 제목 자리와 본문 자리로 흐릅니다. 제목은 그 자리의 크기·색·정렬·세로 맞춤을 따르고, 열두 열은 본문 자리 너비로 나뉩니다. 표지·절 구분은 양식의 표지·구역 머리글 레이아웃에, 쪽 번호와 바닥글은 양식의 자리에 놓입니다. 실행 취소 한 번으로 돌아오고, '양식 빼기'로 바탕 모양으로 돌아갑니다.
+- 색과 서체도 양식에서 나옵니다. 배경·글·제목 색과 테마의 강조색(배경 위에서 읽히는 것만), 제목 크기와 굵기, 명조·고딕을 양식에서 읽고, 표와 차트, 목록 표시는 가장 가까운 모양(선명·논문·무대)을 따릅니다.
+- PPTX로 내보내면 양식의 첫 마스터가 그대로 들어갑니다. 슬라이드마다 그 종류의 레이아웃을 쓰고, 제목·부제·절 요약은 개체 틀, 쪽 번호는 슬라이드 번호 필드, 글은 테마 서체로 씁니다. 10인치 16:9 양식(Google Slides)은 와이드에 맞게 늘립니다. 4:3 양식은 받지 않고 PowerPoint에서 바꾸는 길을 알려 줍니다. 양식 파일을 읽지 못하면 기본 모양으로 저장했다고 말합니다.
+- 양식은 발표 페이지의 블록(요약, 원본 .pptx, 그림)으로 저장되고 저장할 때 한 번 올립니다. 최근에 저장한 양식 셋은 이 기기에 사람마다 남아 다음 발표에서 바로 고를 수 있고(로그아웃하면 지웁니다), 같은 프로젝트의 다른 발표에 쓴 양식도 고를 수 있습니다. 양식 블록이 망가진 발표는 양식 없이 열리고 그렇다고 알립니다.
+- 매크로가 든 파일, DOCTYPE, 25MB를 넘는 파일은 받지 않고, 양식의 XML이나 SVG를 그대로 쓰지 않습니다. 화면의 양식 그림은 읽은 숫자·색·이스케이프한 글로만 짓고, 그림은 페이지가 가진 주소로만 그립니다.
+- 배포: 마이그레이션이 없습니다. MCP 함수를 다시 올리면 발표 참고 도구의 안내(양식 블록을 그대로 두라)가 나가고, 그다음 태그로 사이트를 올립니다.
+
+## 0.80.0 — 2026-10-25
+
+Things worth a slide can now be gathered while reading. On a page or in a paper reading, Add on a figure, plot, table, equation or diagram, or Add to basket on selected words, keeps a copy in the project's basket on this device. The deck editor shows the basket beside the slides: press an item to put it in the chosen slot or the first free slot that takes it, else on a new slide right after, or drag it onto a slot. Each item keeps where it came from, and a paper's figure its credit.
+
+- 읽다가 슬라이드에 쓸 것을 바구니에 담습니다. 페이지와 원문 읽기의 그림·Python 그림·표·수식·도해마다 '담기'가 있습니다. 마우스를 올리거나 키보드 초점이 오면 오른쪽 위에 보이고, 손가락 화면에서는 그것 아래에 있어 아무것도 가리지 않으며, 표로 그린 차트에서는 그림/표 전환 바로 앞에 있습니다. 글을 고르면 도구 줄에 '바구니에 담기'가 생깁니다. 담은 것은 담은 때의 모습 그대로 남습니다.
+- 바구니는 사람과 프로젝트마다 이 기기에 둡니다(서버를 부르지 않습니다). 새로 고침과 다른 창에서도 같고, 로그아웃하면 이 기기에서 지워집니다. 50개, 항목 하나 200KB, 바구니 하나 1MB까지 담고, 같은 것은 한 번만 담깁니다. 프로젝트를 고칠 수 있는 사람에게만 보이고, ChatGPT·Claude 안의 패널에는 없습니다.
+- 페이지 창과 원문 읽기의 위 줄에 '바구니 3'이 생깁니다. 열면 무엇을 어디서 담았는지 보이고, '원래 자리'로 그 블록에 가거나, 하나씩 빼거나, 비울 수 있습니다(창이 열려 있는 동안 '되돌리기'). '발표로 가기'가 이 프로젝트의 발표 화면을 엽니다. 휴대폰에서는 아래에서 올라오는 판입니다.
+- 발표 편집 화면 오른쪽의 '바구니'에서 슬라이드로 넣습니다. 누르면 고른 빈 칸에, 없으면 이 슬라이드에서 그것을 받는 첫 빈 칸에(글은 문단이 들어갈 칸에만), 없으면 바로 다음에 그것에 맞는 레이아웃의 새 슬라이드로 들어갑니다(제목은 캡션의 첫 문장). 끌면 받는 칸이 점선으로 보이고, 빈 칸에 놓으면 넣고, 채워진 칸에 놓으면 바꾸고, 왼쪽 목록의 슬라이드에 놓으면 그 슬라이드로 갑니다. 한 번 넣기는 실행 취소 한 번이고, 넣은 것도 바구니에 남습니다.
+- 넣은 것은 출처를 잃지 않습니다. 슬라이드의 출처 줄에 담은 페이지나 논문이 더해지고, 논문의 그림은 '그림: 저자 · 라이선스 · arxiv.org'를 달고 가서 0.76.0의 라이선스 점검을 그대로 받습니다. 고른 글 속 수식은 TeX로 옮깁니다.
+- 발표 목록은 바구니에 무엇이 있으면 위에 한 줄로 알립니다.
+- 첫 화면에는 위 줄의 수와 '담기' 단추만 들고, 바구니 창과 보관소, 담는 일은 처음 쓸 때 불러옵니다.
+- 배포: 마이그레이션이 없습니다. MCP 함수를 다시 올리면 이 버전으로 다시 지은 ChatGPT·Claude 패널이 나갑니다(패널에는 바구니가 없고 페이지는 전처럼 보입니다). 그다음 태그가 사이트와 플러그인을 올립니다.
+
+## 0.79.0 — 2026-10-25
+
+A paper that is not on arXiv can now be read from its PDF. The AI reads the PDF with its own tools and transcribes it a few pages at a time with save_paper_text; Research Loop keeps the transcription, builds the same kind of reading from it with citations, figures, tables, equations and sections linked, and tells the AI what looks wrong so it can send a page again. The reader says the text is an AI's copy, gives each part's PDF page and asks readers to check the PDF before citing.
+
+- arXiv에 없는 논문도 원문 읽기를 만들 수 있습니다. AI가 PDF를 자기 도구로 읽어 몇 쪽씩 마크다운으로 옮기면, 서버가 그 원고로 같은 읽기본을 짓습니다. arXiv에 있는 논문은 지금처럼 arXiv의 HTML에서 가져옵니다(정확하고 공짜입니다).
+- 서버는 옮긴 원고를 쪽마다 보관하고 부를 때마다 처음부터 다시 짓습니다. 쪽 넘김에 끊긴 문단과 목록을 잇고, 번호로 제목 수준을 정하고, 초록과 참고문헌을 따로 두고, 캡션을 그림·표·알고리즘과 짝짓습니다. 번호 인용은 모든 번호가 참고문헌에 있을 때, 저자–연도 인용은 성과 연도가 한 항목에만 맞을 때 참고문헌을 열고, 'Figure 2', 'Table 1', 'Eq. (3)', 'Section 4'는 그 자리로 갑니다.
+- 의심되는 곳은 거절하지 않고 점검으로 AI에게 알립니다. 다른 쪽보다 훨씬 짧은 쪽, 빈 쪽, 짝 없는 $, 닫히지 않은 수식·코드·주석, 칸 수가 다른 표 줄, 표 없는 표 캡션, 참고문헌에 없는 인용, 짝 없는 각주, 건너뛴 절 번호, 언급했지만 없는 그림과 표입니다. AI는 그 쪽을 다시 보내 고칩니다.
+- MCP 도구 `save_paper_text`(편집자 이상)가 생겼습니다. 한 번에 40,000자, PDF 500쪽까지, 1쪽부터 빠짐없이 보내고, 보낸 쪽을 다시 보내면 그 쪽이 바뀝니다(뜻과 설명은 그 단어가 남아 있으면 그대로). 결과가 쓴 블록의 id와 첫 단어를 알려 주므로 AI는 원문을 다시 읽지 않고 뜻과 설명을 답니다. 그림은 AI가 잘라 올릴 수 있을 때만 이 기록에 올리고, 아니면 'PDF n쪽' 자리로 둡니다. PDF를 옮기는 지침 `get_guide(topic:reading, section:pdf)`(2,295자)는 PDF일 때만 읽습니다.
+- 읽기 화면은 사본임을 숨기지 않습니다. 메타 줄에 'Claude가 PDF에서 옮긴 사본'(학회와 DOI도), 차례에 PDF 쪽 번호, 그림 자리에 'PDF n쪽'(공개된 PDF면 그 쪽으로 가는 링크), 끝에 '인용하기 전에 PDF와 대조하세요'가 있습니다. 옮기는 중인 사본도 열리고, 어디까지 옮겼는지 말합니다.
+- 문헌 페이지는 모든 논문에 '원문 읽기 만들기'를 보여 줍니다(요청 글이 PDF가 필요하면 말해 달라고 합니다). 옮기는 중인 사본에는 '옮기는 중 3/12쪽'과, 편집할 수 있는 사람에게 '이어서 만들기'가 나옵니다.
+- 데모의 KV 프로젝트에 PDF에서 옮긴 두 번째 설명용 가상 논문(3쪽, 600단어, 올린 그림 하나와 'PDF 3쪽' 자리 하나, 한국어 뜻 17개와 설명 3개)이 있습니다.
+- 배포: 마이그레이션 `20261025230000`을 먼저 적용하고(`npm run -s migration:sql -- 20261025230000 | pbcopy`를 SQL Editor에 붙여 실행, 0.78.0의 `20261025200000` 다음), 다음 MCP 함수, 그다음 태그로 사이트와 플러그인을 올립니다. 마이그레이션 전에는 `save_paper_text`만 실패합니다.
+
+## 0.78.0 — 2026-10-25
+
+A literature record can now carry its paper as a reading: the paper in its own words, read like a long article, with meanings on the words a reader may not know and short explanations of hard passages, in the reader's language. An AI makes it from arXiv's HTML, built from the authors' source rather than the PDF, and writes only the meanings and explanations. The demo includes a synthetic paper to try it.
+
+- 문헌 기록에 논문의 '원문 읽기'가 생깁니다. 논문은 원어 그대로 두고, 모를 만한 단어에만 이 논문의 문맥에 맞는 뜻을, 어려운 대목에 짧은 설명을 답니다. 뜻이 달린 단어(점선 밑줄)를 누르면 작은 창에 뜻과 풀이가, 설명은 넓은 화면에서 본문 옆 여백에, 좁은 화면에서는 문단 아래 접힌 줄로 나옵니다. 문장 전체는 번역하지 않습니다.
+- 원문은 PDF를 글자로 읽은 것이 아닙니다. 서버가 arXiv가 저자의 LaTeX 소스로 만든 HTML(없으면 ar5iv)을 옮기고, 수식은 TeX로, 그림·표·인용·각주는 원래 구조대로 둡니다. arXiv의 변환이 실패한 곳이 있으면 그 수를 세어 읽기 화면에 PDF 링크와 함께 알립니다.
+- 문헌 페이지의 '원문 보기' 옆에 '원문 읽기'(뜻·설명 수와 언어)가, 읽기본이 없는 arXiv 논문에는 '원문 읽기 만들기'가 나옵니다. 만들기는 이 기록과 요청 글(화면 언어로 뜻과 설명을 달아 달라는)을 채운 'AI에게 맡기기'를 엽니다. 채팅에서 AI에게 직접 부탁해도 됩니다. AI는 뜻이 필요한지, 어느 언어인지 한 번 묻고, 말하지 않으면 계정 언어로 답니다.
+- 읽기 화면: 680px 단에 논문 글자(Newsreader), 900px부터 여백 설명, 1,200px부터 왼쪽 차례, 위에 돌아가기·차례·뜻 표시·뜻 언어·원문·전체 화면이 있는 얇은 줄과 읽은 만큼 차는 선. 인용을 누르면 참고문헌이, 각주 표시는 그 각주를 찾아 줍니다. 수식은 보이는 곳부터 조판하고, 긴 논문도 화면 근처부터 그려 40쪽짜리가 약 0.4초에 처음 보입니다. 다시 열면 멈춘 곳부터 이어 읽을 수 있고, 주소(`reading=1`)로 뒤로 가기·새로 고침·링크가 됩니다. 글을 고르면 지금의 '토론'·'AI에게 요청'이 그대로 떠서 뜻이 없는 단어도 물을 수 있습니다.
+- MCP 도구 `import_paper_reading`(arXiv에서 원문과 그림을 가져와 만들거나 새 판으로, 뜻은 남김), `get_paper_reading`(약 24,000자씩 쪽으로), `save_paper_glosses`(뜻과 설명을 원문에 맞춰 검사해 합침, 동시 저장은 한 번 더 합치고 `expected_revision`이면 충돌을 알림)와 지침 `get_guide(topic:reading)`(1,582자)이 생겼습니다. 읽기본은 프로젝트 멤버만 보고, 쓰기는 MCP 서버의 전용 함수로만 합니다.
+- 데모의 KV 프로젝트에 설명용 가상 논문(1,444단어, Python으로 그린 그림, 한국어 뜻 36개와 설명 6개)이 문헌 기록으로 들어 있습니다.
+- 배포: 마이그레이션 `20261025200000`을 먼저 적용하고(`npm run -s migration:sql -- 20261025200000 | pbcopy`를 SQL Editor에 붙여 실행), 다음 MCP 함수, 그다음 태그로 사이트와 플러그인을 올립니다. 마이그레이션 전에는 읽기 도구가 실패하고 문헌 페이지에 원문 읽기가 나오지 않습니다.
+
+## 0.77.0 — 2026-10-25
+
+Every way of making a deck now starts in layouts and a look: a page, the research story and an AI's deck. An AI request names the deck's purpose, look and accent, and its result is slides in layouts that the review shows as slides. Graphs an AI draws from data are Python figures in the deck's look, sized to their slot, with a record of the data and code that drew them under the plot's caption.
+
+- 페이지의 '발표 편집'이 레이아웃 발표로 열립니다. 논문은 저널 클럽(논문 모양), 나머지는 랩 미팅 진행 보고(선명 모양)로 시작하고, 상태 줄이 무엇으로 만들었는지와 '발표 전체'에서 바꿀 수 있다는 것을 알려 줍니다. 제목마다 절이 되고, 그림마다 한 장(도해는 큰 도해, 수식은 수식, 표는 표, 차트·그림은 주장+그림)에 그 그림을 읽는 글이 붙습니다. 슬라이드에 넣지 못한 글과 코드는 발표자 노트로 가고 그 수를 알려 줍니다. 레이아웃 발표에 페이지를 넣으면 절 슬라이드와 함께 그 발표의 모양으로 들어갑니다.
+- 연구 이야기 초안도 선명 모양의 레이아웃 발표입니다. 표지(프로젝트·질문·발표자), 지금까지의 답, 출발점, 전환점마다 주장과 그 페이지의 그림, 접은 갈래, 지금, 남은 질문 순서입니다.
+- AI 발표 요청 창에서 용도, 모양, 강조색을 고릅니다. AI는 좌표·색·글꼴 없이 레이아웃과 칸만 고른 결과(형식 2)를 보내고, 앱은 읽지 못하는 결과에 무엇이 어디서 틀렸는지 말합니다. 이미 대기 중인 이전 형식의 요청은 그대로 검토합니다.
+- 검토 창은 AI의 발표를 슬라이드 그림으로 보여 줍니다. 슬라이드마다 그 슬라이드의 점검(넘침, 빈 칸, 다른 모양에 맞춘 그림 등)이 붙고, 글·노트·출처는 접혀 있습니다. AI가 올린 그림은 도착하는 대로 칸에 들어갑니다. 반영하면 레이아웃 발표 그대로 편집 화면이 열립니다.
+- 플러그인의 그래프 도우미에 `slide_context`가 생겼습니다. 발표의 모양(바탕·글자·축·강조색), 칸의 크기(96px = 1인치라 그림 속 글자 크기가 슬라이드 글자 크기와 같음), 용도의 글자 크기, 발표의 글꼴(Research Loop Sans·Serif를 플러그인에 넣음)로 Matplotlib 그림을 그립니다.
+- 플롯 블록이 만든 방법(`made`: 데이터·코드의 저장소 경로와 SHA-256, 커밋, 도구, 모양, 칸, 날짜)을 가질 수 있습니다. 도우미의 `figure_record`가 만들고, 페이지와 리더는 캡션 아래에 '만든 방법' 한 줄로 보여 줍니다. 발표의 모양과 다르면 다시 그리라고 알리고, 그림 파일을 바꾸면 지워집니다. 절대 경로나 저장소 밖 경로는 받지 않습니다.
+- AI 지침(개정 48)의 발표 절을 레이아웃 발표와 Python 그림에 맞춰 다시 썼습니다. 요청 계약과 합쳐 4,212자로, 이전(6,931자)보다 39% 짧습니다.
+- 배포: 마이그레이션 `20261025180000`을 먼저 적용하고(`npm run -s migration:sql -- 20261025180000 | pbcopy`를 SQL Editor에 붙여 실행), 다음 MCP 함수, 그다음 태그로 사이트와 플러그인을 올립니다. 마이그레이션 전에는 데이터베이스가 `made`가 든 플롯 블록을 거절합니다.
+
+## 0.76.0 — 2026-10-25
+
+An AI can now bring a picture from the web with import_research_image: given the image's address and the page it is on, Research Loop copies it from the public internet only and records the page, author, licence and the day it was copied. Pages, slides and PowerPoint show that source under the picture, and a licence nobody knows, or one that limits reuse, is flagged on save and before a talk. The demo's v2 page shows the StreamingLLM figure with its credit.
+
+- AI가 인터넷의 그림을 가져올 수 있습니다. `import_research_image`에 그림 파일 주소와 그 그림이 실린 페이지 주소를 주면, 서버가 공개 인터넷에서만 가져와 프로젝트에 복사하고 출처(페이지, 작성자, 라이선스, 가져온 날)를 그림 블록에 남깁니다. 페이지는 바뀌지 않습니다. 사설·로컬 주소, 다른 포트, 10 MiB 넘는 파일, SVG, 3,200만 화소 넘는 그림은 받지 않습니다.
+- 라이선스는 위키미디어의 파일 정보, arXiv 논문의 권리 링크, 페이지가 스스로 밝힌 라이선스 링크에서 읽습니다. 읽지 못하면 AI가 페이지에서 읽은 값을, 그것도 없으면 '모름'으로 둡니다.
+- 페이지와 플러그인 리더는 캡션 아래에 출처 한 줄을 둡니다. 서버가 확인하지 못한 라이선스는 '(확인 안 됨)', 재사용이 제한된 라이선스는 '재사용 제한', 없으면 '라이선스 모름'으로 표시합니다.
+- 슬라이드(편집 화면, 썸네일, 발표 화면, 발표자 화면)와 PPTX는 그림 캡션의 마지막 줄에 '그림: 작성자 · 라이선스 · 사이트'를 넣습니다.
+- 편집기의 그림 창에서 출처 페이지, 작성자, 라이선스를 고칠 수 있습니다. 그림을 바꾸면 예전 출처는 지워집니다.
+- 라이선스를 모르거나 재사용이 제한된 그림이 있는 페이지를 저장하면 쓰기는 되고 조언(`advice.image_licence`)이 붙습니다. 발표 점검도 그런 그림을 알려 줍니다.
+- AI 지침(개정 47)은 원래 그림이 꼭 필요할 때(논문의 그림, 실제 장치·사진)만 가져오고, CC·퍼블릭 도메인을 먼저 찾고, 출처를 지우지 않고, 남의 그림을 우리 결과의 근거로 쓰지 말라고 합니다.
+- 데모의 v2 페이지(attention sink 보존)에 StreamingLLM 논문의 그림 1을 출처와 함께 넣었습니다. 페이지의 그림 캡션은 그림과 8px 떨어지고 한국어 어절을 끊지 않습니다.
+- 배포: 마이그레이션 `20261025130000`을 먼저 적용하고(`npm run -s migration:sql -- 20261025130000 | pbcopy`를 SQL Editor에 붙여 실행), 다음 MCP 함수, 그다음 태그로 사이트와 플러그인을 올립니다. 마이그레이션 전에는 데이터베이스가 출처가 든 그림 블록을 거절합니다.
+
+## 0.75.0 — 2026-10-25
+
+Explainers now draw each part as what it is: models as filled blocks, vectors as strips of cells, operations where arrows join as small circles with their sign, stores as cylinders, and the step to the next stage as a double arrow. Columns fit what they hold, link labels stay off other links' lines, and a slide lays a diagram out across when upright it would be too tall. The database and AI guidance accept the new kinds; a page with parts lacking a kind still saves, with a note. Exported PPTX keeps control-link dashes and link labels.
+
+- 도해의 부품은 무엇인지에 따라 모양이 다릅니다. 모델은 채운 블록, 벡터는 칸 띠(이름은 띠 아래, 연결은 띠의 가운데로), 연산은 알약, 화살표가 만나는 곳의 원소별 연산은 기호(더하기·빼기·곱하기·나누기·이어붙이기·내적)를 그린 작은 원, 저장소는 원통, 데이터는 겹친 장, 판단은 마름모입니다. 원은 글자 없이 기호만 그리고, 이름과 설명은 올려 두거나 포커스하면 나옵니다. 종류가 없는 부품은 예전 그대로의 상자입니다.
+- 다음 단계나 다음 시점으로 넘어가는 연결은 끝이 열린 두 줄 화살표로 그립니다.
+- 열 너비는 담긴 것에 맞습니다. 이름의 긴 단어는 자리가 있으면 끊지 않고, 원만 있는 열은 좁게(40), 상자는 260보다 넓지 않습니다. 0.74.0에서 가로로 서던 도해는 지금도 가로로 섭니다.
+- 다른 행에서 오는 갈래는 원의 위나 아래로 한 번 꺾여 들어갑니다(휴대폰의 세로 그림에서는 옆으로). 연결 이름은 다른 연결의 선 위에 놓이지 않고, 돌아가는 선은 이미 그린 선을 덜 가로지르는 쪽을 고르며, 휴대폰에서 첫 열을 건너뛰는 선은 그림 옆의 좁은 길로 돕니다. 메모로 들어가는 화살표는 글자 앞에서 멈춥니다.
+- 발표의 도해(편집 화면, 썸네일, PPTX)는 상자에 맞는 가장 큰 크기를 고릅니다. 세로로 서면 너무 길어지던 도해가 가로로 섭니다.
+- PPTX에서 제어 연결의 점선이 빠지던 문제(0.47.0부터)와 연결 이름이 PowerPoint·LibreOffice에서 보이지 않던 문제를 고쳤습니다. 두 줄 화살표도 그대로 나갑니다.
+- AI 지침(개정 46)은 부품마다 종류를 주라고 하고, 종류마다 무엇에 쓰는지와 모양을 말합니다. 종류 없는 부품이 있는 도해를 저장하면 쓰기는 되고 조언이 붙습니다.
+- 데모의 방법 페이지(M1)에서 긴 문맥 토큰은 벡터, 레이어별 예산표는 데이터로 그립니다.
+- 배포: 마이그레이션 `20261025100000`을 먼저 적용하고(`npm run -s migration:sql -- 20261025100000 | pbcopy`를 SQL Editor에 붙여 실행), 다음 MCP 함수, 그다음 태그로 사이트와 플러그인을 올립니다. 마이그레이션 전에는 데이터베이스가 vector, symbol, next를 거절합니다.
+
+## 0.74.0 — 2026-10-25
+
+New presentations start from a purpose and a look: four purposes (conference talk, lab meeting, written report to an advisor, journal club) and four looks, with twelve layouts whose slots set sizes, alignment and a single emphasis for you. A layout change moves what has no slot to the next slide, a dragged box places its slide by hand until you restore the layout, and arrows follow the figure they point at. Older decks open unchanged and can take a look. PPTX export follows the same layout and now keeps chart values exact.
+
+- '빈 발표'는 용도 넷과 모양 넷을 고르는 창에서 시작합니다. 용도마다 시작하는 슬라이드와 본문 크기가 다르고(학회·세미나 발표 7장 28→24pt, 랩 미팅 진행 보고 8장 24→20pt, 교수님 서면 보고 10장 20→16pt, 논문 소개·저널 클럽 11장 26→22pt), 모양(선명, 논문, 무대, 보고서)마다 서체, 색, 머리와 바닥이 다릅니다. 표지에는 발표 제목과 계정 이름, 오늘 날짜가 들어갑니다. 화살표 키로 고르고 Enter로 만듭니다.
+- 레이아웃은 12개입니다(표지, 절 구분, 한 문장, 주장+그림, 큰 그림, 비교, 큰 수치, 목록, 표, 수식, 도해, 정리). 빈 칸을 누르면 그 칸이 받는 것(그림 파일, 페이지 그림, 표, 도해, 수식, 글)이 나오고, 넣기만 하면 크기와 윗선, 간격이 맞습니다. 강조색은 Focus 칸에만 쓰입니다.
+- 레이아웃 단추는 이 슬라이드를 12가지로 미리 보여 주고, 칸이 모자라 옮겨질 상자 수('+1')를 고르기 전에 알려 줍니다. 남는 상자는 바로 다음 새 슬라이드로 갑니다. 실행 취소 한 번이면 돌아옵니다.
+- 칸에 든 상자를 끌거나 크기를 바꾸면 그 슬라이드는 직접 배치가 되고, '레이아웃으로 되돌리기'로 돌아갑니다. 화살표(8방향)와 도형은 그림 위의 자리를 기억해서, 모양이나 제목이 바뀌어 그림이 움직이면 따라갑니다.
+- '발표 전체'에서 용도, 모양, 강조색을 바꾸면 모든 슬라이드가 다시 배치되고, 이것도 실행 취소 한 번으로 돌아옵니다. 예전 발표는 그대로 열리고 그대로 저장됩니다. '모양 고르기'로 모양을 입힐 수 있습니다.
+- 한국어 줄바꿈: '그 결과', '할 것'처럼 붙어 있어야 읽히는 말은 함께 넘기고, 문단의 마지막 줄에 한 어절만 남기지 않습니다. PPTX에도 같은 자리에 줄바꿈 없는 공백을 넣습니다. 예전 발표에도 적용됩니다.
+- 차트의 눈금은 둥근 수(1·2·5 단위)이고, 강조할 항목 하나를 고를 수 있습니다. PPTX 차트가 값을 정수로 반올림해 보이던 문제(79.5가 80으로)를 고쳤습니다. 예전 발표에도 적용됩니다.
+- PPTX는 화면과 같은 배치로 나갑니다. 보고서의 띠, 논문의 머리 선, 화면과 기준선이 맞는 글, 강조 막대, 칸에 붙은 화살표, 도해 옆 단계 목록까지 같습니다.
+- 배포: 마이그레이션은 없습니다. MCP 함수를 올리고(패널이 새 형식의 발표를 읽습니다), 태그로 사이트와 플러그인을 올립니다. 배포 전에 열어 둔 탭은 새로고침해야 새 발표를 엽니다.
+
+## 0.73.0 — 2026-10-24
+
+Research Loop's AI guidance now says each rule once and costs less on every turn: the connect instructions and tool list a model rereads each turn are 27% smaller (28% fewer tokens), and a writing task reads 21–24% less. Who applies a write and how a made-up key is written are one line each in the connect instructions; record guides give their sections without the empty page skeleton; describe_tools says each sentence once per answer. Strict input checks are unchanged. Also fixes six details from the 0.72.0 review.
+
+- AI가 매 차례 다시 읽는 접속 지침과 도구 목록이 27% 줄었습니다(o200k 토큰 28%). 도구 설명은 언제 부르는지, 먼저 읽을 것, 그 도구만의 규칙만 말하고, 역할별 권한 목록은 서버가 지킵니다. 엄격한 입력 검사는 그대로라 지금 받는 호출은 그대로 받고 거절하는 호출은 그대로 거절합니다.
+- 누가 쓰기를 바로 적용하는지(바로 적용할 수 없는 쓰기는 검토 요청이 되고, 다른 쓰기로 다시 시도하지 않습니다)와 AI가 지어내는 키(`idempotency_key`, `request_key`)의 형식은 접속 지침에 한 줄씩만 있습니다.
+- 쓰는 일 하나에 읽는 core, 기록 지침, 지침 절이 21~24% 줄었습니다. core는 입구와 검토 항목을 되풀이하지 않고 그림 규칙은 한 줄입니다. 기록 지침은 빈 페이지 뼈대 대신 절 목록(표나 코드로 시작하는 절은 그 열이나 언어)과 쓰기 한 줄을 주고, 실험 역할은 속성에만 있습니다. 유형 없이 부르면 유형 목차를 줍니다. 문헌 지침은 절마다 한 번, 영어로 줍니다(지침 개정 5). 앱이 새 페이지에 주는 뼈대와 예전 템플릿 도구의 응답은 그대로입니다.
+- `describe_tools`는 한 응답에서 문장을 한 번만 말합니다. 힌트는 읽기만 하는지와 파괴적인지만 주고, 앞 도구가 이미 설명한 필드는 그 도구를 가리킵니다. 숨은 도구 설명 가운데 가장 긴 다섯이 짧아졌습니다.
+- 플러그인의 research-loop 스킬이 10,240바이트에서 8,079바이트가 되었습니다. 접속 지침과 같은 뜻의 규칙(요청이 명세, 소유자 대리, 입구 하나, 작은 수정, 짧은 끝맺음)은 남겼습니다.
+- 지침 시험이 과제마다 모델에게 보낸 맥락 글자를 셉니다. 기준 답안 11개는 모두 완료, 쓰기 거절 0, 맥락 합계는 23% 줄었습니다.
+- 0.72.0 검토가 남긴 여섯 가지를 고쳤습니다. 구현 확인은 실험·분석 페이지가 보여 주지 않을 실행을 모두 알려 줍니다(질문이나 노트에 대한 보고도). 실행 줄의 긴 호스트·장치 목록은 넓은 화면에서도 줄 안에서 줄바꿈합니다. 페이지의 실행 줄은 '실행 정보'라는 이름으로 읽힙니다. 복사 버튼은 두 번 연달아 눌러도 제 이름으로 돌아오고, 경로를 '코드'라고 부르지 않습니다. 폴더와 출력은 C1 제어 문자와 줄·문단 구분자를 거절합니다. 엇나간 주석을 제자리로 옮겼습니다.
+- 배포: 마이그레이션은 없습니다. MCP 함수(지침과 도구 목록)를 올리고 태그로 사이트와 플러그인을 올립니다.
+
+## 0.72.0 — 2026-10-24
+
+Analyses now read experiment, observation, cause, conclusion, and always conclude: writing guide 44 adds a results section drawn from how leading researchers report, and new analysis and experiment pages follow it. Run details leave the reading. An implementation report carries the runs an AI started (where, how, how each ended), a sentence can be carried by runs, and Implementation check gets a Runs section that experiment and analysis pages open in one click. The server flags paths, job numbers and commit hashes in result pages.
+
+- 결과 분석은 실험 → 현상 → 원인 규명 → 결론 순서로 쓰고, 끝은 늘 결론입니다. 쓰기 지침 44에 '결과' 절이 생겼습니다. 현상에서는 결정적인 비교를 먼저 차트로 보이고, 원인 규명에서는 그럴듯한 설명을 모두 놓고 ablation, 한 변수 비교, 용량-반응, 오류 분석 같은 확인으로 가립니다. 결론은 질문에 답하는 한 문장에 확신도와 그 이유, 결론을 뒤집을 결과를 붙입니다. 근거가 약해도 "아직 아니다, 이 확인이 가려 준다"까지 씁니다.
+- 새 분석 페이지는 실험 · 현상 · 원인 규명 · 결론 절로 만들어집니다. 새 실험 페이지는 질문 → 조건 → 결정적인 비교 → 모든 실행 → 실패 → 관찰 → 세부 설정 순서입니다. 예전 템플릿으로 만든 페이지는 그대로 읽히고, 손대지 않은 빈 절은 지금처럼 숨습니다. 페이지의 '재현 정보' 절은 접혀 있습니다.
+- 경로, 노드, GPU, 작업 번호, 명령 같은 실행 세부는 결과 본문에서 빠지고 구현 확인의 '실행'에 모입니다. AI가 돌린 실행마다 무엇을 돌렸는지, 어떻게 끝났는지(완료·실패·중단·진행 중), 어디서 어떻게 돌렸는지가 있고, 명령과 폴더는 복사할 수 있습니다. "seed 3개씩"을 시켰는데 2개만 돌았으면 그 문장이 '일부만'으로 뜹니다.
+- 실험 페이지의 핵심 결론 아래 '실행 정보 · 5건 (실패 1)'을 누르면 그 보고의 '실행'으로 갑니다. 분석 페이지에는 근거가 된 실험마다 이 줄이 있습니다.
+- AI가 실험·분석 본문에 절대 경로, 작업 번호, 커밋 해시를 쓰면 서버가 옮길 곳을 알려 줍니다. AI가 핵심 결론을 '판단 보류'로 둘 때는 그걸 가려 줄 확인 하나도 적어야 저장됩니다.
+- 배포: 마이그레이션 `20261024100000_implementation_runs.sql` 하나를 SQL Editor로 적용하고, 태그의 깨끗한 사본에서 MCP 함수를 올린 뒤 브랜치와 태그를 올립니다. 순서가 바뀌어 사이트가 먼저 나가도 오류는 없고, 실행 정보 줄만 보이지 않습니다.
+
 ## 0.71.1 — 2026-10-24
 
 Rebuilds the embedded AI panels using the exact locked dependencies so their checked-in output matches a fresh CI installation. The scheduled legal revisions, independent Google AI approvals, and Free/Paid project limits from 0.71.0 are unchanged.

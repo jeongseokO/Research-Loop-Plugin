@@ -1,21 +1,28 @@
-"""Small Matplotlib helpers; create and export figures inside ``style_context``.
+"""Small Matplotlib helpers; create and export figures inside ``style_context``,
+or inside ``slide_context`` for a figure that goes on a Research Loop slide.
 
 Only Matplotlib is required. No backend is selected, fonts are never downloaded,
 and importing this module does not change plotting defaults. As with Matplotlib's
-own rc_context, the style context is intended for sequential use, not threads.
+own rc_context, the style contexts are intended for sequential use, not threads.
 """
 
 from contextlib import contextmanager
+from datetime import date
+from functools import lru_cache
 import hashlib
 from itertools import islice
 import json
 import math
 from pathlib import Path
+import re
 import tempfile
+from typing import NamedTuple
 import warnings
 
 import matplotlib as mpl
+from cycler import cycler
 from matplotlib import font_manager
+from matplotlib.colors import Colormap, LinearSegmentedColormap, to_hex
 from matplotlib.text import Annotation
 from matplotlib.text import Text
 from matplotlib.lines import Line2D
@@ -32,7 +39,14 @@ PURPLE = "#7652AF"
 INK = "#223047"
 TEXT = "#334155"
 GRID = "#E7EDF4"
-STYLE_PATH = Path(__file__).resolve().parent.parent / "assets" / "research-loop.mplstyle"
+ASSETS = Path(__file__).resolve().parent.parent / "assets"
+STYLE_PATH = ASSETS / "research-loop.mplstyle"
+# The app's looks, purposes and figure slots, written by the app (npm run build:plot-looks).
+SLIDE_LOOKS_PATH = ASSETS / "slide-looks.json"
+FONT_DIR = ASSETS / "fonts"
+SLIDE_PX_PER_INCH = 96
+HANGUL_SANS = ("Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", "Noto Sans KR", "NanumGothic")
+HANGUL_SERIF = ("AppleMyungjo", "Noto Serif CJK KR", "Noto Serif KR", "Batang", "NanumMyeongjo")
 MAX_POINTS = 100_000
 MAX_DELTA_ROWS = 100
 MAX_ARTISTS = 2_000
@@ -135,6 +149,181 @@ def style_context(*, font_paths=(), portable=True, profile="paper"):
         manager.ttflist[:] = original_fonts
         manager.afmlist[:] = original_afm
         manager._findfont_cached.cache_clear()
+
+
+class SlideStyle(NamedTuple):
+    """A slide figure's look: its colours as ``#RRGGBB``, its face, sizes and canvas."""
+    look: str
+    slot: str
+    purpose: str
+    background: str
+    strong: str
+    body: str
+    muted: str
+    axis: str
+    rule: str
+    focus: str
+    ramp: tuple
+    categories: tuple
+    sequential: Colormap
+    family: str
+    label_size: float
+    tick_size: float
+    figsize: tuple
+
+
+@lru_cache(maxsize=1)
+def _slide_looks():
+    return json.loads(SLIDE_LOOKS_PATH.read_text(encoding="utf-8"))
+
+
+def _one_of(value, options, name):
+    if value not in options:
+        raise ValueError(f"{name} must be one of {', '.join(options)}; got {value!r}")
+    return value
+
+
+def _slide_fonts(family, font_paths):
+    """Register the plugin's face and any given fonts temporarily; return the families to use, in order."""
+    manager = font_manager.fontManager
+    face = "Research Loop Serif" if family == "serif" else "Research Loop Sans"
+    for path in sorted(FONT_DIR.glob(f"research-loop-{family}-*.ttf")):
+        try:
+            manager.addfont(str(path))
+        except (OSError, RuntimeError, ValueError) as error:
+            warnings.warn(f"Cannot use the plugin's {path.name}; using installed fonts ({error}).", UserWarning, stacklevel=4)
+    explicit = []
+    for filename in _bounded_list(font_paths, 8, "font_paths"):
+        path = Path(filename).expanduser()
+        try:
+            manager.addfont(str(path))
+            explicit.append(manager.ttflist[-1].name)
+        except (OSError, RuntimeError, ValueError) as error:
+            warnings.warn(f"Cannot use font {path.name!r}; using installed fonts ({error}).", UserWarning, stacklevel=4)
+    installed = {entry.name for entry in manager.ttflist if Path(entry.fname).is_file()}
+    # Hangul in a serif figure is set in a serif Korean face when one is installed.
+    hangul = (HANGUL_SERIF + HANGUL_SANS) if family == "serif" else HANGUL_SANS
+    if not explicit and not any(name in installed for name in hangul):
+        warnings.warn("No Korean font is installed, so Hangul in this figure will not draw; install Noto Sans KR or pass font_paths.",
+                      UserWarning, stacklevel=4)
+    preferred = [face, *explicit, *hangul, "DejaVu Serif" if family == "serif" else "DejaVu Sans", "DejaVu Sans"]
+    available = list(dict.fromkeys(name for name in preferred if name in installed))
+    if not available:
+        raise RuntimeError("No usable plotting font is installed; provide a local font through font_paths.")
+    return available
+
+
+@contextmanager
+def slide_context(look, slot="claim-figure", purpose="talk", accent=None, font_paths=(), portable=True):
+    """Apply a deck's look to a figure for one of its slides, yielding its ``SlideStyle``.
+
+    ``look`` is the deck's look (vivid, paper, stage, report), ``slot`` the layout the
+    figure goes in (claim-figure, figure, comparison, big-number), ``purpose`` what the
+    deck is for (talk, progress, memo, journal) and ``accent`` the deck's accent, one of
+    the look's four (its first when omitted). The canvas is the slot's picture box at
+    96 px an inch, so 16 pt in the figure is 16 pt on the slide. Axis names take the
+    purpose's caption size and ticks and legends 2 pt less; the stressed series takes
+    ``style.focus`` and the others the look's quiet ramp, as the slide's own charts.
+    Save with ``save_figure(fig, stem, background=style.background)``. Both rcParams
+    and the temporary font registrations are restored, including when drawing fails.
+    """
+    table = _slide_looks()
+    _one_of(look, list(table["looks"]), "look")
+    _one_of(purpose, list(table["purposes"]), "purpose")
+    _one_of(slot, list(table["boxes"][purpose]), "slot")
+    colors, sizes, box = table["looks"][look], table["purposes"][purpose], table["boxes"][purpose][slot]
+    hexed = lambda value: f"#{value}"
+    accents = [hexed(value) for value in colors["accents"]]
+    focus = hexed(str(accent).lstrip("#").upper()) if accent is not None else accents[0]
+    _one_of(focus, accents, f"accent for the {look} look")
+    background, ramp = hexed(colors["background"]), tuple(hexed(value) for value in colors["ramp"])
+    figsize = (box["w"] / SLIDE_PX_PER_INCH, box["h"] / SLIDE_PX_PER_INCH)
+    serif = colors["family"] == "serif"
+    manager = font_manager.fontManager
+    original_fonts = list(manager.ttflist)
+    original_afm = list(manager.afmlist)
+    try:
+        families = _slide_fonts(colors["family"], font_paths)
+        style = SlideStyle(
+            look=look, slot=slot, purpose=purpose, background=background, strong=hexed(colors["strong"]),
+            body=hexed(colors["body"]), muted=hexed(colors["muted"]), axis=hexed(colors["axis"]), rule=hexed(colors["rule"]),
+            focus=focus, ramp=ramp, categories=tuple([focus, *(color for color in accents if color != focus)]),
+            sequential=LinearSegmentedColormap.from_list(f"research-loop-{look}", [background, focus]),
+            family=families[0], label_size=sizes["label"], tick_size=sizes["tick"], figsize=figsize,
+        )
+        with mpl.rc_context(fname=str(STYLE_PATH), rc={
+            "figure.figsize": figsize,
+            "figure.facecolor": background, "axes.facecolor": background,
+            "savefig.facecolor": background, "savefig.edgecolor": background,
+            "text.color": style.body, "axes.labelcolor": style.body, "axes.titlecolor": style.strong,
+            "axes.edgecolor": style.axis, "xtick.color": style.axis, "ytick.color": style.axis,
+            "xtick.labelcolor": style.muted, "ytick.labelcolor": style.muted,
+            "axes.spines.left": True, "axes.spines.bottom": True, "axes.spines.top": False, "axes.spines.right": False,
+            "grid.color": style.rule,
+            "axes.prop_cycle": cycler(color=[focus, *ramp]),
+            "font.family": families, "font.serif" if serif else "font.sans-serif": families,
+            "mathtext.fontset": "dejavuserif" if serif else "dejavusans",
+            "font.size": sizes["tick"], "axes.labelsize": sizes["label"], "axes.titlesize": sizes["label"],
+            "xtick.labelsize": sizes["tick"], "ytick.labelsize": sizes["tick"], "legend.fontsize": sizes["tick"],
+            "lines.linewidth": 2.4, "lines.markersize": 6, "legend.frameon": False,
+            "svg.fonttype": "path" if portable else "none",
+        }):
+            yield style
+    finally:
+        manager.ttflist[:] = original_fonts
+        manager.afmlist[:] = original_afm
+        manager._findfont_cached.cache_clear()
+
+
+def _repository_file(name, root):
+    """A file named relative to the repository root, as a plot's record keeps it: its name and SHA-256."""
+    text = str(name)
+    if not text or len(text) > 200 or any(ord(character) < 32 or ord(character) == 127 for character in text):
+        raise ValueError("file names must be 1–200 printable characters, relative to the repository")
+    if text[0] in "/~\\" or re.match(r"[A-Za-z]:", text):
+        raise ValueError(f"{text!r} is an absolute path; name files relative to the repository root")
+    if ".." in re.split(r"[/\\]", text):
+        raise ValueError(f"{text!r} leaves the repository; name files inside it")
+    path = (root / text).resolve()
+    try:
+        path.relative_to(root)
+    except ValueError as error:
+        raise ValueError(f"{text!r} resolves outside the repository") from error
+    if not path.is_file():
+        raise FileNotFoundError(f"{text} is not a file under {root}")
+    return {"name": text.replace("\\", "/"), "sha256": _file_metadata(path)["sha256"]}
+
+
+def figure_record(data, code=None, *, look, slot, commit=None, tool=None, root=None):
+    """The ``made`` record a plot block keeps: the data files and code that drew it, and for which look and slot.
+
+    Names are relative to ``root`` (the repository; the working directory when omitted)
+    and each file's SHA-256 is computed, so the record can be checked later. Absolute
+    paths and paths that leave the repository are refused, so no home directory leaks
+    into the page. ``commit`` is the repository's commit; ``tool`` defaults to this
+    Matplotlib's version. Pass the result as the plot block's ``made`` when saving it.
+    """
+    table = _slide_looks()
+    _one_of(look, list(table["looks"]), "look")
+    _one_of(slot, list(table["boxes"]["talk"]), "slot")
+    base = (Path.cwd() if root is None else Path(root).expanduser()).resolve()
+    names = _bounded_list([data] if isinstance(data, (str, Path)) else data, 8, "data")
+    if not names:
+        raise ValueError("data must name 1 to 8 files")
+    record = {"data": [_repository_file(name, base) for name in names]}
+    if code is not None:
+        record["code"] = _repository_file(code, base)
+    if commit is not None:
+        commit = str(commit).lower()
+        if not re.fullmatch(r"[0-9a-f]{7,40}", commit):
+            raise ValueError("commit must be 7 to 40 hexadecimal digits")
+        record["commit"] = commit
+    tool = f"matplotlib {mpl.__version__}" if tool is None else str(tool).strip()
+    if not 1 <= len(tool) <= 40:
+        raise ValueError("tool must be 1 to 40 characters")
+    record["tool"] = tool
+    record["look"], record["slot"], record["date"] = look, slot, date.today().isoformat()
+    return record
 
 
 def style_axes(ax, grid="y"):
@@ -316,28 +505,34 @@ def _file_metadata(path):
 
 
 def save_figure(fig, output_stem, *, dpi=300, portable=True, overwrite=False,
-                formats=("png",), close=True):
+                formats=("png",), close=True, background=None):
     """Export a bounded PNG and manifest; opt into PDF/SVG with ``formats``.
 
     Returns the same dictionary saved to ``<stem>.manifest.json``. Manifest paths
     are filenames relative to that file. Portable SVG outlines text; ``False``
     retains editable SVG text requiring the selected font on the viewing system.
     PDF embeds fonts in either mode. Existing outputs require ``overwrite=True``.
-    The figure closes even on failure unless ``close=False`` transfers that
-    responsibility to the caller. Use render_guard.py for the wall-time limit;
-    this in-process helper cannot bound arbitrary user code or memory allocations.
+    The figure is saved on white unless ``background`` names its ground (a slide
+    figure passes ``style.background``). The figure closes even on failure unless
+    ``close=False`` transfers that responsibility to the caller. Use render_guard.py
+    for the wall-time limit; this in-process helper cannot bound arbitrary user code
+    or memory allocations.
     """
     try:
-        return _save_figure(fig, output_stem, dpi=dpi, portable=portable, overwrite=overwrite, formats=formats)
+        return _save_figure(fig, output_stem, dpi=dpi, portable=portable, overwrite=overwrite, formats=formats, background=background)
     finally:
         if close:
             from matplotlib import pyplot as plt
             plt.close(fig)
 
 
-def _save_figure(fig, output_stem, *, dpi, portable, overwrite, formats):
+def _save_figure(fig, output_stem, *, dpi, portable, overwrite, formats, background=None):
     if isinstance(dpi, bool) or not isinstance(dpi, (int, float)) or not math.isfinite(dpi) or not 240 <= dpi <= 600:
         raise ValueError("PNG export dpi must be between 240 and 600")
+    try:
+        ground = "white" if background is None else to_hex(background)
+    except (TypeError, ValueError) as error:
+        raise ValueError(f"background must be a colour; got {background!r}") from error
     formats = _bounded_list(formats, 3, "formats")
     if (not formats or any(extension not in ("png", "pdf", "svg") for extension in formats)
             or len(set(formats)) != len(formats) or "png" not in formats):
@@ -360,7 +555,7 @@ def _save_figure(fig, output_stem, *, dpi, portable, overwrite, formats):
             for extension, target in outputs.items():
                 output = staged / target.name
                 fig.savefig(output, format=extension, dpi=dpi, bbox_inches=None,
-                            facecolor="white", edgecolor="white", transparent=False)
+                            facecolor=ground, edgecolor=ground, transparent=False)
                 manifest["outputs"][extension] = {
                     "path": target.name, **_file_metadata(output),
                 }

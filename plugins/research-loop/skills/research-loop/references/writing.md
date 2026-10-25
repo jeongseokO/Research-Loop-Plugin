@@ -8,7 +8,8 @@ The guide's English is instruction language only. Follow core's output-language 
 | --- | --- |
 | Before substantive authoring | `get_guide(topic:writing)`: core, the shared rules and module index |
 | Create or rename a plan/to-do | `section:tasks`: concrete target/action, purpose-first description and observable completion criteria |
-| Task/Main analysis, research report, PI/student report | `section:report`: question/purpose → approach → findings → interpretation/limits → decision |
+| Task/Main analysis, research report, PI/student report | `section:report`: question/purpose → approach → findings → cause → conclusion/decision |
+| Experiment results or an analysis, on a page or in chat | `section:results`, bundled as [Reporting results](results-reporting.md): experiment → observation → cause → conclusion, always concluding; run details of runs you started in `report_implementation` |
 | Structured lists and indentation | `section:lists`: parent claims, child evidence, Markdown versus block item syntax |
 | First-use technical terms, metrics, datasets or conditions | `section:annotations`: clickable explanations, definitions, escaping and reproduction details |
 | Numbers, methods, examples, figures or sources | `section:evidence`: comparisons, uncertainty, source records and external captions |
