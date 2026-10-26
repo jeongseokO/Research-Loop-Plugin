@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.84.0",
+  "version": "0.86.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Lab templates now show what they hold: the deck's template card draws the current slide on yours with its layouts, colours and faces, turns the page number off and sets the footer, and takes a dropped file; the preview draws a cover, a section and a body slide on it. EMF and WMF logos are drawn, fixed text wraps, and saved files keep the template's placeholders and fonts. Templates exported from Google Slides now work. Paper contents give long section names room, and the home page's Sign in no longer breaks apart at mid widths.",
+        "release_notes": "Your AI finds what a job needs in fewer steps and less text: tools are grouped by the job and listed in a line each before any schema, writes return what they made, and a scheduling write returns the next planning token. The guides take what good public skills do well. Tables mark the best value among what competes, such as the best model on each dataset; a table with a row per method and condition is drawn with a colour per method; names in charts are read whole; and a reading's notes say what they explain.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

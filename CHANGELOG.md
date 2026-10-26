@@ -2,6 +2,37 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.86.0 — 2026-10-26
+
+Your AI finds what a job needs in fewer steps and less text: tools are grouped by the job and listed in a line each before any schema, writes return what they made, and a scheduling write returns the next planning token. The guides take what good public skills do well. Tables mark the best value among what competes, such as the best model on each dataset; a table with a row per method and condition is drawn with a colour per method; names in charts are read whole; and a reading's notes say what they explain.
+
+- 도구 묶음을 하는 일로 다시 나눴습니다(열 개). 논문 읽기는 `papers`, 그림 올리기는 `media`로 나뉘었습니다. `describe_tools(group)`은 도구마다 한 줄 쓰임새만 돌려주고(묶음 하나가 130~290토큰), 스키마는 부를 도구의 이름으로 받습니다. 웹 그림 하나를 가져오는 데 읽는 양이 1,910토큰에서 461토큰으로, 논문 읽기 하나를 여는 데 3,640토큰에서 431토큰으로 줄었습니다. 매 차례 모델이 받는 목록과 접속 지침은 0.85.0보다 10토큰 늘었습니다(4,419 → 4,429).
+- 쓰기 결과: 바로 만든 기록은 id로 알려 주고, 데이터베이스의 작업·이벤트 id처럼 모델이 쓰지 않는 것은 뺍니다. 영향 확인 안내는 연구 기록을 바꾼 쓰기에만 붙습니다(할 일·일정·토론에는 붙지 않음).
+- 일정 쓰기(할 일, 마감, 주간 계획)는 다음 계획 토큰과 그 쓰기가 닿은 날의 부하를 돌려줍니다. 연달아 쓸 때 일정을 다시 읽지 않습니다. 시험의 '이번 주 목표와 할 일 셋'이 호출 10번에서 7번으로, 모델이 다시 읽은 글자가 37% 줄었습니다.
+- 지침(쓰기 개정 49, 문헌 개정 6): AI가 쓴 티가 나는 표현(본론 전 뜸 들이기, 맺음 구호, 부풀린 의의, 겹친 얼버무림, 문서에 대한 문장 등)을 저장 전에 거르고, 고쳐 쓰기는 사실을 더하지 않습니다. 검색은 어디서 언제 찾았는지 적고 '선행 연구 없음'이라고 쓰지 않습니다. 문헌의 요약은 반박할 수 있는 핵심 주장 한 문장이고, 여러 논문은 질문·주제별로 묶습니다. 실험 반복은 주장 수준으로 합니다(학습 주장은 seed, 일반성 주장은 다른 데이터셋·과제).
+- 표의 가장 좋은 값: 행이 데이터셋이고 열이 모델이면 같은 데이터셋 안에서 가장 좋은 모델을 칠합니다(전에는 모델마다 가장 점수 높은 데이터셋을 칠했습니다). 첫 열 머리글(Dataset, Task, Benchmark, 데이터셋, 지표 …)과 단위를 읽으므로 이미 쓴 표도 다시 쓰지 않고 바르게 보입니다. 그림 설정에 '가장 좋은 값: 자동 · 행마다 · 열마다'가 생겼고, AI는 가장 좋은 값을 손으로 굵게 칠하지 않고 `bestIn`으로 정합니다.
+- 그림의 긴 이름: 히트맵 열 이름은 칸 위에 세 줄까지 쓰고, 넘치면 45°로, 칸이 좁으면 세워서 씁니다. 행 이름은 두 줄까지 씁니다. 막대·점·선 그림의 이름 붙은 가로축 값은 하나도 건너뛰지 않고 두 줄이나 사선으로 씁니다. `attention_entropy`처럼 띄어쓰기 없는 이름은 `_ - / .`와 camelCase 경계에서 끊습니다.
+- 긴 표: '방법 × 출력 × batch'처럼 한 행이 방법 하나와 조건 하나인 표에서 한 열을 그리면, 조건마다 한 자리, 방법마다 한 색으로 그리고 범례를 붙입니다(히트맵은 방법을 세로로, 조건을 가로로). 가장 좋은 값은 같은 조건 안에서만 비교합니다. 조건이 저마다 열로 있는 표에 해당하며, 그림 한도는 행 수가 아니라 조건 수로 셉니다. 실제 분석 페이지의 24행 처리량 표가 같은 색 막대 24개에서 네 자리 × 여섯 색이 됐습니다.
+- 표 칸은 단어와 숫자 중간에서 줄을 바꾸지 않습니다('93.9|9', 'ba|tc|h'였던 칸은 열이 넓어지고, 넘치면 표가 옆으로 넘어갑니다). 경로처럼 띄어쓰기 없이 40자가 넘는 칸만 아무 데서나 끊습니다.
+- 한 결과가 같은 질문의 두 회차에 쓰이면 결과 페이지에 '답하는 질문'을 한 번만 씁니다.
+- 결과 지침: 설정·데이터·평가 방식은 실험 페이지에 두고 링크합니다. 조건은 행 이름에 붙이지 않고 열마다 나눕니다. 숫자는 본문처럼 씁니다(1,024; −0.3). 예시는 주장을 보이는 두세 개만 고른 이유와 함께 둡니다. 확인한 것과 못 한 것, 사용자 지시, 대기열 상태 같은 작업 과정은 답에 쓰고 페이지에 쓰지 않습니다. 점마다 '~로 확대하지 않는다'를 덧붙이지 않습니다.
+- 논문 읽기: 설명마다 무엇의 설명인지 첫 줄에 씁니다(인용한 말, 식 (3), Figure 2, Table 1, 이 문단). 좁은 화면에서 접힌 설명의 단추도 같습니다. 식·그림·표·문단 전체에 단 설명을 가리키면 그 블록이 함께 밝아지고, 블록을 가리키면 그 설명이 밝아집니다. 키보드로 옮겨 가도 같습니다.
+- 플러그인: 읽기 순서 노트(`get_reading_guide`)와 논문 읽기(`get_paper_reading`)가 이름으로 헷갈리지 않게 설명을 고쳤고, 참고 문서가 새 묶음 이름을 씁니다.
+- 배포: 마이그레이션 `20261026190000_table_chart_best_in`을 적용한 뒤 MCP 함수(`research-loop-mcp`)를 올리고, 태그로 사이트와 플러그인을 올립니다.
+
+## 0.85.0 — 2026-10-26
+
+Paper readings can now get their missing figures from your AI: where a copy has no picture, the AI puts in the paper's own figure, fetched from the web with its source or cut from the PDF page, and the caption says which AI put it there. A figure you put in stays yours. Readings also carry aids where the paper explains: an equation to move, with its symbols, its derivation line by line and values to try, or an explainer that steps through a method. Each is drawn only when opened, and goes into the basket like any figure.
+
+- 원문 읽기에서 그림이 빠진 자리를 AI가 채웁니다. 새 MCP 도구 `place_reading_figure`는 논문 자신의 그림을 웹 주소로 가져오거나(서버가 공개 인터넷에서 받아 출처를 남깁니다) AI가 PDF 쪽에서 잘라 올린 그림을 넣습니다. 사본을 마쳤을 때와 arXiv 그림을 다 복사했을 때 결과가 빈 그림의 이름을 알려 줍니다.
+- 캡션 아래에 누가 넣었는지가 보입니다. 'Claude가 가져온 그림'(출처 줄과 함께), 'Claude가 PDF 3쪽에서 잘라 넣은 그림'입니다. 사람이 넣은 그림은 AI가 바꾸지 못하고, 사람은 AI가 넣은 그림을 바꾸거나 뺄 수 있습니다.
+- 읽기 머리의 '그림 2개가 아직 PDF에만 있습니다' 옆에 'AI에게 맡기기'가 생겼습니다. 빠진 그림의 이름을 담은 요청으로 AI 요청 창이 열립니다.
+- 식 풀어 보기와 도해: AI가 뜻·설명을 달 때 논문마다 1–3개를 함께 답니다. 식 아래 '식 (2) 풀어 보기'를 펼치면 기호를 가리켜 보고, 유도를 한 줄씩 넘기고, 값을 움직여 볼 수 있습니다. 방법을 말하는 문단 아래 '도해로 보기'는 단계별 도해입니다. 페이지의 수식·도해와 같은 것이라 같은 검사(손으로 푼 점검값)를 받고, 펼칠 때 처음 그리며, 바구니에 담아 페이지와 발표에 씁니다.
+- 읽다가 식이나 방법을 AI에게 물으면, 그 프로젝트를 편집할 수 있는 AI는 답과 함께 그 블록에 식 풀어 보기나 도해를 달고 답에 그렇게 적습니다.
+- 데모 논문의 식 (2)에 식 풀어 보기(논문의 설정대로 24층, 하한은 층마다 고르게 나눈 몫의 4%쯤), Method 첫 문단에 다섯 단계 도해가 붙었습니다.
+- 코드: 로그인한 앱의 첫 화면 코드가 0.3KB(gzip) 늘었고, 읽기 화면은 코드 1.1KB와 스타일 0.2KB가 늘었습니다. 식과 도해를 그리는 코드는 연구 페이지가 이미 받는 것을 함께 씁니다.
+- 배포: 마이그레이션 `20261026180000_ai_reading_figures`를 적용한 뒤 MCP 함수(`research-loop-mcp`)를 올리고, 태그로 사이트와 플러그인을 올립니다.
+
 ## 0.84.0 — 2026-10-26
 
 Lab templates now show what they hold: the deck's template card draws the current slide on yours with its layouts, colours and faces, turns the page number off and sets the footer, and takes a dropped file; the preview draws a cover, a section and a body slide on it. EMF and WMF logos are drawn, fixed text wraps, and saved files keep the template's placeholders and fonts. Templates exported from Google Slides now work. Paper contents give long section names room, and the home page's Sign in no longer breaks apart at mid widths.

@@ -1,13 +1,13 @@
 ---
 name: research-loop
-description: Read and maintain the user's Research Loop projects, research pages, plans and assigned AI work through MCP. Use for work the user wants to inspect, record or coordinate in Research Loop, not generic research advice or development of the app itself.
+description: Read and maintain the user's Research Loop projects through MCP: research pages, papers and their readings, experiments and results, to-dos and schedules, assigned AI work. Use for work the user wants to inspect, record or coordinate in Research Loop, not generic research advice or development of the app itself.
 ---
 
 # Research Loop
 
 Help the human recover understanding and decisions, not accumulate pages. Most text in Research Loop is written by AI, so write for a person who checks it quickly: bottom line first, evidence linked, unknowns explicit.
 
-These instructions are in English. Write in the user's language unless another is requested; keep official names and natural technical terms, explained in the user's language.
+Write in the user's language unless another is requested; keep official names and natural technical terms, explained in the user's language.
 
 ## Core loop
 

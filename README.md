@@ -42,7 +42,7 @@ Claude Code를 다시 시작하고 대화창에서 `/mcp` → Research Loop → 
 
 Codex는 시작할 때 새 버전을 받습니다. Claude Code는 대화창의 `/plugin` → Marketplaces → research-loop에서 자동 업데이트(Enable auto-update)를 한 번 켜 둡니다. 새 버전은 다시 연 뒤 새 대화부터 적용됩니다. 업데이트하려고 다시 설치하지 마세요. VS Code나 앱에서 설치하면 로그인을 새로 하게 되고 '내 AI'에 연결이 하나 더 생깁니다.
 
-현재 패키지: **0.84.0** — 웹사이트·MCP 서버·패널과 같은 번호입니다. 무엇이 바뀌었는지는 [변경 내역](CHANGELOG.md)에 있습니다.
+현재 패키지: **0.86.0** — 웹사이트·MCP 서버·패널과 같은 번호입니다. 무엇이 바뀌었는지는 [변경 내역](CHANGELOG.md)에 있습니다.
 
 ## 공유 서버에서 사용
 

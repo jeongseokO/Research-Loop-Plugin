@@ -3,7 +3,7 @@ description: Pick up a queued Research Loop AI request for this connection and c
 argument-hint: "[task ID or project]"
 ---
 
-Work one Research Loop AI request ("$ARGUMENTS" names it, or choose the oldest one you may claim). Read the research-loop skill's AI work reference first. The AI task tools and `get_implementation_report` are outside the tool list: `call_tool_read` and `call_tool_write` call them, and `describe_tools(group:"ai_tasks")` gives their arguments.
+Work one Research Loop AI request ("$ARGUMENTS" names it, or choose the oldest one you may claim). Read the research-loop skill's AI work reference first. The AI task tools and `get_implementation_report` are outside the tool list: `call_tool_read` and `call_tool_write` call them; `describe_tools(group:"ai_tasks")` lists the AI task tools, and `get_implementation_report` is in the projects group.
 
 1. `list_ai_tasks` once (`status:"queued"`, the linked or named project), then `get_ai_task` for the chosen request. If nothing is queued for this connection, say so and stop.
 2. Check project, owner, status and revision; read `get_project_instructions`. `claim_ai_task`; if another AI already claimed, ran or finished it, stop and say so.
