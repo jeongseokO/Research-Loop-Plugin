@@ -56,7 +56,7 @@ Reuse an already-read guide unless its revision changed.
 | Review a proposal | `list_change_requests`, then `get_change_request` for that one |
 | A record's template and properties | `get_guide(topic:record, type)`; `type:dataset` for benchmarks, columns and linked samples |
 | Literature, meeting minutes (not ordinary notes), refresh, question branches | `get_guide` with topic `literature`, `meeting`, `workflow` or `question` |
-| A paper to read in the original (arXiv or a PDF), with meanings | `get_guide(topic:reading)` |
+| A paper to read in the original (arXiv or a PDF), with meanings; questions asked while reading | `get_guide(topic:reading)`; `list_reading_questions` |
 | A result came in | `record_result_meaning`; `get_research_brief` lists results still waiting |
 | Schedule or distribute work | [Scheduling](references/scheduling.md); `get_team_planning_context` |
 | Tables, mechanisms, equations | Core's composition rule: `table.chart`, an explainer or an equation block; the app draws them. |

@@ -2,6 +2,44 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.83.0 — 2026-10-26
+
+Paper readings now have a place of their own in each project, Reading (논문 읽기), next to the research flow in the project menu: the papers you are in the middle of, with where you stopped on any device and how long is left, every paper with how far you have read it, and adding a paper from arXiv, a PDF or a literature record. Drag over a passage to leave a memo: it is painted in place and set in the margin, kept to yourself or shared with the team, and can be asked of your own AI, which answers under it. The literature list and page say how far you have read and where your memos are.
+
+- 프로젝트 메뉴의 연구 흐름 다음에 '논문 읽기'가 생겼습니다. 맨 위 '이어 읽기'에는 읽다 만 논문이 최근 순으로 카드로 있고, 카드마다 몇 %까지 읽었는지, 어느 절에서 멈췄는지, 남은 시간, 메모 수가 보입니다. 누르면 그 자리에서 이어 읽습니다. 아래 '모든 논문'은 읽는 중·안 읽음·다 읽음으로 고르고 제목·저자로 찾습니다. 원문 읽기가 없는 문헌은 접어 두고, 거기서 바로 원문 읽기를 만들게 합니다.
+- '논문 추가'는 arXiv 주소나 번호, PDF, 이미 있는 문헌 가운데 하나를 고르면 문헌 기록을 만들고(있으면 그것을 쓰고) AI에게 원문 읽기를 요청하는 창까지 한 번에 갑니다. PDF는 이 기기에서 제목과 쪽 수만 읽고 올리지 않습니다.
+- 읽던 자리와 읽은 비율이 서버에 남아 다른 기기에서도 이어 읽습니다. 바뀌었을 때만, 10초에 한 번 이하로 쓰고, 창을 닫거나 탭을 떠날 때 바로 씁니다.
+- 읽다가 글을 끌어 고르면 '메모'가 맨 앞에 뜹니다(보기 전용 멤버에게도). 메모한 대목은 형광펜처럼 칠해지고, 넓은 화면에서는 여백에 카드로, 휴대폰에서는 문단 아래 접힌 줄로 보입니다. 기본은 나만 보기이고 편집할 수 있는 사람은 팀과 나눕니다. 위 줄의 '메모'가 이 논문의 메모 목록을 열고, 논문 읽기의 '메모' 탭에는 프로젝트의 모든 메모가 있습니다. 원문이 다시 옮겨져도 메모는 그 글로 자리를 다시 찾습니다.
+- 메모의 'AI에게 묻기'는 프로젝트 대기열이 아니라 그 메모를 쓴 사람의 AI에게만 갑니다. AI는 대화를 시작할 때(`who_am_i`) 질문이 있다는 것을 듣고, `list_reading_questions`로 질문과 그 대목의 문단을 받아 `answer_reading_memo`로 답합니다. 답은 메모 아래에 AI 종류 이름으로 달립니다.
+- 문헌 목록의 줄에 '읽는 중 62%', '다 읽음', '원문 읽기', 'AI 요청 대기 중'과 '메모 n'이 붙고, 머리에 '논문 읽기'가 있습니다. 문헌 페이지의 원문 읽기 입구는 읽기 시작한 뒤에는 '42% 읽음 메모 2'처럼 내 진행을 보여 줍니다.
+- 논문 읽기에서 연 읽기 화면은 '논문 읽기'로 돌아가고, 머리 끝의 '문헌 기록'이 문헌 페이지를 위에 엽니다.
+- 데모에서 처음부터 해 볼 수 있습니다. 진행과 메모는 이 탭에만 남고, AI의 답을 지어내지 않습니다.
+- 첫 화면은 그대로입니다. 로그인한 앱의 코드는 11.0KB(gzip), 읽기 화면은 7.3KB 늘었고, 논문 읽기 화면(4.4KB)과 논문 추가 창(3.3KB)은 처음 열 때 받습니다.
+- 배포: 마이그레이션 `20261026160000`을 먼저 적용합니다(`npm run -s migration:sql -- 20261026160000 | pbcopy`를 SQL Editor에 붙여 실행). 그전에는 논문 읽기가 진행과 메모를 읽지 못하고 '다시 불러오기'를 보여 줍니다. 다음 MCP 함수(`research-loop-mcp`), 그다음 태그로 사이트와 플러그인을 올립니다.
+
+## 0.82.0 — 2026-10-26
+
+A paper reading's missing figures can now be put in by the person reading. On a figure's place, Add figure opens a dialog: open the paper's PDF on this device (it is never uploaded), and the app turns to the figure's page with the part around it already chosen; adjust it by dragging or with the keys and put it in, cut sharp. A picture file or a screenshot works too, a figure that has a picture can be replaced, and the reading says where each figure came from. The AI tells the person when a copy it finished still lacks figures.
+
+- 원문 읽기에서 그림이 빠진 자리마다 편집할 수 있는 사람에게 '그림 넣기'가 있습니다. 읽기 머리에는 '그림 2개가 아직 PDF에만 있습니다'와 'PDF에서 그림 넣기'가 있어 빠진 그림을 차례로 채웁니다. 캡션만 있고 그림 줄이 없던 그림도 자리가 생겼습니다.
+- 넣기 창의 'PDF에서 자르기': 논문 PDF를 고르거나 끌어 놓으면 이 기기에서만 열고(올리지 않습니다) 그 그림이 있는 쪽을 엽니다. 캡션과 잉크로 그림 둘레를 찾아 두고, 끌거나 손잡이로, 화살표(Shift는 크게, Alt는 크기)로 고쳐 Enter로 넣습니다. 고른 부분만 선명하게(1pt에 4px) 잘라 이 문헌 기록에 올립니다. 빠진 그림이 더 있으면 '넣고 다음 그림'으로 PDF를 연 채 이어 갑니다. 쪽 수나 제목이 다르면 같은 논문인지 확인하라고 알립니다.
+- '그림 파일': 그림을 고르거나 끌어 놓거나 ⌘V·Ctrl+V로 붙여 넣습니다(PNG·JPEG·WebP·GIF, 25MB). 그림이 있는 자리에는 '바꾸기'가 있고, 바꿀 때 지금 그림이 제목 옆에 작게 보입니다. 사람이 넣은 그림은 '넣은 그림 빼기'로 되돌립니다.
+- 사람이 넣은 그림은 캡션 아래에 'PDF 3쪽에서 잘라 넣은 그림' 또는 '직접 넣은 그림'이라고 적힙니다. 읽기본 옆에 그림 번호로 따로 두므로 AI가 사본을 다시 지어도 남고, 다른 논문이 들어오면 지워집니다. 바구니에 담으면 사람이 넣은 그림이 담깁니다.
+- PDF 도구(pdf.js)는 넣기 창에서 PDF를 열 때만 받습니다. 사이트 보안 정책은 그대로입니다. 첫 화면은 그대로이고, 읽기 화면은 1.7KB(gzip) 늘었습니다.
+- AI가 그림 없이 PDF 사본을 마치거나 arXiv에서 복사하지 못한 그림이 남으면, 그 수를 알려 주고 사람이 읽기 화면에서 넣을 수 있다고 전하게 합니다(사람이 이미 넣은 그림은 빼고 셉니다).
+- 데모에서 데모 논문의 실제 PDF로 처음부터 끝까지 해 볼 수 있습니다('데모 논문 PDF 열기'). 넣은 그림은 새로 고치면 사라집니다.
+- 배포: 마이그레이션 `20261026100000`을 먼저 적용합니다(`npm run -s migration:sql -- 20261026100000 | pbcopy`를 SQL Editor에 붙여 실행). 그전에는 읽기 화면은 전처럼 열리고 그림 넣기만 실패합니다. 다음 MCP 함수(`research-loop-mcp`), 그다음 태그로 사이트와 플러그인을 올립니다.
+
+## 0.81.1 — 2026-10-26
+
+Exported decks are now checked the way PowerPoint reads them: every part against the Office Open XML schemas and the package's references and ids, in the test suite. The check found and fixed three faults that every PPTX carried (the notes master listed after the slides, content types for parts that were not there, repeated shape ids in masters from LibreOffice templates). A paper reading's text width can now be set from its bar, and a template's footer prompt is no longer taken for a footer.
+
+- 내보낸 PPTX를 PowerPoint가 읽는 방식으로 검사합니다. 모든 XML을 Office Open XML 표준 스키마(ISO/IEC 29500 Transitional)로 검사하고, 관계·콘텐츠 형식·개체 id·마스터·레이아웃·슬라이드 id가 맞는지도 봅니다. 양식 없는 발표, 양식 발표, LibreOffice로 만든 양식 발표를 시험이 매번 검사합니다(CI는 Python lxml을 설치합니다).
+- 검사가 찾은 세 가지를 고쳤습니다. `presentation.xml`이 노트 마스터를 슬라이드 목록 뒤에 적던 것(지금까지의 모든 PPTX), 없는 부분을 가리키는 콘텐츠 형식, LibreOffice 양식에서 옮겨 온 마스터의 겹친 도형 id입니다. PowerPoint는 예전 파일도 열었지만, 이제 표준이 허락하는 모양 하나로 씁니다.
+- 원문 읽기 위 줄에 '본문 폭'이 생겼습니다. 끌면 글이 바로 넓어지거나 좁아지고(520–960px, 기본 680), 폭의 이름과 한 줄에 들어가는 글자 수를 보여 줍니다. 고른 폭은 이 기기에 모든 읽기 공통으로 남고 '기본 폭'으로 돌아갑니다. 넓은 폭이 차례·메모와 함께 들어가지 않으면 차례를 위 줄로 접고, 글이 화면을 이미 채우는 좁은 화면에서는 보이지 않습니다.
+- LibreOffice가 양식의 바닥글 자리에 써 두는 'Footer'·'<footer>'·'바닥글' 같은 안내 글을 연구실의 바닥글로 쓰지 않습니다.
+- 배포: 마이그레이션은 없습니다. 이 버전 번호를 알리도록 MCP 함수를 다시 올리고, 태그로 사이트와 플러그인을 올립니다. 0.72.0부터 한 번에 올린다면 0.72.0–0.79.0의 마이그레이션 여섯 개를 번호 순서대로 먼저 적용합니다.
+
 ## 0.81.0 — 2026-10-26
 
 A deck can now take a lab's own PowerPoint template. Imported in the deck editor, the template is read in the browser and previewed on the deck's cover and current slide; used, every slide flows into its title and body places on its own ground and art, and the exported PPTX is written on the template's own master, with titles, page numbers and footers in its placeholders and words in its theme fonts.
