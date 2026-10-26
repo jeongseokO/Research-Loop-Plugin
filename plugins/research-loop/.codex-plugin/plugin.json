@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.83.0",
+  "version": "0.84.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Paper readings now have a place of their own in each project, Reading (논문 읽기), next to the research flow in the project menu: the papers you are in the middle of, with where you stopped on any device and how long is left, every paper with how far you have read it, and adding a paper from arXiv, a PDF or a literature record. Drag over a passage to leave a memo: it is painted in place and set in the margin, kept to yourself or shared with the team, and can be asked of your own AI, which answers under it. The literature list and page say how far you have read and where your memos are.",
+        "release_notes": "Lab templates now show what they hold: the deck's template card draws the current slide on yours with its layouts, colours and faces, turns the page number off and sets the footer, and takes a dropped file; the preview draws a cover, a section and a body slide on it. EMF and WMF logos are drawn, fixed text wraps, and saved files keep the template's placeholders and fonts. Templates exported from Google Slides now work. Paper contents give long section names room, and the home page's Sign in no longer breaks apart at mid widths.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

@@ -2,6 +2,25 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.84.0 — 2026-10-26
+
+Lab templates now show what they hold: the deck's template card draws the current slide on yours with its layouts, colours and faces, turns the page number off and sets the footer, and takes a dropped file; the preview draws a cover, a section and a body slide on it. EMF and WMF logos are drawn, fixed text wraps, and saved files keep the template's placeholders and fonts. Templates exported from Google Slides now work. Paper contents give long section names room, and the home page's Sign in no longer breaks apart at mid widths.
+
+- '발표 전체 → 연구실 양식'이 카드 하나가 됐습니다. 이 슬라이드를 그 양식으로 그린 그림, 이름, 표지·절 구분·본문이 쓰는 양식의 레이아웃, 색 견본, 제목·본문 글꼴, 쪽 번호 켜고 끄기, 바닥글 글, '다른 양식으로 바꾸기', '양식 빼기'가 있습니다. 양식이 없으면 PowerPoint 파일을 끌어다 놓거나 고르는 자리가 있고, 최근 양식 세 개는 저마다 자기 그림으로 그려집니다.
+- 미리보기는 이 발표의 표지·절 구분·본문 세 장을 양식에 그리고, 장마다 어느 레이아웃인지 적습니다(없으면 '본문 레이아웃으로'). 색, 글꼴과 크기, 쪽 번호, 바닥글, 화면이 그리지 못한 것도 보입니다. 휴대폰에서는 미리보기가 옆으로 넘어갑니다.
+- 쪽 번호와 바닥글은 발표마다 정하고 실행 취소 한 번으로 돌아갑니다. 화면, 썸네일, 발표 화면, PPTX가 같습니다. 표지에는 둘 다 없습니다.
+- EMF·WMF 로고를 브라우저에서 PNG로 그립니다(rtf.js, 양식에 메타파일이 있을 때만 받음). PPTX에는 원본이 그대로 갑니다. 양식의 고정 글은 상자 폭에서 줄을 바꿉니다.
+- PPTX: '한 문장' 슬라이드의 문장이 제목 개체 틀이 되고, 마스터에만 있는 쪽 번호·바닥글도 개체 틀로 들어가며, 양식에 묻힌 글꼴이 함께 갑니다(하나 10MB, 모두 25MB까지).
+- Google Slides에서 내보낸 양식(연구실 실제 양식으로 확인)을 제대로 읽습니다. 레이아웃 종류 대신 개체 틀과 이름으로 표지·절 구분·본문을 고르고, 개체 틀에 적힌 글꼴(Noto Sans KR)을 쓰고, 글상자로 그린 쪽 번호를 쪽 번호 자리로 읽습니다. 전에는 이런 양식으로 PPTX를 저장하면 기본 모양으로 저장됐습니다.
+- 표지와 절 구분의 제목·부제가 양식 자리의 크기·굵기·색·정렬·세로 위치를 따릅니다(본문 슬라이드 제목은 이미 그랬습니다). 이미 양식을 쓴 발표의 표지 제목이 가운데로 오거나 크기가 바뀔 수 있습니다.
+- 랜딩: 영어·프랑스어·일본어 화면에서 창 폭에 따라(900–1,330px, 프랑스어는 휴대폰 폭에서도) 머리의 '로그인'이 한두 글자씩 세로로 쪼개지던 것을 고쳤습니다. 머리의 단추와 링크는 줄을 바꾸지 않고, 섹션 링크는 자리가 모자라면 가운데에서 비켜나다가 그래도 모자라면 숨습니다. 휴대폰에서 수식 예시의 항목 설명이 화면의 3분의 1 폭에 갇히던 것도 고쳤습니다. 320–1,600px, 네 언어에서 시험합니다.
+- 앱 안에서도 같은 종류를 고쳤습니다. 할 일 머리의 '목록/일정' 전환(영어 Schedule, 프랑스어 Planning), 휴대폰 일정의 주·월 전환(이제 한 줄을 차지합니다), 기록 페이지 속성의 질문 링크(한국어가 음절 중간에서 끊김), 시각화 가이드의 이름, 기록 목록의 종류 칸(일본어 データセット)입니다. 로그인한 앱의 모든 화면을 다섯 폭, 네 언어로 시험합니다.
+- 발표 편집 화면의 접힌 묶음 이름('발표 전체' 등)이 옆의 긴 양식 이름에 밀려 '발표 전 / 체'로 쪼개지지 않습니다.
+- 바구니: 빼기·비우기·되돌리기가 화면 읽기 프로그램에 말해지고, 창의 이름이 한 줄로 맞춰지며, 휴대폰에서 알림이 시트를 가리지 않습니다. 같은 알림은 한 번만 뜹니다.
+- 논문 읽기의 차례: 넓은 화면에서 차례 칸이 넓어지고(216–272px) 절·소절 번호가 한 열로 서서 긴 이름도 깔끔히 접힙니다. 길면 끝이 흐려지고 읽는 절이 차례 안에서 따라 보입니다.
+- 첫 화면의 코드는 그대로이고 공통 스타일이 0.1KB(gzip) 늘었습니다. 로그인한 앱의 코드는 2.0KB 늘었고, 발표 편집 화면은 코드가 0.5KB 줄고 스타일이 0.4KB 늘었습니다. 양식 미리보기(1.7KB와 스타일 0.7KB), 양식 읽기(13.1KB), 양식으로 PPTX 저장(5.1KB)은 쓸 때 받고, 메타파일 그리기(rtf.js, 28KB)는 양식에 EMF·WMF 그림이 있을 때만 받습니다.
+- 배포: 마이그레이션이 없습니다. MCP 함수(`research-loop-mcp`)를 올린 뒤 태그로 사이트와 플러그인을 올립니다.
+
 ## 0.83.0 — 2026-10-26
 
 Paper readings now have a place of their own in each project, Reading (논문 읽기), next to the research flow in the project menu: the papers you are in the middle of, with where you stopped on any device and how long is left, every paper with how far you have read it, and adding a paper from arXiv, a PDF or a literature record. Drag over a passage to leave a memo: it is painted in place and set in the margin, kept to yourself or shared with the team, and can be asked of your own AI, which answers under it. The literature list and page say how far you have read and where your memos are.
