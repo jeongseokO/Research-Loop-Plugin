@@ -131,7 +131,7 @@ By Claude's security policy, the panel does not embed the website. Attachments, 
 
 ## 5. Project access
 
-1. Open **My AI** in the Research Loop web app.
+1. Open **AI connections** in the Research Loop web app.
 2. Find the AI you just connected and check its access to each project.
 3. **Projects where you are the Owner or a Semi-Owner:** your AI can work there without asking.
 4. **Projects you were invited to as an Editor or Viewer:** press **Request access** on that AI. It can work there once the project's Owner approves. Accepting a person's invitation does not approve their AI.
@@ -143,14 +143,14 @@ What the AI can actually do is bounded by **your permissions × your project rol
 
 If you connected with OAuth, skip this step. The key here is not an OpenAI or Anthropic API key: it is **a key for reaching Research Loop**.
 
-1. In the web app, open **My AI → API key · compatible connection**.
+1. In the web app, open **AI connections → API key · compatible connection**.
 2. Choose the AI's name, the client, the permissions it needs and an expiry, then issue the key.
 3. The key is shown only once: keep it in your own secure secret store. Don't paste it into chats, notes or Git repositories.
 4. On the same screen, press **Copy settings** for the tool you use. The default environment variable is `RESEARCH_LOOP_API_KEY`.
 5. Put the copied settings in that tool's MCP configuration, and provide the key through that environment variable **where the AI runs**. Don't write the key into a settings file in plain text. VS Code may not pick up environment variables set in another terminal.
 6. Restart the tool, check the connection, then request access to the projects you need.
 
-If a key was exposed, or you no longer use an AI, remove it with **My AI → Delete AI** and recreate only the connections you need. Once deleted, that AI connection stops working.
+If a key was exposed, or you no longer use an AI, remove it with **AI connections → Delete AI** and recreate only the connections you need. Once deleted, that AI connection stops working.
 
 ## 7. Updates and staying signed in
 
@@ -161,9 +161,9 @@ You don't fetch new versions yourself.
 
 Don't uninstall and reinstall the plugin to update it: a reinstall means signing in again. A plugin installed from a local folder (`research-loop@personal`) doesn't update by itself, so move it once to the marketplace install above.
 
-When you sign in again, pick the AI you were using under **Connect as** on the approval screen. Its name, permissions and project approvals carry over. Choosing **New AI** adds one more connection to **My AI**.
+When you sign in again, pick the AI you were using under **Connect as** on the approval screen. Its name, permissions and project approvals carry over. Choosing **New AI** adds one more connection to **AI connections**.
 
-Signing out of the website keeps your AI connections. Changing your password or deleting a connection under **My AI** ends them; then sign in again in that environment.
+Signing out of the website keeps your AI connections. Changing your password or deleting a connection under **AI connections** ends them; then sign in again in that environment.
 
 ## 8. When it doesn't connect
 
@@ -175,9 +175,9 @@ Signing out of the website keeps your AI connections. Changing your password or 
 | An edit didn't take effect | Whether the AI sent a review request rather than "applied" → check the request in Notifications |
 | `instructions_required` | Have the AI read the current project's working guidelines again, then retry only what is still needed |
 | Service account connection settings missing | A problem with how the service is run. Don't ask users for Supabase settings or repeated keys: contact the administrator |
-| Asked to sign in again | Whether you changed your password or deleted the connection under My AI → sign in again in that environment (`--no-browser` on a remote server) and pick the AI you were using on the approval screen |
+| Asked to sign in again | Whether you changed your password or deleted the connection under AI connections → sign in again in that environment (`--no-browser` on a remote server) and pick the AI you were using on the approval screen |
 | Sign-in ends with `Address in use (os error 98)` | Another program holds the port that receives the sign-in. If your config fixes `mcp_oauth_callback_port`, see who holds that port with `ss -ltnp`, and sign in on another port this once: `codex -c mcp_oauth_callback_port=5556 mcp login research-loop-plugin --no-browser` |
-| The same AI appears several times in My AI | Those connections were approved as **New AI** when signing in again. Delete the ones you don't use under My AI, and pick the AI you were using next time |
+| The same AI appears several times in AI connections | Those connections were approved as **New AI** when signing in again. Delete the ones you don't use under AI connections, and pick the AI you were using next time |
 | Old guidance or icon keeps showing | Reopen Codex or Claude Code and start a new conversation. An existing conversation may keep its old guidance. In Claude Code, check that auto-update is on |
 
 When you contact us, say which tool and version you used, the step that failed and the error message. Don't send API keys, OAuth tokens, passwords or unpublished research. [Contact support](mailto:jeongseok0112@gmail.com)

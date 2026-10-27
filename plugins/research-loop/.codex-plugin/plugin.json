@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.86.0",
+  "version": "0.91.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Your AI finds what a job needs in fewer steps and less text: tools are grouped by the job and listed in a line each before any schema, writes return what they made, and a scheduling write returns the next planning token. The guides take what good public skills do well. Tables mark the best value among what competes, such as the best model on each dataset; a table with a row per method and condition is drawn with a colour per method; names in charts are read whole; and a reading's notes say what they explain.",
+        "release_notes": "A paper reading now has layers you switch on and off: the meanings, the notes, the memos, a short summary before each paragraph in your language, and the key sentences the paper rests on, painted like a highlighter. View holds them all, with a sample of how each looks, how many there are and its switch, keeps your choice on the device, and hands summaries or key sentences that are missing to your AI. Your AI writes both when it makes a reading, and the reading guide says what a good summary and a good key sentence are.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

@@ -2,6 +2,45 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.91.0 — 2026-10-27
+
+A paper reading now has layers you switch on and off: the meanings, the notes, the memos, a short summary before each paragraph in your language, and the key sentences the paper rests on, painted like a highlighter. View holds them all, with a sample of how each looks, how many there are and its switch, keeps your choice on the device, and hands summaries or key sentences that are missing to your AI. Your AI writes both when it makes a reading, and the reading guide says what a good summary and a good key sentence are.
+
+- 보기: 읽기 화면 위 줄의 '보기'가 층 다섯을 한 판에 모읍니다. 줄마다 화면에서 보이는 모양 그대로의 견본, 개수, 스위치가 있고, 줄의 글을 눌러도 스위치가 바뀝니다. '모두 끄기'와 '모두 켜기', 풀이 언어 고르기도 이 판에 있습니다(위 줄의 '뜻' 스위치와 언어 고르기는 판으로 옮겼습니다). Esc나 바깥을 누르면 닫히고, 휴대폰에서는 아래에서 올라옵니다. 고른 것은 이 기기에 남고, 처음에는 모두 켜져 있습니다.
+- 문단 요약: 본문 문단(40낱말 이상)과 목록마다 그 앞에 한두 문장의 요약이 풀이 언어로 섭니다. 논문 글자보다 작은 고딕에 왼쪽 청록 선이라 원문과 섞이지 않고, 화면 읽기 도구에는 '문단 요약:'이 먼저 들립니다. 부록 문단은 부탁할 때만 요약합니다.
+- 핵심 문장: 논문을 떠받치는 문장(질문, 발견, 주된 결과, 한계 같은)을 문헌 색의 옅은 칠로 보여 줍니다. 메모의 칠 아래에 깔리고, 글자는 건드리지 않습니다. 칠할 수 없는 브라우저에서는 판의 줄이 그렇다고 말합니다.
+- 설명과 메모 숨기기: 설명을 끄면 여백 카드, 접힌 줄, 보조 도구 줄과 인용에 칠한 바탕이 사라지고 여백이 다시 놓입니다. 메모를 끄면 메모 카드와 칠이 사라집니다. 메모를 끈 채 새 메모를 쓰거나 목록에서 메모로 가면 메모가 다시 켜집니다. 한국어 설명은 줄이 바뀔 때 낱말을 끊지 않습니다.
+- AI 도구: `save_paper_glosses`가 `summaries`(한 번에 120개, 언어마다 1,000개, 한 요약 300자)와 `key_sentences`(한 번에 60개, 언어마다 200개, 그 블록의 문장을 그대로 8~600자)를 받고, `remove.summaries`(블록 id)와 `remove.key_sentences`로 뺍니다. `get_paper_reading`은 읽은 쪽의 요약과 핵심 문장을 돌려주고, 저장 결과는 아직 요약이 없는 문단 수를 알려 줍니다. 매 차례 모델이 받는 도구 목록은 그대로이고, papers 묶음 설명이 약 560자 늘었습니다.
+- 지침: 읽기 안내(`get_guide(topic:reading)`)가 좋은 요약(문단마다 한 문장, 많아야 두 문장, 문단에 없는 말을 더하지 않음)과 핵심 문장(온전한 문장을 그대로, 초록과 관련 연구에는 두지 않음)을 말합니다. 안내는 약 720자 늘었고, 읽기를 만들 때 한 번 읽습니다.
+- 요청: 새 원문 읽기를 부탁하는 글이 요약과 핵심 문장까지 부탁합니다. 판의 'AI에게 맡기기'는 없는 것만 부탁합니다(요약이 없는 문단 수를 적어서).
+- 문헌 페이지의 원문 읽기 줄에 요약 수가 붙습니다(뜻 36 · 설명 6 · 요약 13 · 한국어).
+- 데모: arXiv 데모 논문에 한국어 요약 13개와 핵심 문장 7개가 있습니다. PDF 데모에는 없어서 판에서 'AI에게 맡기기'를 볼 수 있습니다.
+- 크기(gzip, 0.90.1 대비): 읽기 화면 코드 +2.4KB, 스타일 +0.9KB, 앱 첫 화면 +0.4KB.
+- 슬라이드: 글자를 힌팅하는 화면(CI의 리눅스 러너가 그렇습니다)에서도 슬라이드의 줄이 상자를 넘지 않습니다. 줄은 글꼴의 실제 폭으로 나누는데, 힌팅은 글자마다 폭을 화면 크기에서 반올림해 한국어 줄을 2~3% 넓혔습니다(R1 셋째 장의 한 줄이 상자 1,136에 1,142). 슬라이드 그림, 요소 그림, 도식, 발표 화면의 차트가 이제 글자를 실제 폭 그대로 놓습니다(`text-rendering: geometricPrecision`). 0.90.0과 0.90.1을 CI에서 멈춘 그 시험입니다.
+- 시험: 빈 프로젝트 시험이 가입 직후 주소에 남은 데모 프로젝트 대신 새로 만든 프로젝트를 기다립니다(0.90.1 CI의 다른 실패). 브라우저 시험은 `E2E_FONT_HINTING=full`로 CI처럼 힌팅한 글자를 그릴 수 있습니다.
+- 배포: 마이그레이션은 없습니다(요약과 핵심 문장은 언어별 풀이에 들어가고, 데이터베이스 검사는 그대로 받습니다). MCP 함수(`research-loop-mcp`)를 올린 뒤 태그로 사이트와 플러그인을 올립니다. 0.90.0과 0.90.1은 CI에서 멈춰 사이트와 플러그인으로 나가지 않았으므로, 그 두 버전의 내용도 이번에 함께 나갑니다.
+
+## 0.90.1 — 2026-10-27
+
+Research Loop is in order (0.90.0's work, which ships here): every place has one name, every screen is drawn from one system of space, type and colour, and each screen leads with what you came for. The research tree is a table of branches that says what each line has learned; empty places say what is missing; the latest records say who made each one. Deadlines sent to Google Calendar are labelled as each language writes a label.
+
+- 0.90.0은 CI에서 멈춰 사이트와 플러그인으로 나가지 않았습니다. 0.90.1이 0.90.0의 내용을 그대로 싣습니다(아래 0.90.0 항목).
+- 구글 캘린더로 내보내는 마감 제목은 언어마다 이름표를 쓰는 방식대로 씁니다: `마감: 제목`, `Deadline: …`, `締切: …`, 프랑스어는 쌍점 앞에 줄바꿈 없는 공백을 둔 `Échéance : …`. 캘린더 함수를 배포하면 다음 동기화에서 내보낸 마감 제목이 한 번씩 바뀝니다.
+- 시험: 캘린더 Deno 시험이 새 제목을 기대하고, 슬라이드 맞춤 브라우저 시험은 슬라이드마다 그 글꼴을 다 받은 뒤 잽니다(느린 서버에서 글꼴 조각이 늦게 와도 결과가 같음).
+- 배포: 마이그레이션은 없습니다. MCP 함수(`research-loop-mcp`)와 캘린더 함수 둘(`google-calendar`, `google-calendar-worker`)을 올린 뒤 태그로 사이트와 플러그인을 올립니다.
+
+## 0.90.0 — 2026-10-27
+
+Research Loop is in order: every place has one name, every screen is drawn from one system of space, type and colour, and each screen leads with what you came for. The research tree is a table of branches that says what each line has learned; empty places say what is missing and how to fill it; the latest records say who made each one, a person or whose AI. In the AI apps' panels, a record's title field shows its edge while edited and empty lists say what gathers there.
+
+- 이름과 자리(1부): 갈 곳마다 이름이 하나입니다. 색인의 항목, 화면의 제목, 경로의 끝이 같은 말을 씁니다(내 연구, 프로젝트 이름, 연구 기록, 노트, 정리할 메모, 맡긴 작업, AI에게 맡기기, AI 연결). 할 일과 AI 협업은 색인이 연 범위를 따르고, 화면 안의 프로젝트 고르기는 없어졌습니다. 도구 서랍 대신 내보내기는 프로젝트 설정과 계정 화면에, 시각화 가이드는 연구 기록의 머리와 검색에 있습니다.
+- 체계(2부): 공간 열 단계, 글자 여섯 크기와 세 굵기, 모든 색은 토큰, 층마다 하나의 모서리, 떠 있는 것만 그림자. 단추와 칸은 36px(작은 것 32px, 터치 44px)이고, 초점은 칸 가장자리의 2px 고리입니다. 값 사이의 가운뎃점은 쉼표와 괄호로, 링크 끝의 화살표는 낱말로, 범위는 `1~300`으로 씁니다. 작성 가이드 개정 50.
+- 화면(3부): 연구 트리는 가지의 표입니다. 상태마다 묶음(살아있는 가지, 보류 중인 가지, 결론이 난 가지, 접힌 폐기된 가지), 줄마다 배운 것 한 문장과 걸음 수, 연구 날짜. 첫 화면은 노트북 한 화면에 들어옵니다. 빈 자리는 무엇이 없는지와 채우는 법을 한 문장으로 말하고, 화면마다 그 화면에 온 까닭이 맨 앞에 옵니다. 제목 속 개수는 모두 제목 옆으로 나왔습니다.
+- 데이터셋 목록이 다른 기록 목록과 같은 머리, 검색, 줄을 씁니다.
+- 최근 수정한 기록과 최근 추가에 만든 사람이 붙습니다. 사람의 이름, 또는 누구의 AI인지(`Claude (오정석의 AI)`). 기록되지 않았으면 붙지 않습니다.
+- 패널: 기록 페이지의 제목 칸이 편집 중에 가장자리를 그리고, 빈 기록 목록이 무엇이 모이는지 말합니다.
+- 배포: 가장 새 릴리스 태그만 사이트와 플러그인으로 나갑니다(옛 태그는 검사만). 마이그레이션은 없습니다. MCP 함수(`research-loop-mcp`)를 올린 뒤 태그로 사이트와 플러그인을 올립니다.
+
 ## 0.86.0 — 2026-10-26
 
 Your AI finds what a job needs in fewer steps and less text: tools are grouped by the job and listed in a line each before any schema, writes return what they made, and a scheduling write returns the next planning token. The guides take what good public skills do well. Tables mark the best value among what competes, such as the best model on each dataset; a table with a row per method and condition is drawn with a colour per method; names in charts are read whole; and a reading's notes say what they explain.
