@@ -1,8 +1,25 @@
 {
   "name": "research-loop",
-  "owner": { "name": "오정석", "email": "jeongseok0112@gmail.com" },
-  "metadata": { "description": "Research Loop research pages and local methodology figures" },
+  "owner": {
+    "name": "오정석",
+    "email": "jeongseok0112@gmail.com",
+    "url": "https://airesearchloop.com"
+  },
+  "description": "Research Loop for Claude: the connector to your research projects, with the skills and commands that keep their records.",
   "plugins": [
-    { "name": "research-loop", "source": "./plugins/research-loop" }
+    {
+      "name": "research-loop",
+      "source": "./plugins/research-loop",
+      "displayName": "Research Loop",
+      "description": "Your Research Loop projects in Claude: read and edit research pages, record experiments and what their results mean, read papers with their key sentences, see plans and to-dos, draw method figures and charts, and carry the requests your team queued for AI to review.",
+      "category": "productivity",
+      "tags": [
+        "research",
+        "experiments",
+        "lab-notebook",
+        "literature",
+        "mcp"
+      ]
+    }
   ]
 }

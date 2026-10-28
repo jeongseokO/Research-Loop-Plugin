@@ -2,6 +2,22 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.92.0 — 2026-10-28
+
+Research Loop now sets up properly in Claude. Add the connector at airesearchloop.com/mcp in Claude's Customize → Connectors and it carries Research Loop's own icon; add this marketplace in Customize → Plugins and the plugin's guidance and commands work in chat, in Cowork and, signed in with the same account, in Claude Code. Tools that only read say so, and Claude runs them without asking. Codex and the ChatGPT app keep their connection exactly as it is.
+
+- MCP 주소: `https://airesearchloop.com/mcp`가 같은 MCP 서버입니다. 사이트가 요청을 함수로 넘기고, 답은 흘려보냅니다(SSE 포함, 본문 2 MiB까지, 쿠키는 넘기지 않음). Claude는 커넥터 아이콘을 주소의 도메인에서 가져오므로, 이 주소로 연결하면 Research Loop 아이콘이 보입니다(Supabase 주소는 번개 모양이었습니다). 함수 주소도 그대로 답해서 Codex 플러그인, ChatGPT 앱, 그전의 연결은 바뀌지 않습니다.
+- 인증: 서버가 연결한 주소의 메타데이터(`/.well-known/oauth-protected-resource/mcp`)와 401 안내를 돌려주고, 동의 함수가 두 주소를 받습니다(마이그레이션 `mcp_site_resource`). 끝에 `/`가 붙거나 대소문자가 다른 주소는 지금처럼 거절합니다. 토큰은 어느 주소로 연결했든 함수 주소 하나를 대상으로 합니다. 브라우저로 `/mcp`를 열면 연결 안내로 갑니다.
+- AI 연결 화면: '연결하기'의 첫 칸이 Claude입니다. 번호 붙은 세 걸음으로 커넥터(주소 복사, Claude의 커넥터 설정 열기, Register automatically), 플러그인(마켓플레이스 복사, 플러그인 설정 열기), 같은 계정의 Claude Code를 안내합니다. 이 화면이 보여 주고 복사하는 MCP 주소가 사이트 주소입니다(Codex·Claude Code 직접 연결 설정 포함). 옛 'Claude 웹, 데스크톱, iOS' 줄은 없어졌습니다.
+- 플러그인: Claude가 읽는 `.mcp.json`은 서버 하나, 이름 `research`, 사이트 주소입니다. Claude Code의 도구 이름이 가장 긴 것도 62자로 API의 64자 한도 안에 듭니다(옛 이름으로는 74자). Codex는 매니페스트가 가리키는 `.mcp.codex.json`(서버 이름 `research-loop-plugin`, 함수 주소, OAuth 설정)을 그대로 씁니다. Claude 매니페스트에 표시 이름, Claude에서 하는 일을 말하는 설명, 1024px 아이콘, 문서·개인정보·약관 주소가 있고, 플러그인 폴더에 영어 README가 있습니다. `claude plugin validate --strict`를 플러그인과 마켓플레이스 모두 통과하고, 디렉터리 기준으로는 라이선스만 남았습니다(정하실 일입니다).
+- 도구 표시: `get_project_instructions`를 읽기로 표시해 Claude가 묻지 않고 실행합니다(읽은 지침 판의 기록은 연구 내용을 바꾸지 않습니다). `call_tool_write`는 덮어쓰기·지우기를 부르므로 파괴적으로 표시해 Claude가 늘 묻습니다. 제목 셋을 고쳤습니다(Find Research Records, Read the Research Brief, Check Workspace Access). 서버 정보의 아이콘에 사이트의 SVG와 512px PNG를 더했습니다.
+- 아이콘: `public/favicon.svg` 하나에서 favicon.ico(16·32·48), apple-touch-icon(180), icon-512.png, 플러그인 목록 아이콘(1024)을 그립니다(`node scripts/build-icons.mjs`). 큰 아이콘은 꽉 찬 바탕이라 플랫폼이 모서리를 둥글려도 표지가 잘리지 않습니다. `/favicon.ico`는 이제 SVG로 넘기지 않고 진짜 ICO를 줍니다.
+- 패널: Claude 패널의 `ui.domain`이 연결한 주소에 맞습니다(사이트 주소와 옛 함수 주소 각각).
+- 안내: 연결 안내(한국어·영어)가 Claude(웹·데스크톱·모바일·Cowork)로 시작하고, Claude Code 절은 계정으로 따라오는 길과 터미널 길을 함께 적습니다. MCP만 연결하는 주소는 사이트 주소입니다. 문제 해결에 번개 모양 아이콘, 등록 방식, 패널을 더했습니다.
+- 라이브 확인: `npm run check:site`가 `/mcp`의 401 안내와 메타데이터의 resource까지 봅니다.
+- 다시 연결: Claude 앱의 옛 커넥터(Supabase 주소)는 지우고 사이트 주소로 다시 추가합니다. Claude Code에 플러그인으로 연결해 둔 사람은 서버 이름과 주소가 바뀌어 `/mcp`에서 한 번 다시 인증합니다. 승인 화면의 '연결할 AI'에서 쓰던 AI를 고르면 이름·권한·프로젝트 승인이 이어집니다.
+- 배포: 마이그레이션 `20261027233000_mcp_site_resource` → MCP 함수(`research-loop-mcp`) → 태그로 사이트와 플러그인. 이 순서가 아니면 사이트 주소로의 연결이 거절됩니다(동의 함수가 주소를 모르거나, 메타데이터가 함수 주소를 말함). 0.91.0을 아직 올리지 않았다면 이번 배포가 그 내용까지 싣습니다.
+
 ## 0.91.0 — 2026-10-27
 
 A paper reading now has layers you switch on and off: the meanings, the notes, the memos, a short summary before each paragraph in your language, and the key sentences the paper rests on, painted like a highlighter. View holds them all, with a sample of how each looks, how many there are and its switch, keeps your choice on the device, and hands summaries or key sentences that are missing to your AI. Your AI writes both when it makes a reading, and the reading guide says what a good summary and a good key sentence are.

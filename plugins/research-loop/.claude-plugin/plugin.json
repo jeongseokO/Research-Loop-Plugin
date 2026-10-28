@@ -1,20 +1,26 @@
 {
   "name": "research-loop",
-  "version": "0.91.0",
-  "description": "Research Loop in Claude Code: read and edit research pages, record experiments run in your repository, explain methods as step-by-step diagrams and equations with named terms, and carry queued AI requests to review.",
+  "displayName": "Research Loop",
+  "version": "0.92.0",
+  "description": "Your Research Loop projects in Claude: read and edit research pages, record experiments and what their results mean, read papers with their key sentences, see plans and to-dos, draw method figures and charts, and carry the requests your team queued for AI to review.",
   "author": {
     "name": "오정석",
-    "email": "jeongseok0112@gmail.com"
+    "email": "jeongseok0112@gmail.com",
+    "url": "https://airesearchloop.com"
   },
-  "repository": "https://github.com/jeongseokO/Research-Loop-Plugin",
   "homepage": "https://airesearchloop.com",
+  "repository": "https://github.com/jeongseokO/Research-Loop-Plugin",
   "keywords": [
     "research",
     "experiments",
     "lab-notebook",
     "literature",
+    "paper-reading",
     "mcp"
   ],
-  "skills": "./skills/",
-  "mcpServers": "./.mcp.claude.json"
+  "icon": "./assets/icon-1024.png",
+  "documentationUrl": "https://airesearchloop.com/guide/ai",
+  "privacyPolicyUrl": "https://airesearchloop.com/privacy",
+  "termsOfServiceUrl": "https://airesearchloop.com/terms",
+  "skills": "./skills/"
 }

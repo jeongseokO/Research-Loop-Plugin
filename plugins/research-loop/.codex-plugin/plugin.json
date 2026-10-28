@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.91.0",
+  "version": "0.92.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -40,11 +40,11 @@
     "logo": "./assets/icon.png",
     "logoDark": "./assets/icon.png"
   },
-  "mcpServers": "./.mcp.json",
+  "mcpServers": "./.mcp.codex.json",
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "A paper reading now has layers you switch on and off: the meanings, the notes, the memos, a short summary before each paragraph in your language, and the key sentences the paper rests on, painted like a highlighter. View holds them all, with a sample of how each looks, how many there are and its switch, keeps your choice on the device, and hands summaries or key sentences that are missing to your AI. Your AI writes both when it makes a reading, and the reading guide says what a good summary and a good key sentence are.",
+        "release_notes": "Research Loop now sets up properly in Claude. Add the connector at airesearchloop.com/mcp in Claude's Customize → Connectors and it carries Research Loop's own icon; add this marketplace in Customize → Plugins and the plugin's guidance and commands work in chat, in Cowork and, signed in with the same account, in Claude Code. Tools that only read say so, and Claude runs them without asking. Codex and the ChatGPT app keep their connection exactly as it is.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

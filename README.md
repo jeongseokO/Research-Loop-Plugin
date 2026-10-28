@@ -1,10 +1,17 @@
 # Research Loop plugin
 
-[Research Loop](https://airesearchloop.com/)에 Claude Code·Codex·ChatGPT를 연결하는 플러그인입니다. AI가 연구 페이지를 읽고 쓰고, 저장소에서 돌린 실험을 기록하고, 방법을 단계별 도해로 설명하고, 팀이 맡긴 AI 요청을 처리합니다. 웹앱 소스와 연구 데이터는 들어 있지 않습니다.
+[Research Loop](https://airesearchloop.com/)에 Claude·Claude Code·Codex·ChatGPT를 연결하는 플러그인입니다. AI가 연구 페이지를 읽고 쓰고, 저장소에서 돌린 실험을 기록하고, 방법을 단계별 도해로 설명하고, 팀이 맡긴 AI 요청을 처리합니다. 웹앱 소스와 연구 데이터는 들어 있지 않습니다.
 
 ## 설치
 
-**Claude Code**
+**Claude (웹·데스크톱·모바일·Cowork)**
+
+1. **Customize → Connectors**에서 **Add custom connector**: 이름 Research Loop, 주소 `https://airesearchloop.com/mcp`(등록 방식을 물으면 **Register automatically**). Research Loop 계정으로 로그인합니다.
+2. **Customize → Plugins**에서 **Add → Add marketplace**: `jeongseokO/Research-Loop-Plugin`을 넣고 Research Loop를 설치합니다.
+
+같은 Claude 계정으로 로그인한 Claude Code에는 다음 실행부터 플러그인이 따라옵니다. `/mcp`에서 `plugin:research-loop:research`를 한 번 인증합니다.
+
+**Claude Code (API 키로 쓰거나 터미널에서 설치)**
 
 ```sh
 claude plugin marketplace add jeongseokO/Research-Loop-Plugin
@@ -13,7 +20,7 @@ claude plugin install research-loop@research-loop
 
 Claude Code를 다시 시작하고 대화창에서 `/mcp` → Research Loop → 인증을 눌러 본인 계정으로 로그인합니다.
 
-**Codex · ChatGPT · MCP만 연결**은 [AI 연결 안내](CONNECTION-GUIDE.md)를 따르세요 ([English](CONNECTION-GUIDE.en.md)). 플러그인과 MCP 직접 연결은 둘 중 하나만 씁니다. 설치는 프로젝트 접근 승인을 대신하지 않습니다.
+**Codex · ChatGPT · MCP만 연결**은 [AI 연결 안내](CONNECTION-GUIDE.md)를 따르세요 ([English](CONNECTION-GUIDE.en.md)). Codex에서는 플러그인과 MCP 직접 연결 중 하나만 씁니다. 설치는 프로젝트 접근 승인을 대신하지 않습니다.
 
 ## Claude Code 명령
 
@@ -40,9 +47,9 @@ Claude Code를 다시 시작하고 대화창에서 `/mcp` → Research Loop → 
 
 ## 업데이트
 
-Codex는 시작할 때 새 버전을 받습니다. Claude Code는 대화창의 `/plugin` → Marketplaces → research-loop에서 자동 업데이트(Enable auto-update)를 한 번 켜 둡니다. 새 버전은 다시 연 뒤 새 대화부터 적용됩니다. 업데이트하려고 다시 설치하지 마세요. VS Code나 앱에서 설치하면 로그인을 새로 하게 되고 'AI 연결'에 연결이 하나 더 생깁니다.
+Claude 앱은 플러그인을 가져온 마켓플레이스에서 새 버전을 확인합니다(바로 받으려면 Customize → Plugins에서 마켓플레이스의 Update). Codex는 시작할 때 새 버전을 받습니다. Claude Code는 대화창의 `/plugin` → Marketplaces → research-loop에서 자동 업데이트(Enable auto-update)를 한 번 켜 둡니다. 새 버전은 다시 연 뒤 새 대화부터 적용됩니다. 업데이트하려고 다시 설치하지 마세요. VS Code나 앱에서 설치하면 로그인을 새로 하게 되고 'AI 연결'에 연결이 하나 더 생깁니다.
 
-현재 패키지: **0.91.0** — 웹사이트·MCP 서버·패널과 같은 번호입니다. 무엇이 바뀌었는지는 [변경 내역](CHANGELOG.md)에 있습니다.
+현재 패키지: **0.92.0** — 웹사이트·MCP 서버·패널과 같은 번호입니다. 무엇이 바뀌었는지는 [변경 내역](CHANGELOG.md)에 있습니다.
 
 ## 공유 서버에서 사용
 
