@@ -100,93 +100,93 @@
   },
   "purposes": {
     "talk": {
-      "label": 18,
-      "tick": 16
-    },
-    "progress": {
       "label": 16,
       "tick": 14
     },
-    "memo": {
+    "progress": {
       "label": 14,
       "tick": 12
     },
+    "memo": {
+      "label": 12,
+      "tick": 12
+    },
     "journal": {
-      "label": 16,
-      "tick": 14
+      "label": 14,
+      "tick": 12
     }
   },
   "boxes": {
     "talk": {
       "claim-figure": {
         "w": 653,
-        "h": 384
+        "h": 387
       },
       "figure": {
         "w": 1136,
-        "h": 352
+        "h": 355
       },
       "comparison": {
         "w": 556,
-        "h": 280
+        "h": 283
       },
       "big-number": {
         "w": 556,
-        "h": 336
+        "h": 339
       }
     },
     "progress": {
       "claim-figure": {
         "w": 653,
-        "h": 387
+        "h": 391
       },
       "figure": {
         "w": 1136,
-        "h": 355
+        "h": 359
       },
       "comparison": {
         "w": 556,
-        "h": 283
+        "h": 287
       },
       "big-number": {
         "w": 556,
-        "h": 339
+        "h": 343
       }
     },
     "memo": {
       "claim-figure": {
         "w": 653,
-        "h": 263
+        "h": 266
       },
       "figure": {
         "w": 1136,
-        "h": 231
+        "h": 234
       },
       "comparison": {
         "w": 556,
-        "h": 159
+        "h": 162
       },
       "big-number": {
         "w": 556,
-        "h": 215
+        "h": 218
       }
     },
     "journal": {
       "claim-figure": {
         "w": 653,
-        "h": 387
+        "h": 383
       },
       "figure": {
         "w": 1136,
-        "h": 355
+        "h": 351
       },
       "comparison": {
         "w": 556,
-        "h": 283
+        "h": 279
       },
       "big-number": {
         "w": 556,
-        "h": 339
+        "h": 335
       }
     }
   }

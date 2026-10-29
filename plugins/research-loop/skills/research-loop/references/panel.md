@@ -4,6 +4,10 @@
 
 The same `open_research_panel` tool opens the panel in Claude (claude.ai, Claude Desktop, Claude iOS) through the connector at `https://airesearchloop.com/mcp`. The server reads the host from the OAuth client's name or user agent and, for Claude, points the tool at `ui://research-loop/claude-v1.html`: the self-contained panel (records, to-dos, planning, AI work, saved presentations; charts, explainers and equations drawn in the panel) on Claude's sandbox origin. Its `ui.domain` is the first 32 hex characters of the SHA-256 of the address the connector uses, on `.claudemcpcontent.com`: the server answers each address with its own (`3d7e2d283f65115738058c664136b8f8` for the site, `e5218402d133d2202257c598a17e25ab` for an older connector at the function's address). Claude allows no nested iframe inside an MCP App, so the website is not embedded there; attachments, the calendar and team settings are one link away on the site. The panel names the host it runs in ("Claude와 함께"); its requests go to the Claude conversation through the MCP Apps bridge.
 
+The Claude panel has four places: **연구 홈**, **연구 기록**, **할 일** and **팀 공간**. **팀 공간** gathers, per project, what waits on the owner (questions to them, to-do requests, AI results to confirm, their blocked to-dos, answers to their questions), recent discussions, AI work in flight and the members; the count beside its name is what waits. It reads the app-only `get_panel_team` when opened and on **다시 불러오기**, never by polling. **새로** marks what moved since the owner last opened that team space on this device (one device-local time per person and project, no research content); it changes nobody's read state.
+
+The Claude panel never writes for the team space: it does not answer, accept, decline or post in the person's name. **답하기**, **질문하기** and **Claude와 살펴보기** send one message to the conversation with the person's own words and the target IDs, and the same as model context (`researchLoopTeamRequest`: `intent` is `answer-question`, `ask-teammates`, `open-discussion` or `explain-request`, with `projectId` and `threadId`, `askUserIds`, or `assignmentId` and `taskId`). Act on it as the connected AI with the ordinary tools: answer from records with evidence and the record IDs, or say what is unknown and leave the question with its human; ask at most three teammates, after searching their records; explain a to-do request without accepting or declining it. Accepting and declining stay the person's, on the site.
+
 ## Full workspace
 
 - Use `open_research_panel` when the user wants to work beside ChatGPT. Fresh discovery opens `ui://research-loop/workspace-v9.html`, the website on https://airesearchloop.com; cached v8 and v7 descriptors open the same full workspace. Known project and page IDs select the initial destination. Later tool results must not replace an open editor or unsaved draft.
@@ -14,11 +18,17 @@ The same `open_research_panel` tool opens the panel in Claude (claude.ai, Claude
 
 ## Selected evidence → stored records → team drafts
 
-- Keep **연구 노트** and **팀 공간** separate. A sentence or plot selection prepares a bounded source draft; dropping, opening, previewing or cancelling does not send or save it. Use the selected draft's source return action to revisit the original evidence.
+- Keep **작업 공간** and **팀 공간** separate. A sentence or plot selection prepares a bounded source draft; dropping, opening, previewing or cancelling does not send or save it. Use the selected draft's source return action to revisit the original evidence.
 - After explicit AI work, **저장된 기록 · 제안 → 기록 새로고침** lists at most twenty current-project choices. A request receipt is delivery only. Read actual saved pages or authorized proposal detail on selection; do not synthesize a result from a receipt or capture the whole personal conversation. Unsupported proposal reads remain visibly unavailable.
 - Choose text from the displayed first-twenty-block / 4,000-character excerpt, then attach it. Attachments start unchecked. Only explicitly checked evidence, result excerpt or proposal excerpt enters the team payload; unchecked body, conditions, author and metadata stay out. Missing authors remain unspecified.
 - A pending proposal is **검토 대기 · 미적용**. Its proposal version and project base revision are distinct from a saved page revision. Before confirmed sharing, reread the checked proposal's current detail; changed version/content/status requires a new selection. Approval alone is not proof of a saved result.
 - Team publication requires explicit confirmation and existing account/project write access. A confirmed ID is committed even if refresh fails; an uncertain invoked create must not retry automatically. Account/project drafts retain private contents only until logout; content-free deduplication markers prevent stale resends.
+
+## Team space in ChatGPT
+
+- The workspace's two spaces are **작업 공간** (the website) and **팀 공간**. The team space is drawn from the website's own state and acts in the signed-in person's name: **답하기** opens the thread's answer box in the workspace, **수락** and **거절** (after a second look) answer a to-do request, and **질문하기** posts the question as the site's own form does (only the people asked are notified). **새로** follows the site's unread replies and notices.
+- Shared drafts from selected evidence live in the team space (**공유 초안**); a draft's editor returns to it. Viewers read the team space but cannot ask or share.
+- The desk row carries **ChatGPT에 요청**, one menu (**최신 내용**, **밝게**, **어둡게**, **사이트 열기**) and **넓게 보기**. Once a person is signed in, the host's own bar steps aside; an older host keeps it.
 
 ## Direct ChatGPT requests
 

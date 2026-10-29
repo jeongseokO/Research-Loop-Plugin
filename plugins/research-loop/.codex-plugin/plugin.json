@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.92.0",
+  "version": "0.95.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Research Loop now sets up properly in Claude. Add the connector at airesearchloop.com/mcp in Claude's Customize → Connectors and it carries Research Loop's own icon; add this marketplace in Customize → Plugins and the plugin's guidance and commands work in chat, in Cowork and, signed in with the same account, in Claude Code. Tools that only read say so, and Claude runs them without asking. Codex and the ChatGPT app keep their connection exactly as it is.",
+        "release_notes": "Slides read as designed. Each purpose sets its titles, body and captions on one scale, so a title stands well above its words, and the words beside a figure keep a column away. A page's words keep their bold lead-ins, a page deck never runs over its slides, and a wide picture keeps its height with its caption beside it. An equation sets out its symbols, derivation and values on the slide and answers while you present. A reading names its blurry arXiv figures, and Sharpen from the PDF cuts them again from the paper's PDF.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

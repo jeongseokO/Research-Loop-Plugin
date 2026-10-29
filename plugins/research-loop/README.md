@@ -38,4 +38,8 @@ The connector talks to `https://airesearchloop.com/mcp` over OAuth. It carries w
 
 Claude acts for the person who connected it, with that person's role in each project: at once where they are Owner or Semi-Owner, and elsewhere once the project's owner approves. It reads the current revision and saves only the change you asked for. A Viewer's AI reads only. An Editor's AI edits the notes, literature, experiments, datasets and results its person created; other changes become review requests that wait for a person's approval. A Semi-Owner's AI edits research content directly, and deleting a project or changing who can see it stays with the owner. Reading tools are marked read-only; Claude asks before the others run unless you allowed them.
 
+## License
+
+The plugin's files (skills, commands, references, scripts and manifests) are licensed under the [Apache License 2.0](LICENSE). The license does not cover the Research Loop name and logo (its section 6), and using the Research Loop service is governed by its [Terms](https://airesearchloop.com/terms).
+
 [Privacy policy](https://airesearchloop.com/privacy) · [Terms](https://airesearchloop.com/terms) · [Connection guide](https://airesearchloop.com/guide/ai)

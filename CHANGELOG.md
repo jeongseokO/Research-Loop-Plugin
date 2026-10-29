@@ -2,6 +2,54 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.95.0 — 2026-10-29
+
+Slides read as designed. Each purpose sets its titles, body and captions on one scale, so a title stands well above its words, and the words beside a figure keep a column away. A page's words keep their bold lead-ins, a page deck never runs over its slides, and a wide picture keeps its height with its caption beside it. An equation sets out its symbols, derivation and values on the slide and answers while you present. A reading names its blurry arXiv figures, and Sharpen from the PDF cuts them again from the paper's PDF.
+
+- 글자 위계: 내용 슬라이드의 제목, 본문, 캡션 크기를 용도가 함께 정합니다. 제목과 본문의 시작 크기(괄호 안은 칸이 모자랄 때 줄어드는 바닥)는 학회 발표 40pt(32)와 24pt(20), 랩 미팅 36(28)과 20(16), 서면 보고 30(24)와 16(13), 저널 클럽 36(28)과 22(18)입니다. 제목은 본문의 1.6배에서 시작하고, 가장 줄어도 본문의 시작 크기보다 25% 이상 큽니다. 데모의 랩 미팅 슬라이드는 제목 32pt와 본문 24pt에서 36pt와 20pt가 됐습니다. 모양은 제목의 굵기와 자리를 그대로 정합니다. 랩 템플릿은 제목 크기를 지키고 본문을 그 3/4 아래에서 시작합니다. 바닥의 쪽 번호, 출처, 챕터는 12pt입니다. 저장된 덱도 새 크기로 다시 흐르고, 사람이 칸에 정한 크기는 그대로입니다.
+- 그림과 글 사이: 그림 곁의 해석, 표의 읽는 법, 목록의 곁 메모, 정리의 다음 단계, 수식의 기호 풀이가 그림에서 격자 한 칸 떨어집니다. 긴 해석은 좁은 칸에서 작아지기 전에 넓은 그림 아래로 가서 제 크기를 지킵니다. 그 자리에서 그림이 작아진다면(차트, 보통 비율의 그림) 그림은 곁에 제 크기로 남고 해석이 조금 작아집니다. 정리 슬라이드의 오른쪽 칸에 `다음 단계`라는 이름이 붙습니다.
+- 넓은 그림: 칸을 다 채우지 못하는 그림(낮은 칸의 넓은 그림, 세로로 긴 그림)은 칸의 높이를 다 쓰고 캡션이 그 옆에 섭니다. 데모의 넓은 그림이 발표 슬라이드에서 436×147에서 734×248이 됐습니다. PowerPoint도 같습니다.
+- 페이지에서 온 글: 굵은 머리말(`**노이즈:**`)이 굵게 남고, 빈 줄은 문단 나눔 하나가 되며, `=`나 `÷` 같은 기호로 줄이 시작하지 않고, 차트의 음수는 `−22`로 씁니다.
+- 페이지 덱: 칸을 넘치는 본문은 다음 슬라이드로 이어지고, 그림 곁의 긴 해석은 앞 문장만 남기고 전체를 노트에 둡니다. 서면 보고 덱에 빈 요약 줄이 붙지 않고, 정리의 결론과 불확실함은 목록입니다.
+- 수식 무대: 기호, 유도, 값이 있는 수식은 큰 그림 레이아웃에서 식, 번호 붙은 유도와 그 이유, 식에서처럼 그린 기호와 이름, 값 슬라이더와 크게 쓴 결과와 작은 곡선을 함께 펼칩니다. 자리가 모자라면 캡션, 기호의 뜻, 곡선, 계산식, 이유 순으로 물러나고 값은 끝까지 남습니다. 편집기와 PowerPoint에는 유도의 마지막 줄이 보이고, PowerPoint의 글은 고칠 수 있는 텍스트, 식은 그림입니다.
+- 발표 중 수식: 슬라이드에 들어서면 유도의 첫 줄이 보이고, Space나 →가 한 줄씩 넘긴 뒤 다음 슬라이드로 갑니다. 기호를 가리키면 식과 유도의 모든 줄에서 그 기호가 밝아지고, 누르면 밝은 채로 남습니다. 값을 움직이면 결과와 곡선이 따라옵니다. 화면 낭독기는 단계와 값을 듣습니다. 휴대폰에서는 페이지의 수식 그림이 그대로 나옵니다.
+- 논문 그림 선명하게: arXiv HTML 판의 그림은 100 DPI로 그려져 레티나 화면에서 흐립니다. 읽기 화면이 그림을 보이는 크기로 재어, 그림을 넣을 수 있는 사람에게 머리에 "그림 N개가 흐립니다."와 `PDF로 선명하게`를 보입니다. 누르면 논문 PDF(이 탭에서 연 것, 고른 것, 데모의 것)로 흐린 그림과 빠진 그림을 차례로 다시 자릅니다. 캡션이 분명히 그 그림의 것인 쪽에서만 자르고, 이미 선명한 그림은 두며, 바꾼 그림마다 `되돌리기`, 찾지 못한 그림마다 `직접 고르기`가 있습니다. 사람이나 AI가 넣은 그림은 건드리지 않고, PDF는 이 기기에서만 읽습니다.
+- AI: 발표 지침(개정 51)은 기호, 유도, 값이 있는 수식을 `figure`에, 맨 수식만 `equation`에 놓고, 그림 곁의 글은 한두 문장으로 쓰게 합니다. 논문 읽기 지침은 arXiv 사본의 흐린 그림을 `PDF로 선명하게`로 바꿀 수 있다고 사람에게 알리게 합니다.
+- 크기: 읽기 화면은 0.7KB(gzip) 늘었고, 선명하게 하는 창(3.4KB)은 처음 누를 때 받습니다. 수식 무대(4.0KB)와 MathJax의 추가분(0.4KB)은 수식이 있는 덱에서만 받습니다. 첫 화면은 그대로입니다.
+- 배포: DB 변경이 없습니다. 함수 `research-loop-mcp`와 `shared-page`, 그리고 태그로 사이트와 플러그인.
+
+## 0.94.0 — 2026-10-28
+
+Share one page with people outside your project, the way Google Drive shares a file. An Owner or Semi-Owner opens Share on a page, adds people by email or opens it to anyone with the link, and copies the link or sends it from their own mail app. They read that page alone, view only, with its pictures and files, and nothing else of the project: not its name, its other records or its members. Pages shared with you wait under Shared with me, project settings list every shared page, and an AI reading a page is told whether it is shared. No tool shares a page.
+
+- 공유: 페이지를 읽는 화면의 `편집` 앞에 `공유`가 있습니다. Owner와 Semi-Owner에게, 활성 프로젝트의 공유할 수 있는 페이지에서만 보입니다(할 일, 마감, 토론 노트, 연구 트리 노트는 공유하지 않습니다). 아이콘이 상태를 말합니다: 사람 더하기(아직 아무도), 사람들(추가한 사람), 지구(링크가 있는 누구나). 다른 멤버에게는 머리에 `링크로 공개`나 `3명에게 공유` 칩이, 공유된 페이지를 편집하는 사람에게는 편집기 위에 "저장하면 바로 보입니다" 한 줄이 보입니다.
+- 공유 창: 사람 추가(쉼표, 띄어쓰기, 줄바꿈으로 여럿. 한 번에 20명, 한 페이지에 50명. 프로젝트 팀원은 넣지 않고 형식이 틀린 주소는 그 주소를 말합니다), 방금 추가한 사람에게 `메일로 알리기`(내 메일 앱, 여럿이면 숨은 참조), 볼 수 있는 사람과 빼기, `추가한 사람만`(기본)과 `링크가 있는 누구나`, `링크 복사`, `···` 안의 `링크 다시 만들기`와 `공유 중지`. 고르는 대로 바로 저장되고, 실패하면 그 전으로 돌아갑니다. 저장하는 동안에도 키보드가 창 안에 있습니다. 휴대폰에서는 아래에서 올라오고, 창의 코드는 처음 누를 때 내려받습니다.
+- 공유된 페이지(`/share#…`): 그 페이지 하나가 프로젝트에서와 같은 모양으로 열립니다. 종류와 상태, 제목, 쓴 사람, 핵심 결론, 속성, 본문과 그림·파일. 프로젝트 이름, 다른 기록, 토론, 변경 이력, 이메일은 서버가 처음부터 보내지 않고, 본문 속 다른 기록의 링크는 작은 자물쇠가 붙은 글자로 남아 열리지 않습니다. 그림 주소는 1시간 가고, 깨지면 1분에 한 번까지 새로 받습니다. 링크 ID는 주소의 `#` 뒤에 있어 서버 기록과 다른 사이트에 남지 않고, 검색 엔진에 실리지 않습니다. 받은 사람의 브라우저 언어로 열리고(고른 언어나 계정 언어가 있으면 그것), 문서처럼 스크롤되며, 인쇄하면 본문만 나옵니다. 작업 공간 묶음을 내려받지 않습니다.
+- 받는 사람: `추가한 사람만`이면 그 이메일로 로그인해야 열립니다(확인된 이메일만). 계정이 없으면 같은 주소로 가입하면 되고, 확인 메일의 링크가 열려던 페이지로 돌아옵니다. 다른 계정이면 "이 계정으로는 열 수 없습니다"와 `다른 계정으로 로그인`. 중지한 공유, 바뀐 링크, 휴지통의 페이지, 보관한 프로젝트는 모두 "열 수 없는 링크"입니다. 그 프로젝트의 멤버에게는 `프로젝트에서 열기`가 있습니다.
+- 공유받은 페이지: 내 연구 아래에 있고, 하나라도 있을 때만 보이며 아직 열지 않은 수가 붙습니다. 줄마다 종류, 제목, 공유한 사람과 날짜, `새로`. 누르면 새 탭에서 열립니다. 로그인한 채 `/share`만 열어도 같은 목록이 나옵니다.
+- 프로젝트 설정: 팀 다음에 `공유 중인 페이지`. 범위, 공유한 사람, 날짜가 보이고, Owner와 Semi-Owner는 줄마다 `공유 설정`으로 공유 창을 엽니다.
+- AI: `get_research_page`가 `sharing`(`{ "anyoneWithLink": …, "people": … }`, 공유하지 않았으면 null)을 돌려줍니다. 지침은 공유된 페이지를 고치면 밖에서도 바로 보인다는 것과, 어떤 도구도 페이지를 공유하거나 그 링크를 주지 않는다는 것을 말합니다. Claude와 ChatGPT의 패널에는 공유 단추가 없습니다(칩과 편집 줄은 보입니다).
+- 데이터와 보안: 마이그레이션 `20261028200000_page_sharing`이 공유 표 둘과 함수들을 더합니다. 표는 직접 읽거나 쓸 수 없고, 바꾸는 함수는 Owner와 Semi-Owner만 통과하며, 공유된 페이지를 읽는 `rl_read_shared_page`는 서비스 역할만 부릅니다. 새 Edge Function `shared-page`가 링크를 확인하고 보여도 되는 것만 골라, 그 페이지의 첨부만 서명합니다. AI의 OAuth 토큰은 로그인한 사람으로 치지 않습니다.
+- 문구: 공유된 페이지의 말은 번역 묶음의 새 `share` 부분에 있어, 공유된 페이지가 작업 공간의 번역을 내려받지 않습니다. 새 문구 79개를 영어, 일본어, 프랑스어로 옮겼습니다.
+- 법적 문서: 개인정보 처리방침(공유받는 사람의 이메일, 지우는 때, 누가 무엇을 보나), 이용약관(공유하는 사람의 확인), 개정 공지(10월 28일 추가)에 페이지 공유가 들어갔습니다. 11월 24일 시행을 알린 공지에 나중에 더한 것이라, 다시 공지할지는 소유자가 정합니다.
+- 크기: 공유된 페이지는 처음에 스크립트 299.5KB(gzip)를 받습니다(첫 화면은 326.7KB). 그 가운데 공유된 페이지만의 것은 50.0KB이고, 차트 표·설명 그림·수식의 코드(50.6KB)는 그런 그림이 있는 페이지만 받습니다. 처음 만든 빌드는 모든 페이지가 이 코드와 발표 코드를 받아 357.6KB였습니다. 글을 꾸미는 코드(markdown-it과 KaTeX, 133.4KB)는 작업 공간처럼 필요할 때 받습니다. 번역의 `share` 부분은 언어마다 10~11KB, 공유 창은 7.3KB(처음 누를 때), 작업 공간 묶음은 1.8KB 늘었습니다.
+- 배포: 마이그레이션 `20261028200000_page_sharing` → 함수 `shared-page`(JWT 검사 없이, `--no-verify-jwt`) → 함수 `research-loop-mcp` → 태그로 사이트와 플러그인. `shared-page`는 사이트와 허용 목록을 함께 쓰므로 이제 릴리스마다 함께 배포합니다(릴리스 명령의 안내와 `docs/release.md`). 사이트가 먼저 올라가면 마이그레이션 전에는 공유 창이 상태를 읽지 못하고, 함수 전에는 공유된 페이지가 "페이지를 불러오지 못했습니다"를 보입니다.
+
+## 0.93.0 — 2026-10-28
+
+Open Research Loop has a team space. What teammates asked of you, the discussions, the work you gave to AI and the people on the project are in one place, in ChatGPT and in Claude, with a count beside its name. In ChatGPT you answer, ask, accept and decline in your own name. In Claude the panel hands each of these to Claude as one request and never writes as you. Claude's panel trades its side index for four places along the top, and ChatGPT's workspace has one bar fewer.
+
+- 팀 공간: ChatGPT 작업 공간과 Claude 패널에 같은 모양, 같은 말로 있습니다. 나에게 온 것(질문, 할 일 요청, 결과 확인, 막힌 작업, 답변), 토론(최근 여섯), 맡긴 작업(넷), 팀원(나부터) 순서입니다. 머리의 `질문하기`나 팀원 줄의 `질문하기`로 세 명까지 묻고, 아무도 고르지 않으면 토론이 됩니다. 구획마다 불러오는 중, 비었음, 실패(다시 불러오기), 찬 상태가 있고, 실패한 뒤에 예전 줄을 보여 주지 않습니다.
+- 새로 온 것: 목적지 이름 옆에 나에게 온 것의 수가 붙고(`팀 공간 3`), 새로 생기거나 움직인 줄에 `새로`가 붙습니다. ChatGPT 쪽은 사이트의 안 읽음(`새 답글 2`, `알림 3`), Claude 쪽은 이 기기에서 그 프로젝트의 팀 공간을 마지막으로 본 때가 기준이고, 패널은 읽음을 바꾸지 않습니다. 패널이 닫혀 있을 때는 `who_am_i`가 기다리는 것이 있을 때만 `ownerWaiting` 한 줄을 돌려주어, AI가 대화의 첫 답에서 누가 무엇을 기다리는지 알립니다. 호스트의 플러그인 아이콘 배지나 푸시는 MCP Apps가 앱에 열어 두지 않았습니다.
+- ChatGPT 작업 공간: 사람의 사이트 로그인으로 움직입니다. `답하기`는 작업 공간의 그 토론 답변 칸으로 갑니다. `질문하기`는 내 이름으로 올리고 질문받은 사람에게만 알림이 갑니다. `수락`은 바로, `거절`은 같은 줄에서 한 번 더 묻습니다. 이 기기의 공유 초안은 `공유 초안 2`로 팀 공간 안에서 열리고 그리로 돌아옵니다. 보기 권한이면 읽기만 합니다.
+- Claude 패널의 팀 공간: 패널의 쓰기는 연결한 AI의 이름으로 기록되므로, 사람 대신 쓰거나 수락·거절하거나 읽음을 바꾸지 않습니다. 동작마다 Claude에 요청 하나(의도, 대상 ID, 사용자가 쓴 말)를 보냅니다. 질문의 `답하기`는 패널 안에서 토론을 열고 끝에 `Claude에 답변 요청`과 `사이트에서 내가 답하기`를 둡니다. 할 일 요청은 `Claude와 살펴보기`와 사이트, 결과 확인은 패널 안의 작업 상세입니다. 연결된 기록은 패널이 읽은 적 있으면 제목으로 보입니다.
+- Claude 패널의 틀: 왼쪽 색인 대신 위에 목적지 넷(연구 홈, 연구 기록, 할 일, 팀 공간)이 있습니다. 연구 홈은 나에게 온 것부터, 연구 기록은 검색과 갈래 칩(노트 포함), 할 일은 `목록 | 일정` 전환입니다. 예전 자리(노트, 일정, AI 협업)로 가는 링크는 모두 그대로 열립니다. 목록 폭은 760px입니다.
+- ChatGPT의 머리줄: 로그인한 사이트가 틀을 그린다고 알리면 바깥 틀의 머리줄이 사라지고 데스크 줄 하나가 남습니다(`작업 공간 | 팀 공간`, `ChatGPT에 요청`, `···` 안의 최신 내용·밝게·어둡게·사이트 열기, `넓게 보기`). 전체 화면에서는 `작게 보기`로 바뀝니다. 함수와 사이트의 판이 섞여도 넓게 보기와 사이트 열기는 남습니다. `연구 노트` 공간은 `작업 공간`이 되었습니다.
+- MCP: 앱 전용 읽기 도구 `get_panel_team`이 팀 공간을 한 번에 채웁니다(팀원 100, 질문 10, 요청 10, 결과 5, 막힘 5, 답변 5, 토론 6, 작업 4, 본문 없이 제목만). 마이그레이션 `owner_task_requester`가 `get_my_research_tasks`의 배정마다 맡긴 사람(`assigned_by_name`)과 시각(`requested_at`)을 더합니다. `open_research_panel`의 설명, 플러그인 스킬의 `references/panel.md`, `docs/MCP.md`가 팀 공간과 패널이 하지 않는 일을 말합니다.
+- 크기: Claude 패널 HTML 2,081,970자(0.92.0보다 29,260자, 한도 40,000자). 번들에 남았지만 화면에 나오지 않던 문구 99개(16,190자)를 패널 빌드에서 뺐습니다. ChatGPT 작업 공간 틀은 328자 늘었습니다. 사이트(gzip)는 앱 본체가 0.7KB, 작업 공간 데스크가 스크립트 8.9KB와 스타일 1.9KB, 번역 묶음이 각각 약 1KB 늘었습니다.
+- 라이선스: 플러그인 파일(스킬, 명령, 참고 문서, 스크립트, 매니페스트)은 Apache License 2.0을 따릅니다(소유자 결정). 플러그인 폴더와 마켓플레이스 맨 위에 같은 LICENSE가 있고, Claude 매니페스트가 `Apache-2.0`을 밝힙니다. Research Loop의 이름과 로고는 이 라이선스에 들어 있지 않고, 서비스 이용은 이용약관을 따릅니다. 이제 `claude plugin validate --profile directory`가 아무것도 지적하지 않습니다.
+- 배포: 마이그레이션 `20261028100000_owner_task_requester` → MCP 함수(`research-loop-mcp`) → 태그로 사이트와 플러그인. 마이그레이션 전에는 할 일 요청이 맡긴 사람 없이 보일 뿐 실패하지 않습니다.
+
 ## 0.92.0 — 2026-10-28
 
 Research Loop now sets up properly in Claude. Add the connector at airesearchloop.com/mcp in Claude's Customize → Connectors and it carries Research Loop's own icon; add this marketplace in Customize → Plugins and the plugin's guidance and commands work in chat, in Cowork and, signed in with the same account, in Claude Code. Tools that only read say so, and Claude runs them without asking. Codex and the ChatGPT app keep their connection exactly as it is.

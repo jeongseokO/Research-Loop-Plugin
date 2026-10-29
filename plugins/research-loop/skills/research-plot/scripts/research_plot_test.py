@@ -351,11 +351,11 @@ class SlideTests(unittest.TestCase):
         with plot.slide_context("vivid", purpose="talk") as style:
             fig, ax = plt.subplots()
             ax.set_xlabel("Budget (%)")
-            self.assertEqual(ax.xaxis.label.get_fontsize(), 18)
-            self.assertEqual((style.label_size, style.tick_size), (18, 16))
-            self.assertEqual(matplotlib.rcParams["legend.fontsize"], 16)
+            self.assertEqual(ax.xaxis.label.get_fontsize(), 16)
+            self.assertEqual((style.label_size, style.tick_size), (16, 14))
+            self.assertEqual(matplotlib.rcParams["legend.fontsize"], 14)
         with plot.slide_context("report", purpose="memo") as style:
-            self.assertEqual((style.label_size, style.tick_size), (14, 12))
+            self.assertEqual((style.label_size, style.tick_size), (12, 12))
 
     def test_unknown_names_say_what_is_possible(self):
         cases = [({"look": "neon"}, "vivid, paper, stage, report"), ({"look": "vivid", "slot": "hero"}, "claim-figure, figure, comparison, big-number"),
