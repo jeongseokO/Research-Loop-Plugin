@@ -15,7 +15,7 @@ The guide's English is instruction language only. Follow core's output-language 
 | Numbers, methods, examples, figures or sources | `section:evidence`: comparisons, uncertainty, source records and external captions |
 | Explain with a visual | `section:visuals`, bundled as [Visual explanations](visual-explanations.md): question-led format, faithful interaction and explanation beside the visual and in the final reply |
 | A mechanism or experiment design to draw | `section:explainer`: parts, links and steps the app lays out and steps through |
-| An equation the reader must understand | `section:equation`: the LaTeX, each symbol named, the derivation as steps, values to try — the app typesets, lights and steps it |
+| An equation the reader must understand | `section:equation`: the LaTeX, each symbol named, the derivation as steps, values to try, and a plot when its shape is the point (a curve, a 3D surface, or level lines with constraint regions) — the app typesets, lights, steps and draws it |
 | Before saving substantive writing | `section:review`: the request's explicit requirements first, then reader-path and evidence checks |
 | Explicit instruction audit | `section:all`; unnecessary for ordinary work |
 

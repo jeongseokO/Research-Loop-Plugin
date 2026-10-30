@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.95.0",
+  "version": "0.98.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Slides read as designed. Each purpose sets its titles, body and captions on one scale, so a title stands well above its words, and the words beside a figure keep a column away. A page's words keep their bold lead-ins, a page deck never runs over its slides, and a wide picture keeps its height with its caption beside it. An equation sets out its symbols, derivation and values on the slide and answers while you present. A reading names its blurry arXiv figures, and Sharpen from the PDF cuts them again from the paper's PDF.",
+        "release_notes": "An equation can now draw its graph. A curve compares up to four cases along one variable, marks where the reader stands, draws the slope there and says whether the value rises or falls; a 3D surface turns under a drag or the arrow keys; level lines show constraint regions with the lowest point in each, so Lasso's corner lands exactly on zero where Ridge's circle does not. The sliders move every plot on a page and while presenting, and PPTX keeps it as a picture. This release has a database migration.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

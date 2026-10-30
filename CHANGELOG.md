@@ -2,6 +2,68 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.98.0 — 2026-10-30
+
+An equation can now draw its graph. A curve compares up to four cases along one variable, marks where the reader stands, draws the slope there and says whether the value rises or falls; a 3D surface turns under a drag or the arrow keys; level lines show constraint regions with the lowest point in each, so Lasso's corner lands exactly on zero where Ridge's circle does not. The sliders move every plot on a page and while presenting, and PPTX keeps it as a picture. This release has a database migration.
+
+- 그래프: 값 막대가 있는 수식 블록에 `plot`을 붙이면 세 가지 중 하나를 그립니다. 곡선(변수 하나를 따라 식 1–4개), 3D 곡면(변수 둘의 함수), 등고선과 제약 영역(위에서 본 같은 함수와 영역 1–3개, 영역은 식 ≤ 0인 곳)입니다. 축에 두지 않은 변수는 그대로 값 막대로 남아 그림의 모양을 바꿉니다. 식에 `sign`이 생겼습니다(0–1 손실).
+- 곡선: 1, 2, 5 단위 눈금과 축 이름, 계열마다의 색과 지금 값을 적은 범례가 있습니다. 지금 자리에 세로선과 점을 두고, 첫 계열에는 접선을 점선으로 긋습니다. 가로축 위 띠가 늘어나는 구간, 줄어드는 구간, 그대로인 구간을 나누고, 결과 아래에 “y = 1: p 값이 커지면 ↘ 감소 (기울기 -3.333)”처럼 말합니다. −log p처럼 끝없이 커지는 값은 적은 곳에서 자르고, 곡선을 누르거나 끌면 그 자리로 값 막대가 옮겨 갑니다.
+- 3D 곡면: 3D 라이브러리 없이 앱이 32×32 격자를 돌려 SVG로 칠합니다. 높이에 따라 옅은 초록에서 짙은 초록으로 칠하고, 지금 점을 지나는 두 단면을 굵게 그어 이름(“p만 바꿀 때”)을 붙입니다. 끌면 돌고(손가락은 가로로만, 세로는 페이지 스크롤), 화살표 키는 좌우로 15°씩 돌리고 위아래로 10°씩 기울이며, Home이나 두 번 누르기로 처음 각도로 돌아옵니다. 결과 아래에 두 변수의 기울기를 함께 말합니다.
+- 등고선과 제약 영역: 등고선 10줄(낮을수록 진하게)과 지금 점, 영역마다 옅은 칠과 테두리를 그립니다. 영역 안의 최솟값을 좌표와 함께 찍고(“Lasso 최솟값 (0, 1)”), 전체 최솟값은 속이 빈 점입니다. 축 위로 옮겨도 영역 안이고 값이 커지지 않는 최솟값은 정확히 축에 붙으므로, Lasso의 마름모는 꼭짓점에서 한 가중치가 정확히 0이 되고 Ridge의 원은 두 가중치가 모두 0이 아닌 접점에서 만납니다. 누르면 그 자리로 두 값이 옮겨 가고, 휴대폰에서는 범례가 위로 가고 정사각이 카드 폭을 씁니다.
+- 함께 움직이기: 값 막대를 움직이면 그래프, 결과, 계산식, 기울기 문장이 다음 프레임에 함께 바뀝니다. 그래프마다 화면 낭독기가 읽는 요약이 있고, 기울기 문장은 바뀔 때 읽힙니다. 그리스 문자 이름의 변수(`lam`, `alpha`)는 값 막대, 축, 단면, 문장, 계산식에서 λ, α로 보입니다.
+- 슬라이드: 넓은 수식 무대에서는 그래프가 식과 유도 아래에 칸의 폭으로, 좁은 무대에서는 값 아래에 무대 폭으로 놓입니다. 자리가 모자라면 캡션과 기호의 뜻이 먼저 빠지고, 그래프는 값 막대 바로 앞에 빠집니다. 글자를 캡션 크기로 쓰고도 읽을 만한 그림이 남지 않으면 그리지 않습니다. 발표 중에는 값 막대가 그래프를 다시 그리고, 곡면은 끌거나 그 위의 화살표 키로 돌며 슬라이드는 넘어가지 않습니다.
+- PPTX: 그래프는 SVG 그림 하나(PowerPoint가 쓰는 PNG 미리보기와 함께)로 들어가고, 그림의 설명과 노트에 요약(“예측 확률 p에 따른 손실. p = 0.3일 때 y = 1: 1.204, …”)이 붙습니다. 자리가 없어 그리지 못한 슬라이드도 노트에는 요약이 있습니다.
+- AI: 쓰기 지침(개정 53)의 수식 부분이 세 가지를 언제 쓰는지, 계열과 영역은 TeX와 캡션이 말하는 것만 그린다는 것, 끝없이 커지는 값만 자른다는 것을 가르칩니다. 예시 수식에 곡선이 붙었습니다. 수식 부분은 5,770자(전 4,822자, 한도 6,000자)입니다. 저장할 때 잘못은 키를 짚어 돌려줍니다(`plot.y must differ from plot.x.` 등).
+- DB: 마이그레이션 `20261030100000_equation_plot.sql`이 수식 블록이 받는 키에 `plot`을 더하고 모양(종류, 그 종류의 키, 블록의 변수인 축, 계열·영역의 수와 글자, 순서대로 된 축 끝)을 검사합니다. 다른 검사는 그대로입니다.
+- 데모: 데모 프로젝트에 ‘공부 노트: 손실과 정규화를 그래프로’가 있습니다. 교차 엔트로피, 힌지·로지스틱·0–1 손실, 베르누이 KL 곡면, Lasso와 Ridge의 등고선, λ에 따라 줄어드는 계수(Lasso만 0에 닿음)를 담았습니다. 방법 페이지의 층별 예산 규칙과 데모 논문의 식 (2) 도구에도 곡선이 있습니다.
+- 문구: 새 문구 14개를 영어, 일본어, 프랑스어로 옮겼습니다.
+- 크기: 첫 화면의 스크립트와 작업 공간은 그대로입니다. 그래프 코드(15.0KB)는 페이지에 그래프가 있을 때만 받고, 슬라이드는 그리는 코드와 함께 받습니다(12.3KB). 그래프 스타일 0.7KB는 앱의 스타일시트에 있어 카드가 미리 자리를 잡습니다. 데모 노트(3.0KB)는 데모에서만 받습니다.
+- 배포: 마이그레이션을 먼저 적용하고, 함수 `research-loop-mcp`와 `shared-page`, 그리고 `v0.98.0` 태그를 올립니다.
+
+## 0.97.0 — 2026-10-29
+
+A paper reading can now carry a plain explanation under its abstract and each paragraph: what it says in plain words, one example from the paper's own numbers, and what it is there for, in the reader's language. All of them together are about as long as the paper, so the AI asks before writing them and adds them only on a yes; an existing reading asks for them from View. They switch on and off like the other layers. The demo paper has one under its abstract and every summarized paragraph.
+
+- 쉬운 설명: 초록과 본문 문단(40낱말 이상)마다, 처음 읽는 사람도 따라오게 그 문단이 하는 말을 쉬운 말로 풀고, 예시 하나(논문의 숫자를 직접 넣어 보거나 지어낸 예라고 밝힌 작은 경우)와 이 논문에서 왜 그 말을 하는지를 짧은 문장 2–4개로 씁니다. 그 문단 바로 아래의 옅은 상자에 놓이고, 읽는 사람의 언어로 씁니다.
+- 먼저 묻기: 다 달면 읽을 글이 두 배쯤 늘고 시간이 더 들어서, AI가 원문 읽기를 만들기 전에 문단마다 쉬운 설명도 달지 한 번 묻고 그렇다고 할 때만 답니다. 요청에 이미 있으면 묻지 않습니다. 새 원문 읽기 요청 글은 이것을 말하지 않고, 어려운 대목의 풀이는 이제 “예시를 곁들인 설명”이라고 부탁합니다(‘쉬운 설명’은 새 층의 이름).
+- 보기: 문단 요약 아래에 ‘쉬운 설명’ 줄(문단마다 예시와 함께, 개수, 스위치)이 있습니다. 끄면 다시 그리지 않고 바로 숨고, 고른 것은 이 기기에 남습니다. 없거나 일부만 있으면 그 줄의 ‘AI에게 맡기기’가 쉬운 설명만 부탁하고, 이 요청에는 AI가 다시 묻지 않습니다. PDF 사본에 쉬운 설명이 있으면 ‘이어서 만들기’가 다음 쪽에도 달라고 합니다.
+- AI: `save_paper_glosses`가 `plain_explanations`를 받습니다(사람이 그렇다고 했을 때만이라는 설명과 함께, 한 번에 60개, 언어마다 1,000개, 600자). 결과가 몇 문단에 달렸는지 말하고, `get_paper_reading`은 쪽마다 쉬운 설명이 있는 블록을 알려 줍니다. 읽기 안내는 4,441자(전 3,799자), papers 도구 설명은 10,743자(전 10,290자)입니다. 늘 받는 도구 목록은 그대로입니다.
+- 크기 검사: 서버가 풀이의 크기를 DB와 같은 방식(jsonb 글, 쌍점과 쉼표 뒤의 빈칸까지)으로 잽니다. 1 MiB를 넘는 쓰기는 DB의 오류 대신 서버가 이유와 함께 거절합니다.
+- 데모: 데모 논문의 초록과 요약이 있는 13문단에 한국어 쉬운 설명이 있습니다. PDF 사본에는 없어서 보기에서 부탁하는 길을 볼 수 있습니다.
+- 문구: 새 문구 5개와 바뀐 요청 2개를 영어, 일본어, 프랑스어로 옮겼습니다.
+- 크기: 첫 화면은 그대로이고, 읽기 화면이 0.3KB, 작업 공간이 0.2KB 늘었습니다. 데모의 쉬운 설명 14개(2.6KB)는 데모에서만 받습니다.
+- 배포: DB 변경이 없습니다. 함수 `research-loop-mcp`와 `shared-page`, 그리고 `v0.97.0` 태그.
+
+## 0.96.1 — 2026-10-29
+
+In ChatGPT and other AI clients, the full workspace hands work to the conversation as you submit it: a task handed to AI, or a question on a reading memo, starts there without a second request. The workspace fills the host's height, keeps the site's index beside record pages and opens a saved memo over a narrow reader without moving the text. The basket and page sharing work in the plugin as on the site. A paper reading's explanations now come in plain words with a worked example.
+
+- 대화로 이어지는 맡긴 작업: AI 클라이언트 안의 작업 공간에서 `AI에게 맡기기`로 작업을 저장하거나 논문 메모에서 `AI에게 묻기`를 누르면, 저장한 요청이 지금 대화로도 갑니다. 요청을 다시 쓰지 않아도 AI가 시작합니다. 이 기기에서 방금 제출한 것만 보내고(불러오기, 새로고침, 다른 기기의 작업은 보내지 않음), 제출이 끝난 뒤 계정과 프로젝트, 저장하지 않은 편집을 다시 확인합니다. 작업은 그 작업을 읽고 확인해 가져간 뒤 시작하라고, 메모는 그 질문과 구절에 답해 그 메모에 저장하라고 정확한 대상을 적어 보냅니다. 대화에는 사람이 보낸 말로 보이므로 그 사람의 언어로 시작합니다(“방금 맡긴 작업을 시작해 주세요.”). 자동으로 다시 보내지 않습니다.
+- 사이트와 같은 기능: 플러그인에서도 바구니와 페이지 공유(Owner와 Semi-Owner의 `공유`, 공유받은 페이지)를 씁니다. 바구니는 그 창의 브라우저 저장소에 있어서 사이트의 바구니와는 따로입니다. 로그인이 따로인 것과 같습니다.
+- 화면: 호스트가 주는 높이를 다 씁니다(높이를 주지 않을 때만 760px, 좁은 화면 720px). 기록 페이지 옆에 사이트처럼 색인이 남고, 위쪽 한 줄에 공간 전환과 AI 입구가 있습니다. 그림의 두 동작(팀 초안에 담기, AI에게 맡기기)은 그림 가장자리의 아이콘입니다. 고른 글 옆의 메뉴는 글에서 8px 떨어져 뜨고, 아래에 자리가 없으면 위에 뜨며, 읽는 자리가 움직이면 닫힙니다.
+- 좁은 화면의 메모와 돌아오기: 저장한 메모는 떠 있는 카드(휴대폰은 아래에서 올라오는 시트)로 열려 아래 문단이 밀리지 않습니다. 팀 공간에서 돌아오면 스크롤을 그대로 되살리고, 폭이 바뀌어 글이 다시 흘렀으면 고른 부분이 보이게 합니다.
+- 말: 작업 공간은 ChatGPT, Codex 등 사이트를 띄우는 어느 호스트에서나 열리므로 한 호스트의 이름을 쓰지 않습니다(`AI에게 맡기기`, `AI와 다듬기`, 계정과 권한 안내). 요청 창 아래에는 “대화의 AI에게 바로 보냅니다. 맡긴 작업 목록에는 남지 않습니다.”가 있고, 요청을 준비만 하는 사이트의 요청 창은 ChatGPT와 Claude를 함께 안내합니다.
+- 메모의 질문: AI 클라이언트 안에서 메모로 물은 질문은 이미 대화로 갔으므로, 카드에는 “이 대화의 AI가 답하면 여기에 달립니다.”라고만 씁니다. 데모의 안내는 “실제 작업 공간에서는 연결한 AI의 답이 여기에 달립니다.”입니다.
+- 논문 설명: 논문 읽기의 어려운 대목에 다는 설명을, 쉬운 말로 뜻을 말하고 작은 예시(논문의 숫자를 직접 대입해 보기, 아주 작은 경우, 항 하나가 커지면 어떻게 되는지)로 보여 준 뒤 왜 중요한지까지 2–5문장으로 쓰게 했습니다(AI가 논문 읽기 전에 읽는 지침). 낱말 뜻의 보충 설명에는 한 줄 예시를 붙입니다. 앱이 보내는 논문 읽기 요청도 “어려운 대목에는 예시를 곁들인 쉬운 설명을”로 바뀌었고, 데모 논문의 설명 다섯 곳이 그 모양입니다.
+- 크기: 첫 화면은 그대로이고 작업 공간이 0.4KB, 읽기 화면이 0.7KB 늘었습니다. 대화로 보내는 부분(1.1KB)은 플러그인에서만 받습니다.
+- 배포: DB 변경이 없습니다. 함수 `research-loop-mcp`와 `shared-page`, 그리고 `v0.96.1` 태그만 올립니다(0.96.0이 함께 들어 있습니다).
+
+## 0.96.0 — 2026-10-29
+
+Slides speak in points. A page or story deck turns each paragraph in a list, a reading or a closing slot into one point per sentence; in Korean each point ends in 개조식 (회복함, 가설임), and the sentences stay in the speaker notes. Titles stay claims. Points past what a purpose shows on one slide continue evenly on the next. An AI deck keeps the structure its AI chose, ends its Korean words in 개조식 and always opens on a cover. As points, under Whole presentation, turns a saved deck's words into points in one step.
+
+- 항목으로: 목록, 그림 곁의 해석, 수식의 기호 풀이와 조건, 곁 메모, 정리의 결론과 다음 단계, 비교의 양쪽은 문장이 둘 이상인 문단을 문장마다 글머리표 하나로 나눕니다. 한 문장이면 한 줄 그대로입니다. 목록은 번호가 있든 없든 그대로이고, 한 항목 안의 문장들은 끝만 바꿔 `. `로 잇습니다. 부제, 요지, 받침 줄, 요약 줄, 수식 아래 줄, 비교의 판정은 끝만 바꿉니다. 제목, 이름 줄, 큰 수치와 그 메모, 표와 차트, 캡션, 그림, 인용 블록은 쓴 그대로입니다.
+- 개조식: 했다·합니다 → 함, 된다·됐다 → 됨, 이다·입니다 → 임, 아니다 → 아님, 값이나 명사 + 다 → 임(81.8%임, 원리임), 받침 + 다 → 음(왔음, 높음), 는다 → 음(바로잡음), ㄴ다 → ㅁ(줌, 모름, 씀), ㅂ니다 → ㅁ(감), ㄹ 받침 → ㄻ(긺). 연구 페이지에 나오는 불규칙(만듦, 어려움, 놀라움, 들음, 지음, 나음, 그러함, 것임)과 동사처럼 보이는 명사(차이임, 길이임, 이하임)를 압니다. 목적어 뒤의 동사 원형과 페이지가 원형으로 쓰는 동사는 ㅁ으로 끝냅니다(학습률을 낮추다 → 낮춤, 시간이 걸리다 → 걸림). 명사는 그대로 명사입니다(세 가지임, 줄이기임). 괄호, 인용 번호, 굵게는 제자리에 남습니다. 물음, 권유와 명령, 해요체, 느낌표, 인용, 영어, 조사로 끝나는 조각(토큰마다)은 쓴 그대로 둡니다. 명사로 끝나는 항목도 마침표를 떼어 한 목록 안의 모양이 같습니다.
+- 노트: 끝맺음이 바뀐 칸은 페이지에 쓴 문단을 그 슬라이드의 노트에 한 번 둡니다. 영어를 항목으로 나누기만 했거나 마침표만 뗀 칸은 노트에 다시 쓰지 않고, 노트에 이미 있는 문장도 다시 쓰지 않습니다.
+- 이어지는 항목: 한 장에 보이는 항목 수는 용도를 따릅니다(학회 발표 4, 저널 클럽 5, 랩 미팅 6, 서면 보고 8). 넘치면 같은 제목으로 다음 장에 이어지고, 장마다 고르게 나눕니다(다섯 개가 한 장에 넷까지 들어가면 넷과 하나가 아니라 셋과 둘).
+- AI 덱: AI가 정한 구조는 그대로 두고 한국어 글의 끝만 바꿉니다(나누지 않고, 노트도 그대로). 첫 장은 늘 표지입니다. 뒤에 쓴 표지는 맨 앞으로 오고, 표지가 없으면 결과의 제목으로 하나 더합니다. 검토를 열 때 이름 줄이 빈 표지에 그 사람과 그날을 적어, 검토한 덱과 초안에 넣는 덱이 같습니다. 0.95.0의 계약으로 맡겨 둔 요청도 그대로 검토할 수 있습니다.
+- 개조식으로: `발표 전체`의 `말투`에 있습니다. 저장된 덱의 모든 슬라이드를 같은 규칙으로 한 번에 바꾸고(레이아웃 없는 슬라이드는 글 상자의 끝만), 실행 취소 한 번에 모두 돌아옵니다. 상태 줄이 "슬라이드 2장에서 문장 3개를 개조식으로 바꿨습니다."처럼 말하고, 다시 누르면 "바꿀 문장이 없습니다."입니다. 슬라이드를 더하지는 않아서, 칸을 넘치는 항목은 점검에 `다음 슬라이드로 잇기`와 함께 나옵니다.
+- 굵은 머리말: 굵은 부분이 있는 글을 통째로 굵게 재던 것을, 글자마다 제 굵기와 굵게 중 넓은 쪽으로 잽니다. 굵은 띄어쓰기가 보통 띄어쓰기보다 좁아서 굵은 머리말 뒤의 긴 줄이 상자를 7px까지 넘을 수 있었습니다(0.95.0부터).
+- AI: 발표 지침(개정 52)이 슬라이드의 말을 문장이 아니라 항목으로, 항목 하나에 두 줄까지, 한국어는 명사나 ~함/~임/~됨으로 끝내고 ~다/~습니다는 쓰지 않게 합니다. 제목은 그대로 주장 한 문장이고, 완전한 문장은 노트로 갑니다. 덱 계약에 `slides[0] is the cover`가 들어갔습니다. 지침은 2,997자, 덱 계약과 합쳐 4,389자로 한도(3,000자, 4,400자) 안입니다.
+- 문구: 새 문구 6개를 영어, 일본어, 프랑스어로 옮겼습니다.
+- 크기: 개조식 규칙(3.3KB)은 덱을 처음 열 때 받는 덱 공용 덩어리에 들어갑니다. 첫 화면은 그대로이고 작업 공간은 0.1KB 늘었습니다.
+- 배포: DB 변경이 없습니다. 함수 `research-loop-mcp`와 `shared-page`, 그리고 태그로 사이트와 플러그인.
+
 ## 0.95.0 — 2026-10-29
 
 Slides read as designed. Each purpose sets its titles, body and captions on one scale, so a title stands well above its words, and the words beside a figure keep a column away. A page's words keep their bold lead-ins, a page deck never runs over its slides, and a wide picture keeps its height with its caption beside it. An equation sets out its symbols, derivation and values on the slide and answers while you present. A reading names its blurry arXiv figures, and Sharpen from the PDF cuts them again from the paper's PDF.
