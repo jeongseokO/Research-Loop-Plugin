@@ -30,14 +30,14 @@ The tool list holds the core tools. The rest are in groups: `describe_tools(grou
    - Local edit → `patch_research_page`; whole rewrite → `save_research_page`, only after a full read; new knowledge with no owning record → `create_research_object`, after `query_research_objects` finds none.
    - Experiment, result and claim pages carry their bottom line in `fields.summary`: send it as `summary` with the page save or patch, so the two never disagree.
    - Many records → `update_research_objects`; run problems stay apart from findings. Both in [Writes and approvals](references/writes.md).
-   - The loop: write an experiment's `fields.prediction` before it runs, never after; when a result arrives, call `record_result_meaning` once, then record the next move it shows (the next experiment linked to the result with `link_objects` rel `follows`). Report results per [Reporting results](references/results-reporting.md); never quiz anyone or ask whether they understood.
+   - The loop: write an experiment's `fields.prediction` before it runs, never after; when a result arrives, call `record_result_meaning` (questions) once, then record the next move it shows (the next experiment linked to the result with `link_objects` rel `follows`). Report results per [Reporting results](references/results-reporting.md); never quiz anyone or ask whether they understood.
    - Direction decisions (branch, state, turning point) → `patch_research_tree`; see [Research tree](references/tree.md).
    - Give every reviewable write a short plain-language `rationale`. `proposed` means awaiting review, never committed.
 6. **Finish briefly:** check each requirement from step 0, then give the outcome, entry links, pending reviews, the smallest open decision and any requirement you could not meet, with the reason.
 
 **Linked repository.** A `.research-loop.json` at a code repository's root names the project its work belongs to: `{"project": "<project ID>", "name": "<project name>"}`. Read it before asking which project; offer to write it when the user names the project for this repository. It holds no credentials and can be committed. In Claude Code, `/research-loop:brief`, `record`, `explain` and `task` start from it.
 
-Keep shared-server work serial and bounded: no polling, recursive scans, installs, experiments or bulk figure regeneration from a routine refresh. Reuse unchanged outputs; ask before expanding computation.
+Keep shared-server work serial and bounded: no polling, recursive scans, installs, experiments or bulk figures from a routine refresh. Reuse unchanged outputs; ask before expanding computation.
 
 ## Load only the current operation
 
@@ -49,7 +49,7 @@ Reuse an already-read guide unless its revision changed.
 | Create or rename a to-do | `get_guide(topic:writing, section:tasks)`; [Task workflow](references/tasks.md) |
 | Assigned human work, meeting actions | [Task workflow](references/tasks.md); `get_research_task_context` for one assignment |
 | Queued AI requests | [AI work](references/ai-work.md): `list_ai_tasks` once, claim before work |
-| Changed code for a to-do, AI request or page | Before finishing: `report_implementation`; the [excerpt helper](../../scripts/code-excerpt.mjs) copies the lines and changed files from git. |
+| Changed code for a to-do, AI request or page | Before finishing: `report_implementation` (projects); the [excerpt helper](../../scripts/code-excerpt.mjs) copies the lines and changed files from git. |
 | Weekly update or talk from team work | [Team updates and presentations](references/team-updates.md) |
 | Write or review a page | [Writes and approvals](references/writes.md); [Writing design](references/writing.md) |
 | Follow-up after committed edits | `get_research_impacts` with changed IDs; `get_research_review` per candidate |
@@ -57,7 +57,7 @@ Reuse an already-read guide unless its revision changed.
 | A record's template and properties | `get_guide(topic:record, type)`; `type:dataset` for benchmarks, columns and linked samples |
 | Literature, meeting minutes (not ordinary notes), refresh, question branches | `get_guide` with topic `literature`, `meeting`, `workflow` or `question` |
 | A paper to read in the original (arXiv or a PDF), with meanings; questions asked while reading | `get_guide(topic:reading)`; `list_reading_questions` |
-| A result came in | `record_result_meaning`; `get_research_brief` lists results still waiting |
+| A result came in | `record_result_meaning` (questions); the brief lists results waiting |
 | Schedule or distribute work | [Scheduling](references/scheduling.md); `get_team_planning_context` |
 | Tables, mechanisms, equations | Core's composition rule: `table.chart`, an explainer or an equation block; the app draws them. |
 | Figure a page cannot draw, image upload, a picture from the web (`import_research_image`) | [Media](references/media.md); `get_guide(topic:visualization, section)`; [research-plot](../research-plot/SKILL.md) for distributions and paper plots, [method-figure](../method-figure/SKILL.md) for static paper figures |

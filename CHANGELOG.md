@@ -2,6 +2,18 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.98.1 — 2026-10-30
+
+Research Loop costs an AI less on every call. The tool list it carries every turn is a fifth smaller (3,992 to 3,187 tokens for Claude): two tools most turns never use now sit one describe_tools call away, and sentences said elsewhere left the descriptions. The project's work instructions come once, from get_project_instructions; other reads say which revision is current instead of repeating the text (286 tokens saved per read for a 485-character instruction). who_am_i says each rule and each role's capabilities once (591 to 379 tokens). Nothing in the database changes.
+
+- 매 걸음 도구 목록: Claude 기준 17,688자(3,992토큰)에서 14,055자(3,187토큰)로, ChatGPT 기준 17,894자에서 14,261자로 줄었습니다(20%). `record_result_meaning`은 `questions` 그룹으로, `report_implementation`은 `projects` 그룹으로 갔습니다. `describe_tools`의 목차가 두 이름을 매번 보이고, 접속 지침의 마무리 줄이 두 도구를 부릅니다(`results: record_result_meaning; code/runs: report_implementation first`). `archive_project`는 남습니다. 호스트는 목록에 있는 파괴적 도구를 그 이름으로 부를 때만 사용자에게 확인을 받습니다.
+- 겹치는 문장: 어느 쓰기 전에 어느 지침을 읽는지, 글쓰기 원칙, 지침을 언제 읽는지는 접속 지침이 한 번 말하므로 `get_research_page`, `patch_research_page`, `save_research_page`, `get_guide`, `call_tool_*`, 패널 도구의 설명에서 뺐습니다. 목록 스키마는 0이라는 하한과 1,000자 이상의 상한을 싣지 않습니다. 모든 호출은 지금처럼 엄격한 스키마로 검사하므로, 같은 값은 같은 필드 이름과 함께 거절됩니다.
+- 작업 지침: 전문은 `get_project_instructions`만 줍니다. 다른 읽기는 `projectInstructions: {revision, textFrom: "get_project_instructions"}`만 싣고, 지침이 비었으면 `{revision, text: ""}`입니다. 연구 내용 안에 같은 이름의 키가 있어도 건드리지 않습니다. 이력 읽기(`get_project_context`, `sync_project`)는 지침을 바꾼 사건 안에 그 글을 그대로 보입니다. 485자 지침이면 보통 세션의 읽기 일곱 번이 5,510토큰에서 3,508토큰으로 줄었습니다.
+- `who_am_i`: 고정 문장은 다른 곳에 없는 두 규칙(충돌의 뜻과 다시 쓰기, 여러 기록과 페이지 요약을 한 번에 쓰는 도구)만 남았습니다. 권한은 역할마다 한 번(`capabilitiesByRole`)이고, 역할과 권한이 다른 프로젝트만 자기 `capabilities`를 지닙니다. 프로젝트 색과 빈 설명은 싣지 않고, API 키의 범위와 만료는 `authentication`에 한 번만 있습니다. 프로젝트 하나일 때 591토큰에서 379토큰입니다.
+- 플러그인: 스킬과 `record`, `task` 명령이 옮긴 도구 옆에 그룹을 적습니다.
+- 대가: 옮긴 도구를 쓰는 작업은 `describe_tools`로 한 차례를 더 씁니다(답 428토큰과 290토큰). 참조 과제 11개를 그 차례까지 넣어 다시 돌리면 모두 합쳐 모델에게 보낸 글자가 9.4% 줄었고, 옮긴 도구를 쓰는 세 과제는 6–11% 늘었습니다. 세션이 길수록 더 줄어듭니다.
+- 배포: 마이그레이션은 없습니다. 함수 `research-loop-mcp`와 `v0.98.1` 태그를 올립니다.
+
 ## 0.98.0 — 2026-10-30
 
 An equation can now draw its graph. A curve compares up to four cases along one variable, marks where the reader stands, draws the slope there and says whether the value rises or falls; a 3D surface turns under a drag or the arrow keys; level lines show constraint regions with the lowest point in each, so Lasso's corner lands exactly on zero where Ridge's circle does not. The sliders move every plot on a page and while presenting, and PPTX keeps it as a picture. This release has a database migration.

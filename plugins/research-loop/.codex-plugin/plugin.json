@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.98.0",
+  "version": "0.98.1",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "An equation can now draw its graph. A curve compares up to four cases along one variable, marks where the reader stands, draws the slope there and says whether the value rises or falls; a 3D surface turns under a drag or the arrow keys; level lines show constraint regions with the lowest point in each, so Lasso's corner lands exactly on zero where Ridge's circle does not. The sliders move every plot on a page and while presenting, and PPTX keeps it as a picture. This release has a database migration.",
+        "release_notes": "Research Loop costs an AI less on every call. The tool list it carries every turn is a fifth smaller (3,992 to 3,187 tokens for Claude): two tools most turns never use now sit one describe_tools call away, and sentences said elsewhere left the descriptions. The project's work instructions come once, from get_project_instructions; other reads say which revision is current instead of repeating the text (286 tokens saved per read for a 485-character instruction). who_am_i says each rule and each role's capabilities once (591 to 379 tokens). Nothing in the database changes.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
