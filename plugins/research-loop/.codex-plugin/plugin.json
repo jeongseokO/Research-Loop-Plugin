@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.98.1",
+  "version": "0.99.1",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Research Loop costs an AI less on every call. The tool list it carries every turn is a fifth smaller (3,992 to 3,187 tokens for Claude): two tools most turns never use now sit one describe_tools call away, and sentences said elsewhere left the descriptions. The project's work instructions come once, from get_project_instructions; other reads say which revision is current instead of repeating the text (286 tokens saved per read for a 485-character instruction). who_am_i says each rule and each role's capabilities once (591 to 379 tokens). Nothing in the database changes.",
+        "release_notes": "A security check. Research Loop runs no PHP, so PHP2Shell does not reach it. The MCP server moves to SDK 2.3.1 and zod 4.6.7, takes one JSON-RPC request per HTTP request and at most 25,000 elements in a tool call's arguments, so an oversized request is refused in a line instead of costing the function hundreds of megabytes. The site takes markdown-it 15.0.3 against a page built to freeze the tab that opens it, and next, vite and vitest take their fixes. npm audit finds nothing in production dependencies.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

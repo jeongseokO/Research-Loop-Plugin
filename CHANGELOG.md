@@ -2,6 +2,30 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.99.1 — 2026-10-31
+
+A security check. Research Loop runs no PHP, so PHP2Shell does not reach it. The MCP server moves to SDK 2.3.1 and zod 4.6.7, takes one JSON-RPC request per HTTP request and at most 25,000 elements in a tool call's arguments, so an oversized request is refused in a line instead of costing the function hundreds of megabytes. The site takes markdown-it 15.0.3 against a page built to freeze the tab that opens it, and next, vite and vitest take their fixes. npm audit finds nothing in production dependencies.
+
+- PHP: 코드, 의존성, 호스팅 어디에도 PHP가 없습니다. 사이트는 Cloudflare Workers(vinext), 서버 함수는 Supabase Edge Functions(Deno), DB는 Supabase Postgres입니다. PHP2Shell(CVE-2026-109618, CVE-2026-109619)은 해당이 없습니다. 저장소에 비밀 값도 없습니다. `.env` 파일은 `.env.example`만 추적합니다.
+- MCP 서버: `@modelcontextprotocol/server` 2.0.0 → 2.3.1, zod 4.5.4 → 4.6.7. 전에는 로그인한 계정이면 요청 하나에 메시지 12,000개를 실어 함수를 14초 붙잡거나, 잘못된 인자 30만 개(586KB)로 응답 18MB와 메모리 404MB를 쓰게 할 수 있었습니다. 함수 하나의 메모리 한도는 256MB입니다. 이제 HTTP 요청 하나에는 JSON-RPC 요청이 하나만 들어갑니다. 속도 제한이 HTTP 요청을 세기 때문입니다. 알림은 함께 실을 수 있고 모두 합쳐 100개까지입니다. 도구 호출 인자는 원소 25,000개까지입니다(`MAX_TOOL_INPUT_ELEMENTS`). 위의 두 요청은 이제 9–50ms 만에 한 줄로 거절됩니다. 표 다섯 개가 가득 찬 250블록 페이지(원소 22,112개)도 들어갑니다. `manage-agent-keys`도 zod 4.6.7을 씁니다.
+- 웹: next 16.4.3, markdown-it 15.0.3, vite 8.2.4, vitest 4.1.12로 올렸습니다. zod 4.6.7, MCP client·core 2.4.0, xmldom 0.9.12(speech-rule-engine 4.1.5), source-map-js 1.2.2, fast-uri 3.1.9는 범위 안에서 따라 올라갑니다. next는 사이트에 배포되지 않습니다(vinext가 자체 런타임으로 돌립니다). 그래도 올려서 치명 등급 경고를 없앴습니다. markdown-it은 페이지에 넣은 링크 참조 정의 하나로 그 페이지를 여는 탭이 멈추던 문제를 고쳤습니다. 패널은 새 패키지로 다시 빌드했습니다.
+- 남긴 것: Cloudflare 개발 도구(wrangler, miniflare, undici, sharp, `@cloudflare/vite-plugin`)는 고친 판이 나온 지 며칠 안 된 베타라 다음 릴리스에서 올립니다. 개발 기기와 빌드에서만 돌고 배포된 Worker에는 들어가지 않습니다. vinext의 `@vercel/og`·satori는 쓰지 않는 OG 이미지 기능입니다. `npm audit`는 19건에서 8건으로, 운영 의존성은 0건입니다.
+- 테스트: `request_limits.test.ts`는 요청 수와 인자 원소 상한을 확인하고, `dependencyFloors.test.ts`는 고친 판보다 낮은 버전이 다시 들어오면 실패합니다.
+- 배포: 마이그레이션은 없습니다. 함수 `research-loop-mcp`와 `manage-agent-keys`를 올린 뒤 `cloudflare` 브랜치와 `v0.99.1` 태그를 올립니다.
+
+## 0.99.0 — 2026-10-30
+
+A paper reading's plain explanations now fold under their paragraph. Each is one line hung from the paragraph by a hairline, with the paper's paragraph sign and its name; pressing it opens the explanation as an inset commentary in a bracket of the same line, and pointing at it lights the paragraph it explains. The View panel can keep them all open on this device, one opened stays open when the meanings or the language change, and only open ones print. Nothing in the database or the AI's tools changes.
+
+- 접힌 한 줄: 쉬운 설명은 처음에 그 문단 아래 한 줄로 접혀 있습니다. 문단 바로 아래에서 가는 선이 내려와 꺾여 '¶ 쉬운 설명'으로 들어갑니다. ¶는 논문 글꼴입니다. 누르거나 Enter·Space로 펼치고, 다시 누르면 접힙니다. 다른 언어 화면에서는 하나를 가리키는 이름(Plain explanation, やさしい解説, Explication simple)입니다.
+- 어느 문단의 것인지: 선이 위 문단에 매달려 있어 이름표가 다음 블록의 제목으로 읽히지 않습니다. 이름표나 펼친 글을 가리키면, 또는 키보드로 닿으면 그 문단이 옅은 청록으로 밝아지고 선도 청록이 됩니다. 가리켜서 밝히는 것은 포인터가 떠 있을 수 있는 화면에서만입니다. 휴대폰에서 누른 뒤 밝힘이 남지 않게 했습니다.
+- 학문적인 꼴: 청록 상자를 없앴습니다. 펼친 글은 이름표 아래에 들여 쓰고(넓은 화면은 양쪽, 600px 이하는 왼쪽만), 같은 가는 선이 글 왼쪽을 따라 내려가 마지막 줄 아래에서 안으로 꺾여 괄호처럼 묶습니다. 글꼴, 크기, 색은 그대로입니다.
+- 펼쳐 두기: 보기 판의 쉬운 설명 줄 아래 확인란입니다. 켜면 지금 읽기의 설명이 모두 펼쳐지고, 이 기기에서 여는 읽기도 펼쳐진 채 그려집니다. 끄면 모두 접힙니다. 층이 꺼져 있으면 흐려집니다. 판의 견본은 꺾인 선과 ¶입니다.
+- 읽는 동안: 뜻을 켜고 끄거나 풀이 언어를 바꿔 읽기를 다시 그려도, 하나씩 펼치고 접은 것이 그대로입니다.
+- 움직임과 인쇄: 지원하는 브라우저(Chrome 131 이상)에서는 220ms 동안 부드럽게 열리고 닫히며 여백 설명이 따라옵니다. 다른 브라우저와 동작 줄이기 설정에서는 바로 열립니다. 인쇄하면 펼친 것만 나옵니다. 초록의 설명은 문단과 같은 거리에 매달리고, 층을 끄면 초록 아래 여백이 그대로입니다.
+- 크기: 읽기 화면의 스크립트와 스타일이 gzip으로 합쳐 1.05KB 늘었습니다.
+- 배포: 마이그레이션은 없습니다. 서버의 동작은 그대로지만, MCP 서버와 그 패널이 0.99.0을 보고하도록 `research-loop-mcp`를 다시 올리고, `cloudflare` 브랜치와 `v0.99.0` 태그를 올립니다. `shared-page`는 바뀌지 않았습니다.
+
 ## 0.98.1 — 2026-10-30
 
 Research Loop costs an AI less on every call. The tool list it carries every turn is a fifth smaller (3,992 to 3,187 tokens for Claude): two tools most turns never use now sit one describe_tools call away, and sentences said elsewhere left the descriptions. The project's work instructions come once, from get_project_instructions; other reads say which revision is current instead of repeating the text (286 tokens saved per read for a 485-character instruction). who_am_i says each rule and each role's capabilities once (591 to 379 tokens). Nothing in the database changes.

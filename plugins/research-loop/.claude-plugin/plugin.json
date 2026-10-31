@@ -1,7 +1,7 @@
 {
   "name": "research-loop",
   "displayName": "Research Loop",
-  "version": "0.98.1",
+  "version": "0.99.1",
   "description": "Your Research Loop projects in Claude: read and edit research pages, record experiments and what their results mean, read papers with their key sentences, see plans and to-dos, draw method figures and charts, and carry the requests your team queued for AI to review.",
   "author": {
     "name": "오정석",
