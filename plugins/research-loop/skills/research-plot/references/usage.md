@@ -49,7 +49,7 @@ The style applies to ordinary Matplotlib plots too: call `style_axes(ax, grid="y
 Draw a deck's figure inside `slide_context` with the deck's look, the layout slot it goes in, the deck's purpose and accent (the request names all four). The canvas is that slot's picture box at 96 px an inch, so the type in the figure is the type on the slide; do not change the figure size. Plot the series the slide's claim is about first: it takes `style.focus`, the others the look's quiet ramp. Then record how it was made.
 
 ```python
-with slide_context("vivid", slot="claim-figure", purpose="talk", accent="2457D6") as style:
+with slide_context("vivid", slot="claim-figure", purpose="talk", accent="1D7568") as style:
     fig, ax = plt.subplots(layout="constrained")
     ax.plot(layers, per_layer, label="Per-layer budget")    # the claim's series: style.focus
     ax.plot(layers, uniform, label="Uniform budget")        # context: the look's quiet ramp

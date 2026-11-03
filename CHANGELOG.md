@@ -2,6 +2,93 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.105.1 — 2026-11-03
+
+Every CI job now names its Ubuntu image. GitHub is moving `ubuntu-latest` to Ubuntu 26.04, where the Playwright this repository uses installs no Chromium, so 0.105.0's checks stopped before its browser tests ran and nothing shipped. The jobs run on `ubuntu-24.04`, and the app is 0.105.0's.
+
+- CI: GitHub이 `ubuntu-latest`를 Ubuntu 26.04로 옮기는 중이라(2026-10-19~11-19), v0.105.0 태그의 브라우저 검사가 26.04 기계를 받았고 Playwright 1.56.0이 거기에 Chromium을 설치하지 못해 멈췄습니다. 네 검사가 모두 통과해야 배포되므로 웹사이트도 플러그인도 올라가지 않았습니다.
+- 이제 모든 작업이 `ubuntu-24.04`에서 돕니다. 브라우저 테스트가 만들어지고 마지막으로 통과한 이미지입니다. 다른 이미지로 바뀌면 `scripts/workflows.test.mjs`가 실패합니다. 26.04로는 그곳을 지원하는 Playwright로 올리고 브라우저 테스트를 통과한 뒤에 옮깁니다.
+- 앱 코드는 0.105.0과 같고 버전 번호만 바뀝니다.
+- 배포: 마이그레이션은 없습니다. 함수 `research-loop-mcp`를 다시 올린 뒤(버전을 알립니다) `cloudflare` 브랜치와 `v0.105.1` 태그를 올립니다. `v0.105.0` 태그와 실패한 실행은 그대로 둡니다.
+
+## 0.105.0 — 2026-11-02
+
+A research page shows its bottom line at a glance: its head is the title, one line of status, author and date, and one line naming the question it answers and its line in the research tree, each fact said once, with no tags above the title. The front page explains again, as it did in 0.102.0. And a field an AI writes keeps its spaces: text whose spaces were taken out to fit a limit is refused, and the AI is told to cut words instead. A sign-in that fails keeps what was typed into it.
+
+- 기록 페이지: 제목 위 태그 줄(프로젝트, 종류, 상태)을 없앴습니다. 종류는 상단 막대가 말하고, 프로젝트는 프로젝트 첫 화면에서 열었을 때 막대가 말합니다. 그 밖의 곳에서 열면 아래 줄 맨 앞에 프로젝트의 색 표와 짧은 이름이 붙습니다.
+- 제목 아래 두 줄: 첫 줄은 상태, 작성자, 날짜(올해면 연도 없이), 마지막 수정입니다. 상태는 색 있는 낱말이고, 편집자는 그 자리에서 바꿉니다. 둘째 줄은 '답하는 질문'과 '연구 트리'의 가지입니다. 질문 제목은 잘리지 않고 줄을 바꾸고, 가지 이름을 누르면 트리가 열립니다.
+- 판정은 한 번: 질문 줄의 '예측대로/판단 보류'를 빼고 핵심 결론의 판정만 남겼습니다. 같은 판단을 두 번 쓴 것이었습니다.
+- 휴대폰에서 데모 분석 페이지의 결론이 화면 위 468px에서 354px로 올라왔습니다. 공유 페이지의 머리도 같은 모양입니다.
+- 랜딩: 0.103.0에서 뺀 설명을 되살렸습니다. 히어로의 두 번째 문장, 단계를 따라 움직이는 도해, 섹션 제목 아래 문장, 연구 트리 창과 단계 설명, 순환 아래 문장, 수식 창, AI가 사람에게 묻는 칸, 예시마다의 캡션입니다. 0.104.0의 고리 그림은 그대로입니다.
+- 띄어쓰기: AI가 쓰는 짧은 칸(제목, 핵심 결론의 세 문장, 질문 노트, 결과의 의미, 예측, 완료 기준)에 띄어쓰기 없이 한글이 15음절 이상 이어지면 서버가 저장하지 않고, 띄어쓰기를 지키고 단어를 줄이라고 안내합니다. 한도는 지금처럼 띄어쓰기를 셉니다. AI 지침 54판에도 한 줄 넣었습니다. 사람이 앱에서 쓰는 글은 검사하지 않습니다.
+- 고친 것: 로그인에 실패하면 이메일과 비밀번호 칸이 비던 문제를 고쳤습니다. 첫 화면, 작업 공간의 로그인 화면, AI 연결의 로그인 화면 모두 입력한 내용이 그대로 남습니다.
+- 고친 것: ChatGPT·Claude 패널의 로그인 화면에서 패널이 다 뜨기 전에 이름을 입력하면 뒷글자가 사라질 수 있었습니다. 패널이 자리를 잡는 순간에도 입력하던 칸과 커서가 그대로 남습니다.
+- 배포: 마이그레이션은 없습니다. 함수 `research-loop-mcp`를 올린 뒤 `cloudflare` 브랜치와 `v0.105.0` 태그를 올립니다.
+
+## 0.104.0 — 2026-11-02
+
+The loop on the front page is drawn the way the brand mark is built: the curve at its own proportions, one teal ribbon passing over itself at the crossing, and the mark's dot going round it at a steady pace, resting in its place for readers who ask for reduced motion. The two stages it joins stand under their lobes.
+
+- 무한대: 로고 곡선을 늘이지 않고 제 비율로 그립니다. 브랜드 청록 한 가닥이고, 교차점에서 오른쪽 고리 위에서 왼쪽 고리 아래로 가는 가닥이 다른 가닥 위로 지나갑니다. 방법 색과 실험 색은 그림에서 뺐습니다.
+- 점: 흰 바탕에 테두리를 두른 점 대신 로고의 점이 선을 끊고 앉아, 한 바퀴 12초의 일정한 속도로 돕니다. 화면에 보일 때만 움직이고, 움직임 줄이기 설정이면 로고 속 자리에 멈춰 있습니다.
+- 단계 이름: '3 연구 방법 고안'과 '4 실험 및 방법 고도화'가 각 고리 아래 가운데에 놓입니다. 브랜드 지침대로 로고 안에는 글을 넣지 않고, 휴대폰과 데스크톱이 같은 배치입니다.
+- 크기: 첫 화면 스타일 −154B, 스크립트 +48B(gzip). 고리의 기하는 테스트가 계산해 상수로 둡니다.
+- 배포: 마이그레이션은 없고 패널 코드도 그대로입니다. Mac의 `cloudflare`가 아직 0.99.1이면 0.103.0과 같은 순서로 함수 `research-loop-mcp`를 올린 뒤 `cloudflare` 브랜치와 `v0.104.0` 태그를 올립니다.
+
+## 0.103.0 — 2026-11-01
+
+The front page says less. Its sections are a heading and a picture each, with no explaining sentence under the heading, and its examples show the screens without their manuals: the opening figure is one still picture, the research path is the stages and the loop, and the figures are a table, its chart and one typeset formula. The page shows about a third of the words it did, and loads less script.
+
+- 섹션: 'AI 검토', '연구 과정', '일정', '그림과 수식'의 제목 아래 설명 문장을 뺐습니다. 앱이 지키는 '제목 아래 설명 문장을 두지 않는다'를 랜딩도 지킵니다. 첫 화면 소개는 한 문장입니다("Claude Code, Codex, ChatGPT가 질문과 실험, 결과를 페이지로 남깁니다.").
+- 첫 화면의 도해: 단계 버튼, 단계 설명, "그림을 눌러도 넘어갑니다", 자동 재생을 빼고 모든 부품이 그려진 그림 한 장으로 둡니다. 단계 설명은 화면 읽기 프로그램이 읽는 개요에 남습니다.
+- 예시 창: AI 창은 검토할 변경과 연결된 AI 둘만 둡니다(사람에게 묻는 질문 칸을 뺐습니다). 연구 과정에서는 연구 트리 창과 단계별 설명, 순환 아래 문장을 뺐습니다. 일정은 날짜별 요약줄과 '이번 주 배분' 제목을 뺐습니다. 그림과 수식은 창 하나로, 표와 그래프 아래에 수식 한 줄만 둡니다(기호 풀이, 유도 과정, 슬라이더 창을 뺐습니다).
+- 캡션: 예시마다 '가상 데이터' 한 마디만 둡니다.
+- 글의 양: 보이는 글이 1,977자에서 689자가 됐습니다(공백, 그림 속 글자, 수식 제외). 800자를 넘으면 테스트가 실패하고, 규칙은 DESIGN.md에 적었습니다.
+- 크기: 랜딩이 불러오는 스크립트가 199.0KB에서 167.4KB로 줄었습니다(gzip, 42개 → 33개 파일). 첫 화면 스타일 −468B, 번역 파일은 언어마다 약 1.5KB 줄었습니다. 패널은 −40B입니다.
+- 배포: 마이그레이션은 없습니다. 패널의 도해와 수식 코드가 바뀌었으므로 함수 `research-loop-mcp`를 다시 올린 뒤 `cloudflare` 브랜치와 `v0.103.0` 태그를 올립니다.
+
+## 0.102.0 — 2026-11-01
+
+The front page shows the loop it is named for. The headline is larger, the example page opens on its whole figure with the conclusion in focus, and between the stages of research the brand's own loop is drawn with method and experiment in its two lobes. The section that says AI changes are reviewed now comes right after the opening, every lede runs to its column and every example window ends on the same edge.
+
+- 첫 화면: 제목이 48px에서 64px이 되고, 소개 문장은 19px 두 줄입니다.
+- 예시의 첫 상태: 히어로의 도해가 마지막 단계(부품이 모두 그려지고 결론의 14%에 초점)에서 시작합니다. 그다음 1단계부터 돌고, 마지막 단계는 두 배 오래 머뭅니다. 움직임 줄이기 설정이면 전체 그림에 머뭅니다.
+- 순환 장면: 연구 단계 목록의 2.2와 5 사이에 브랜드 로고의 ∞ 곡선을 그립니다. 3 연구 방법 고안은 왼쪽 고리(방법 색), 4 실험 및 방법 고도화는 오른쪽 고리(실험 색)에 있고, 작은 점이 고리를 돕니다. 아래 13px 각주는 없앴습니다.
+- 순서: 히어로 다음이 'AI의 변경은 검토를 거쳐 반영됩니다'입니다. 그 뒤로 연구 과정, 일정, 그림과 수식이 옵니다. AI 예시 창은 검토할 변경이 맨 위입니다.
+- 글 폭과 가장자리: 섹션 소개 문장이 칸 폭(약 20자)까지 씁니다. AI 예시 창의 폭 제한을 없애 모든 예시 창의 오른쪽 끝을 맞췄습니다.
+- 크기: 첫 화면 스타일 +218B, 스크립트 +556B(gzip). 패널은 +35B입니다.
+- 배포: 마이그레이션은 없습니다. 패널의 도해 코드가 바뀌었으므로 함수 `research-loop-mcp`를 다시 올린 뒤 `cloudflare` 브랜치와 `v0.102.0` 태그를 올립니다.
+
+## 0.101.0 — 2026-11-01
+
+Decks say their message. A figure made from a page takes the first sentence of the words that read it as its title, and the studio asks for one where a slide only names its chapter. A list or a table with nothing beside it runs the slide's width instead of keeping an empty column, and new decks are the brand's green. On the presentations page a draft's captions keep their titles, and the presenter's index reads as a table of contents.
+
+- 그림 슬라이드의 제목: 페이지로 만든 발표에서 그림(차트, 표, 플롯, 이미지, 도해)을 읽어 주는 문단이 있으면, 그 문단의 첫 문장이 슬라이드 제목이 됩니다. 마침표는 떼고, 제목 두 줄에 들어갈 때만입니다. 나머지 문장은 전처럼 그림 옆이나 아래에 남고, 페이지의 소제목은 슬라이드의 챕터로 남습니다. 예시 페이지 R1의 변화량 차트는 '현상' 대신 '잃은 22%p 중 18%p를 회복했다'가 제목입니다. 물음표는 그대로 두고, '2.6%p', 'e.g.', 따옴표 안의 마침표에서는 문장을 자르지 않습니다. 글이 없는 그림, 목록으로 읽는 그림, 수식, 두 줄을 넘는 문장은 소제목을 그대로 씁니다.
+- 점검: 그림 슬라이드의 제목이 챕터 이름과 같으면 점검에 '제목이 챕터 이름과 같습니다. 그림이 말하는 것을 한 문장으로 쓰세요.'가 뜹니다. 조언이라 저장과 내보내기를 막지 않고, 제목을 바꾸면 사라집니다.
+- 빈 칸: 목록의 곁 메모, 그림과 표의 해석, 수식의 기호 풀이처럼 내용 옆 칸이 비어 있으면, 글자를 줄이지 않고 들어가는 배치 가운데 빈 칸이 옆에 남지 않는 것을 고릅니다. 곁 메모가 없는 목록은 슬라이드 폭을 다 씁니다. 글자를 줄여야만 넓게 들어가는 긴 목록은 그대로 둡니다. 스튜디오, 발표 화면, 썸네일, PPTX가 모두 같습니다. 빈 칸에 글을 쓰면 다시 옆으로 옵니다.
+- 색: 선명 모양의 강조색이 브랜드 초록(#1D7568), 파랑(#2457D6), 빨강, 보라 순서가 됐습니다. 페이지, 연구 흐름, 갤러리, AI 요청으로 새로 만드는 발표가 모두 초록이고, 플러그인의 그림 도우미도 강조 계열을 초록으로 그립니다. 이미 저장한 발표는 저장한 색을 지킵니다. 두 번째 초록(#0E7C66)은 목록에서 빠졌고, 그 색으로 이미 맡긴 AI 요청은 그대로 읽어 그 색으로 펼칩니다.
+- 캡션과 목차: 발표 페이지에서 연구 흐름으로 만들 초안의 캡션은 번호와 제목뿐이고 제목이 두 줄까지 보입니다. 챕터 이름은 그 챕터의 첫 슬라이드 위에 한 번만 씁니다. 발표 화면의 목차는 챕터를 제목처럼 한 번 쓰고 그 아래에 슬라이드를 놓습니다. 슬라이드 제목이 모두 챕터 이름과 같으면 챕터 제목은 생략합니다.
+- 발표 화면 버튼: 스튜디오에서 발표할 때 버튼을 가리키면 앱의 바탕색이 깔려, 다크 모드에서는 흰 발표 위에 어두운 상자가 생겼습니다. 이제 버튼은 발표의 강조색으로 바뀝니다.
+- 속도: 그림마다 제목이 두 줄에 들어가는지 볼 때 슬라이드 전체를 배치하던 것을 제목만 재도록 바꿨습니다. 그림마다 해석 문단이 있는 250블록 페이지가 17.8ms에서 9.7ms가 됩니다.
+- 크기: 첫 화면은 그대로입니다. 스튜디오, 발표 화면, 발표 페이지와 배치 모듈이 gzip으로 합쳐서 약 0.85KB 늘었습니다. 패널은 그대로입니다.
+- 배포: 마이그레이션은 없습니다. 패널이 발표의 모양을 그리므로 함수 `research-loop-mcp`를 다시 올린 뒤 `cloudflare` 브랜치와 `v0.101.0` 태그를 올립니다.
+
+## 0.100.0 — 2026-11-01
+
+Reading gets a floor. No word is smaller than 13px, Korean words no longer break between syllables in answers, lists of facts and tables, and the faintest ink is kept off words. A result page leads with its bottom line at 23px, references to records read as underlined text, tags lose their borders, and text actions are teal with a real target. The row to look at now is one strength of yellow everywhere, the home's side column follows as you scroll, and a page's bar keeps one line on a phone.
+
+- 글자 크기: 가장 작은 글자가 12px에서 13px이 됐습니다. 라벨, 보조 줄, 배지 숫자가 한 단계를 같이 쓰기 때문에 앱, 발표 스튜디오의 도구 글자, AI 앱 안 패널의 12px 낱말이 한꺼번에 13px이 됩니다. 한글 음절은 획이 많아서 12px이면 보통 화면에서 획이 붙습니다. 그 위 단계(14, 16, 19, 23, 28px)는 그대로입니다. 안내, 약관, 개인정보 페이지의 12px 낱말도 13px입니다.
+- 낱말 끊김: 홈과 연구 흐름의 답이 '회/복', '분/을'처럼 음절 사이에서 끊기던 것을 고쳤습니다. 낱말을 지키는 규칙이 제목, 문단, 목록에만 있었는데 이제 정의 목록, 인용, 그림 설명, 표 칸에도 적용됩니다.
+- 옅은 글자: 가장 옅은 잉크(3.2:1)는 비활성 컨트롤과 구분 기호에만 씁니다. 회차 번호, 예측과 결과 해석의 빈 줄, 연구 기록 목록의 추가 버튼은 한 단계 진한 잉크(5.5:1)로 바꿨습니다.
+- 결과 페이지: 핵심 결론이 제목 다음으로 큰 문장입니다(23px, 연구 세리프). 그 위의 '답하는 질문'과 '연구 트리'는 상자 없이 한 줄씩 읽힙니다.
+- 작은 것은 두 모양: 다른 기록을 가리키는 참조(결론의 근거, 답하는 질문, 홈의 가설과 방법, 실행 줄, 문단의 참조)는 글입니다. 유형은 그 색으로, 제목은 가는 밑줄로 쓰고 가리키면 밑줄이 진해집니다. 누르는 자리는 28px, 터치 화면에서는 44px입니다. 상태, 유형, 직위, AI 표시 같은 태그는 테두리 없는 옅은 알약입니다.
+- 글로 된 동작: 초록 편집, 할 일 전체, 모두 확인, 목표 수정, 다시 배치가 회색 라벨처럼 보였습니다. 이제 청록이고, 높이 32px(터치 화면 44px)에 가리키면 바탕이 깔립니다.
+- 노란 띠: 지금 볼 하나를 표시하는 행(홈의 다음 할 일, 연구 흐름의 진행 중 단계, 나에게 온 질문과 구현 확인, 구현 지도에서 연 문장)이 모두 같은 세기입니다. 형광펜 55%, 가리키면 80%이고 옆 띠는 없습니다. 전에는 홈의 띠가 형광펜 그대로라 첫 화면에서 가장 시끄러웠고, 협업 목록은 32%에 3px 띠였습니다. 낱말 안의 표시(바뀐 글, 코드 줄, '내가 답할 차례')는 그대로입니다. 할 일의 눌린 필터는 노랑 대신 회색 바탕입니다.
+- 홈의 오른쪽 칸: 두 칸이 들어가는 넓은 화면에서 이번 주, 다른 마감, AI에게 맡긴 작업이 스크롤을 따라옵니다. 칸이 창보다 길면 그 칸만 따로 스크롤됩니다.
+- 작은 것들: 왼쪽 색인의 '약관 변경 안내' 밑줄을 없앴습니다. 안내, 약관, 개인정보 페이지가 사이트와 같은 로고를 씁니다. 휴대폰에서 페이지 위 막대가 한 줄을 지킵니다. 돌아가는 곳 이름이 줄어들고(화면 읽기 프로그램에는 전체 이름), 페이지 이름은 온전히 보입니다. 서지정보에서 아직 없는 링크와 저자는 작은 회색 '미등록'으로 보입니다.
+- 크기: 첫 화면의 스타일이 gzip으로 약 0.5KB 늘었습니다. 패널과 논문 읽기는 거의 그대로입니다.
+- 배포: 마이그레이션은 없습니다. 패널의 글자 크기가 바뀌었으므로 함수 `research-loop-mcp`를 다시 올린 뒤 `cloudflare` 브랜치와 `v0.100.0` 태그를 올립니다.
+
 ## 0.99.1 — 2026-10-31
 
 A security check. Research Loop runs no PHP, so PHP2Shell does not reach it. The MCP server moves to SDK 2.3.1 and zod 4.6.7, takes one JSON-RPC request per HTTP request and at most 25,000 elements in a tool call's arguments, so an oversized request is refused in a line instead of costing the function hundreds of megabytes. The site takes markdown-it 15.0.3 against a page built to freeze the tab that opens it, and next, vite and vitest take their fixes. npm audit finds nothing in production dependencies.

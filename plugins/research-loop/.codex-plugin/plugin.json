@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.99.1",
+  "version": "0.105.1",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "A security check. Research Loop runs no PHP, so PHP2Shell does not reach it. The MCP server moves to SDK 2.3.1 and zod 4.6.7, takes one JSON-RPC request per HTTP request and at most 25,000 elements in a tool call's arguments, so an oversized request is refused in a line instead of costing the function hundreds of megabytes. The site takes markdown-it 15.0.3 against a page built to freeze the tab that opens it, and next, vite and vitest take their fixes. npm audit finds nothing in production dependencies.",
+        "release_notes": "Every CI job now names its Ubuntu image. GitHub is moving `ubuntu-latest` to Ubuntu 26.04, where the Playwright this repository uses installs no Chromium, so 0.105.0's checks stopped before its browser tests ran and nothing shipped. The jobs run on `ubuntu-24.04`, and the app is 0.105.0's.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
