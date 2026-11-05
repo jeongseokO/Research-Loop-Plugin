@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.105.1",
+  "version": "0.106.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Every CI job now names its Ubuntu image. GitHub is moving `ubuntu-latest` to Ubuntu 26.04, where the Playwright this repository uses installs no Chromium, so 0.105.0's checks stopped before its browser tests ran and nothing shipped. The jobs run on `ubuntu-24.04`, and the app is 0.105.0's.",
+        "release_notes": "Pages an AI writes now read as reports. The server holds them to a reading budget by type (a result page is about five screens), few tables, a chart for a numeric comparison, no run details or generic caution in the text, and Korean spaced around numbers and Latin terms; complete tables go under a folded 부록 or on linked pages, and a page already too long may shrink but not grow. A chart can draw differences from a baseline. The writing guide (revision 55) gives a results page its shape; a page read in outline says what to repair, and the brief lists experiments to tidy.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

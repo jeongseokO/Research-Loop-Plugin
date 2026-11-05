@@ -2,6 +2,24 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.106.0 — 2026-11-04
+
+Pages an AI writes now read as reports. The server holds them to a reading budget by type (a result page is about five screens), few tables, a chart for a numeric comparison, no run details or generic caution in the text, and Korean spaced around numbers and Latin terms; complete tables go under a folded 부록 or on linked pages, and a page already too long may shrink but not grow. A chart can draw differences from a baseline. The writing guide (revision 55) gives a results page its shape; a page read in outline says what to repair, and the brief lists experiments to tidy.
+
+- 보고서 분량: AI가 쓰는 페이지의 펼친 글을 유형별로 셉니다(한글 1자 = 2칸). 분석 12,000칸(한글 약 6,000자, 데스크톱 약 5화면), 실험 16,000칸, 질문 12,000칸, 방법론·데이터셋 16,000칸, 주장·가설·결정 8,000칸, 노트 24,000칸입니다. 넘으면 저장하지 않고 '결론·핵심 그림·판단 근거는 본문에, 전체 표·조건별 세부·예시는 맨 끝 ## 부록이나 별도 페이지로' 옮기라고 안내합니다. 이미 넘친 페이지는 줄이는 수정만 받습니다. 문헌, 논문 구성, 리뷰 쟁점, 할 일, 마감 페이지와 '논문'·'Rebuttal' 분류의 노트는 분량을 세지 않습니다.
+- ## 부록: '부록'이나 'Appendix'로 시작하는 큰 제목 아래는 ## 재현 정보처럼 접혀 보입니다. 접힌 부분은 60,000칸까지이고, 그보다 많으면 별도 페이지로 나눕니다.
+- 표와 그림: 분석 페이지는 펼친 표 4개, 실험 페이지는 6개까지입니다. 그림 없는 표는 15행까지입니다. 숫자를 비교하는 표가 있는 분석 페이지에는 그림이 하나는 있어야 합니다.
+- 경로·잡 번호·커밋 해시: 분석·실험 페이지 본문(표 칸과 캡션 포함, 코드 블록 제외)에 쓰면 저장하지 않고 ## 재현 정보나 구현 확인 보고로 보냅니다. 지금까지는 조언이었습니다.
+- 판에 박힌 단서 문장('해석에 주의가 필요하다', '추가 검증이 필요하다' 같은)은 분석·실험·주장 페이지에 세 문장까지입니다. 구체적인 한계는 세지 않습니다.
+- 소수 넷째 자리까지 쓴 숫자가 새 글에 셋 이상이면 반올림하라고 조언만 합니다. 화학처럼 그 정밀도가 맞는 분야가 있어 막지 않습니다.
+- 띄어쓰기: '정확도는0.53'처럼 숫자·영문에 붙여 쓴 것과 'SCROLLS 의'처럼 조사를 떼어 쓴 것을 거절합니다. 페이지 본문과 모든 짧은 칸에 해당하고, 고칠 자리와 고친 모양을 함께 알려 줍니다. '제1저자'와 한 번 쓴 '실험2'는 통과합니다.
+- 거절 문구는 함께 걸린 다른 문제도 알려 줘서 한 번에 고치게 합니다. 사람이 앱에서 쓰는 글은 검사하지 않습니다.
+- 기준 대비 차이 그림: 표 그림에 '기준'(열이나 가로축 값)을 정하면 선·막대·점 그림이 나머지를 기준과의 차이로 그립니다. 0선이 기준이고 세로축 제목이 그것을 말합니다(Full 대비 차이 (%p)). %는 %p가 되고 표는 원래 값을 그대로 둡니다. 가리키면 값과 차이가 함께 보이고, 슬라이드에서는 'Ours − Baseline'처럼 이름이 붙습니다. 페이지 편집기의 그림 설정에 '기준'이 생겼습니다.
+- AI 지침 55판: 분석 페이지는 5화면 이내이고, 본문에는 핵심 그림 하나, 판단 근거, 한계 하나를 둡니다. 전체 표·조건별 세부·예시는 ## 부록이나 별도 페이지로 갑니다. 숫자는 퍼짐이 허락하는 만큼(보통 유효숫자 셋) 반올림합니다. 판단 보류는 데이터가 예측을 검증할 수 없을 때만 쓰고, 효과가 예측보다 작으면 '예측과 다름'입니다. 한국어 띄어쓰기 규칙도 한 줄 넣었습니다.
+- 고칠 거리: AI가 페이지를 outline으로 열면 무엇을 어디서 어떻게 고칠지 함께 받습니다. 브리핑에는 14일 넘게 멈춘 실행 중 실험, 질문에 이어지지 않은 실행 중 실험, 예측 없는 실험이 나옵니다. 예측 없이 실험을 만들거나 실행으로 바꾸면 예측부터 쓰라고 조언합니다.
+- 화면: 연구 이야기 덱의 제목·라벨·기록 종류가 한국어입니다(챕터는 영어 그대로). 휴대폰에서 제목 줄이 '·'로 시작하지 않습니다. 연구 트리 줄이 페이지 제목을 되풀이하지 않습니다. 홈의 작업 막대가 '다른 질문' 대신 질문마다 이름(RQ2 같은 코드나 앞 낱말)을 씁니다.
+- 배포: 마이그레이션 하나(`20261104070000_table_chart_baseline`)를 먼저 적용하고, 함수 `research-loop-mcp`를 올린 뒤 `cloudflare` 브랜치와 `v0.106.0` 태그를 올립니다.
+
 ## 0.105.1 — 2026-11-03
 
 Every CI job now names its Ubuntu image. GitHub is moving `ubuntu-latest` to Ubuntu 26.04, where the Playwright this repository uses installs no Chromium, so 0.105.0's checks stopped before its browser tests ran and nothing shipped. The jobs run on `ubuntu-24.04`, and the app is 0.105.0's.
