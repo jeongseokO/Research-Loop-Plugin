@@ -2,6 +2,20 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.107.0 — 2026-11-05
+
+Experiment modules, from the owner's pull request: a module keeps setup versions that never change, and each experiment records the setup it ran with. A setup page now shows what changed from the version before, line by line with the moved words marked; a module page is the history of its versions, each with what changed and how many experiments ran on it. Saving a version makes it current in one press. An experiment's head names its module and setup, the experiments list opens on every setup, and the brief lists modules for an AI.
+
+- 실험 모듈(소유자의 PR): 모듈은 설정 버전을 모아 두고, 저장한 설정은 바뀌지 않으며, 실험은 돌린 모듈과 설정을 기록합니다. 현재 설정은 모듈의 포인터 하나가 정하고, 이름이나 날짜로 짐작하지 않습니다. 브라우저, MCP 서버, DB 트리거가 같은 규칙을 지킵니다. 팀 공간에는 원문을 열 때까지 남는 받은 소식과 '함께 만들기'(발표 함께 만들기, 이번 주 공유)가 생겼습니다.
+- 바뀐 것: 설정 버전 페이지가 바로 앞 버전과 줄마다 비교합니다. 값이 바뀐 줄은 옛 값에 취소선, 새 값에 형광펜을 긋고, 더하거나 지운 줄은 +와 −로 표시합니다. 바뀌지 않은 줄이 둘 이상 이어지면 '같은 줄 N개'로 접습니다. YAML, JSON, TOML, 명령줄 옵션의 키를 읽고, 맨 위 한 줄로 요약합니다(앞 버전 v1: allocation uniform → layerwise, rescore_every 4 → 16).
+- 모듈 페이지: 목적, 현재 설정과 그 조건, 버전 기록 순입니다. 버전마다 앞 버전과 바뀐 것과 그 설정으로 한 실험 수가 나오고, 실험 수를 누르면 그 설정의 실험 목록이 열립니다. 버전이 없는 모듈은 '첫 설정 버전 만들기'가 주 동작입니다.
+- 새 설정 버전은 현재 설정의 조건에서 시작하고, 저장하면 바로 현재 설정이 됩니다(상자를 끄면 그대로 둡니다). 그사이 다른 사람이 현재 설정을 바꿨다면 버전만 저장하고 그렇게 알려 줍니다.
+- 실험과 설정 버전 페이지의 머리 자리 줄에 모듈이 나옵니다(모듈 KV 예산 배분 실험 v1 현재는 v2). 정보의 속성에서 같은 것을 되풀이하지 않습니다.
+- 실험 목록은 '모든 설정'으로 열립니다. 전에는 '현재 설정만'으로 열려 8개 중 1개만 보였습니다. 모듈 아래의 행은 모듈 이름을 빼고, 이전 설정으로 돌린 실험이면 '이전 설정'이라고 씁니다.
+- 모듈과 설정 버전은 노트 목록, 노트 분류, 이전글/다음글, 미분류 수에서 빠집니다. 모듈이 정리합니다.
+- AI: get_research_brief가 프로젝트의 모듈(8개까지, 현재 설정과 버전 수)과 실험을 모듈에 묶는 법을 한 문장으로 줍니다. 모듈이 없는 프로젝트의 브리핑은 그대로입니다.
+- 배포: 마이그레이션 `20261104075011_research_modules_and_setup_versions`를 먼저 적용합니다(0.106.0의 `20261104070000_table_chart_baseline`을 아직 적용하지 않았다면 그것부터). 그다음 함수 `research-loop-mcp`, `cloudflare` 브랜치와 `v0.107.0` 태그를 올립니다.
+
 ## 0.106.0 — 2026-11-04
 
 Pages an AI writes now read as reports. The server holds them to a reading budget by type (a result page is about five screens), few tables, a chart for a numeric comparison, no run details or generic caution in the text, and Korean spaced around numbers and Latin terms; complete tables go under a folded 부록 or on linked pages, and a page already too long may shrink but not grow. A chart can draw differences from a baseline. The writing guide (revision 55) gives a results page its shape; a page read in outline says what to repair, and the brief lists experiments to tidy.

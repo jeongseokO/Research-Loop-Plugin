@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.106.0",
+  "version": "0.107.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Pages an AI writes now read as reports. The server holds them to a reading budget by type (a result page is about five screens), few tables, a chart for a numeric comparison, no run details or generic caution in the text, and Korean spaced around numbers and Latin terms; complete tables go under a folded 부록 or on linked pages, and a page already too long may shrink but not grow. A chart can draw differences from a baseline. The writing guide (revision 55) gives a results page its shape; a page read in outline says what to repair, and the brief lists experiments to tidy.",
+        "release_notes": "Experiment modules, from the owner's pull request: a module keeps setup versions that never change, and each experiment records the setup it ran with. A setup page now shows what changed from the version before, line by line with the moved words marked; a module page is the history of its versions, each with what changed and how many experiments ran on it. Saving a version makes it current in one press. An experiment's head names its module and setup, the experiments list opens on every setup, and the brief lists modules for an AI.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
