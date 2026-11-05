@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.107.0",
+  "version": "0.108.1",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Experiment modules, from the owner's pull request: a module keeps setup versions that never change, and each experiment records the setup it ran with. A setup page now shows what changed from the version before, line by line with the moved words marked; a module page is the history of its versions, each with what changed and how many experiments ran on it. Saving a version makes it current in one press. An experiment's head names its module and setup, the experiments list opens on every setup, and the brief lists modules for an AI.",
+        "release_notes": "On the landing, every method version now takes the same two lines at every width and in every language: the setting it changed where the stages say what they keep, and what its experiment found under it. In 0.108.0 the two shared one line that wrapped where it ran out of room, so in French on a desktop one version's finding sat beside its setting and the next one's under it. Versions stand apart from each other, and neither the caption nor a finding leaves a word alone on its last line.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

@@ -2,6 +2,26 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.108.1 — 2026-11-05
+
+On the landing, every method version now takes the same two lines at every width and in every language: the setting it changed where the stages say what they keep, and what its experiment found under it. In 0.108.0 the two shared one line that wrapped where it ran out of room, so in French on a desktop one version's finding sat beside its setting and the next one's under it. Versions stand apart from each other, and neither the caption nor a finding leaves a word alone on its last line.
+
+- 랜딩의 방법 버전이 모든 너비와 언어에서 같은 두 줄이 됩니다. 바꾼 설정은 단계 설명이 시작하는 자리에, 실험에서 나온 것은 그 아래 같은 자리에 놓입니다. 0.108.0에서는 둘이 한 줄을 나눠 쓰다 자리가 모자라면 넘어가서, 프랑스어 1,440px과 한국어 760px에서 어떤 버전은 결과가 설정 옆에, 다음 버전은 아래에 놓였습니다.
+- 버전 사이(16px)를 버전 안의 두 줄 사이보다 넓게 띄워 버전 하나가 한 덩어리로 읽힙니다.
+- 아래 설명 줄은 두 줄이 되면 길이를 맞추고(영어에서 'found.'가 혼자 남았습니다), 넘어가는 결과는 낱말 하나만 내려보내지 않습니다(휴대폰 영어의 'models').
+- 휴대폰에서 첫 버전 위의 세로선이 위 칸의 선을 4px 넘던 것을 맞췄습니다.
+- 배포: 마이그레이션은 없습니다. 함수 `research-loop-mcp`를 다시 올린 뒤(버전을 알립니다) `cloudflare` 브랜치와 `v0.108.1` 태그를 올립니다. 0.108.0은 따로 배포하지 않습니다(0.108.1에 들어 있습니다).
+
+## 0.108.0 — 2026-11-05
+
+The landing no longer draws the brand's loop between method and experiment. In its place, on the ledger's own columns, the example project's method versions read from oldest to current, each with the setting it changed and what its experiment found, and a caption says that versions keep both. The loop's drawing, its moving dot and their code are gone, and the first screen is 337 bytes lighter.
+
+- 랜딩의 '연구 과정'에서 3(연구 방법 고안)과 4(실험 및 방법 고도화) 사이에 있던 무한대 그림을 뺐습니다.
+- 그 자리에 예시 프로젝트(평가 신뢰도)의 방법 버전이 표의 칸에 맞춰 오래된 것부터 나옵니다. 버전마다 바꾼 설정과 실험에서 나온 것이 있고, 지금 버전은 표시가 채워져 있습니다: `order: fixed` 순서를 바꾸자 선택의 14%가 뒤집힘, `calibration: position` 다른 평가 모델에서 재현되지 않아 폐기, `order: shuffle × 3` 반복 평가에서 선택이 안정되는지 보는 중.
+- 아래 한 줄: '방법과 실험은 필요한 만큼 오갑니다. 버전마다 바꾼 것과 실험 결과가 남습니다.' 휴대폰에서는 이름, 설정, 결과가 차례로 쌓입니다.
+- 무한대의 도형, 돌던 점, 그 코드와 스타일이 빠져 첫 화면이 337B 가벼워졌습니다. 로고는 그대로입니다.
+- 배포: 마이그레이션은 없습니다. 함수 `research-loop-mcp`를 다시 올린 뒤(버전을 알립니다) `cloudflare` 브랜치와 `v0.108.0` 태그를 올립니다.
+
 ## 0.107.0 — 2026-11-05
 
 Experiment modules, from the owner's pull request: a module keeps setup versions that never change, and each experiment records the setup it ran with. A setup page now shows what changed from the version before, line by line with the moved words marked; a module page is the history of its versions, each with what changed and how many experiments ran on it. Saving a version makes it current in one press. An experiment's head names its module and setup, the experiments list opens on every setup, and the brief lists modules for an AI.
