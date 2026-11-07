@@ -2,6 +2,19 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.109.0 — 2026-11-06
+
+Choosing words anywhere now brings the same three actions, Discuss, Memo and Add to basket, and memos work on every research page as in a paper reading. A memo is painted on its words; on a wide page its card stands beside them in the right column, which switches between the outline and the memos, and on a narrow page it opens from the painted words. A memo is kept to yourself or shown to everyone in the project, and can be asked of your own AI, whose answer appears under it; inside ChatGPT or Claude the question goes to the conversation at once.
+
+- 글을 고르면 연구 페이지, 논문 읽기, ChatGPT와 Claude 안 어디서나 토론, 메모, 바구니에 담기가 이 순서로 나옵니다. 토론은 예전의 '토론으로 보내기'입니다. 보기 권한만 있는 사람에게는 메모만 나옵니다. 고른 말을 AI에게 묻는 일은 이제 메모의 'AI에게 묻기'가 맡고, 막대의 'AI에게 맡기기'는 빠졌습니다. 프로젝트 AI에게 일을 맡기는 'AI에게 맡기기'는 위쪽 막대에 그대로 있습니다.
+- 모든 연구 페이지에 메모를 남길 수 있습니다. 질문, 방법, 실험, 결과, 노트, 문헌 페이지 어디든 본문 블록의 말을 고르면 됩니다. 제목, 속성 줄, 할 일의 기준은 메모가 붙잡을 블록이 없어 메모가 나오지 않습니다. 메모는 논문처럼 말 위에 칠해지고, 페이지가 고쳐져도 그 말을 다시 찾으며, 말이 사라지면 '자리를 잃은 메모'로 남습니다.
+- 넓은 화면에서는 오른쪽 칸 머리가 '이 페이지 / 메모 n' 전환이 됩니다. 메모 쪽에서는 카드가 저마다 제 말 옆에, 위 카드와 겹치지 않게 놓입니다. 목차가 없는 페이지는 메모 칸만 생기고, 한 번 메모가 생기면 그 방문 동안 칸이 남습니다. 어느 쪽을 보는지는 이 기기에 기억되고, 칠한 말을 누르면 메모 쪽으로 돌아와 그 카드를 보여 줍니다.
+- 좁은 화면(휴대폰, 참고 창, AI 패널)에서는 칠한 말을 누르면 카드가 그 아래(휴대폰은 아래에서 올라오는 시트)로 뜨고, 페이지 위에 붙은 줄의 '메모 n'이 이 페이지의 메모 목록을 엽니다.
+- 공유 설정은 '나만 보기 / 모두와 보기'입니다(페이지와 논문 모두). 모두는 프로젝트 멤버 전원이고, 공유 링크로 보는 사람에게는 메모가 보이지 않습니다. 모두와 보기는 진행 중인 프로젝트의 Owner, Semi-Owner, Editor만 고를 수 있습니다. 논문 읽기 목록은 '다른 사람의 메모 n'을 셉니다.
+- 메모에서 'AI에게 묻기'를 누르면 연결한 내 AI가 `list_reading_questions`로 페이지 질문도 함께 받고(질문마다 그 말이 든 문단과 위 제목), `answer_reading_memo`로 메모 밑에 답합니다. 도구 이름은 그대로입니다. AI는 메모로 페이지를 고치지 않고, 고쳐 달라는 질문에는 고칠 말을 답에 적습니다. ChatGPT나 Claude 안에서는 질문이 바로 그 대화로 갑니다.
+- 데모에서는 방법 페이지 M1에 김지훈의 모두와 보기 메모(Claude의 답 포함)와 내 메모가 처음부터 있습니다.
+- 배포: 마이그레이션 `20261106100000_page_memos` 하나(표 `research_page_memos`, 그 정책과 함수, AI의 두 함수, 프로젝트를 떠날 때와 계정 삭제)를 SQL Editor로 먼저 적용합니다. 그다음 함수 `research-loop-mcp`, 마지막으로 `cloudflare` 브랜치와 `v0.109.0` 태그를 올립니다.
+
 ## 0.108.1 — 2026-11-05
 
 On the landing, every method version now takes the same two lines at every width and in every language: the setting it changed where the stages say what they keep, and what its experiment found under it. In 0.108.0 the two shared one line that wrapped where it ran out of room, so in French on a desktop one version's finding sat beside its setting and the next one's under it. Versions stand apart from each other, and neither the caption nor a finding leaves a word alone on its last line.

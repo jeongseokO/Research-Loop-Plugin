@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.108.1",
+  "version": "0.109.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "On the landing, every method version now takes the same two lines at every width and in every language: the setting it changed where the stages say what they keep, and what its experiment found under it. In 0.108.0 the two shared one line that wrapped where it ran out of room, so in French on a desktop one version's finding sat beside its setting and the next one's under it. Versions stand apart from each other, and neither the caption nor a finding leaves a word alone on its last line.",
+        "release_notes": "Choosing words anywhere now brings the same three actions, Discuss, Memo and Add to basket, and memos work on every research page as in a paper reading. A memo is painted on its words; on a wide page its card stands beside them in the right column, which switches between the outline and the memos, and on a narrow page it opens from the painted words. A memo is kept to yourself or shown to everyone in the project, and can be asked of your own AI, whose answer appears under it; inside ChatGPT or Claude the question goes to the conversation at once.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
