@@ -1,12 +1,14 @@
 # Writing design — one canonical guide
 
-The server's writing guide, `get_guide(topic:writing)`, owns writing design. Do not copy its full policy into skills or load every guide at startup. A technical report normally needs core, report, lists, annotations and evidence, followed by review. Reuse modules at the same revision within the task.
+The server's writing guide, `get_guide(topic:writing)`, owns writing design. Do not copy its full policy into skills or load every guide at startup. A technical report normally needs core, plain, shape, report, lists, annotations and evidence, followed by review. Reuse modules at the same revision within the task.
 
 The guide's English is instruction language only. Follow core's output-language rule and annotations' naming/localization rules; reports, captions and clickable explanations follow the user's language unless explicitly requested otherwise.
 
 | When | Read |
 | --- | --- |
 | Before substantive authoring | `get_guide(topic:writing)`: core, the shared rules and module index |
+| Any explanation a person will read: a result, a method, a term, a paper, a reply | `section:plain-ko`, `plain-en`, `plain-ja` or `plain-fr`, the language you write in: the manner (one idea per sentence, things named by what they do, reasoning in the linking words) with dense and plain pairs to imitate; a save advises on sentences that take two readings |
+| Before laying out a page: its paragraphs, lists, tables and code | `section:shape`: the column a page is read in (38 em, a little over half of it on a phone) in numbers: paragraphs under 500 columns, lists of two levels, tables of about five short columns, code lines of about 68 characters; a save advises on what does not fit |
 | Create or rename a plan/to-do | `section:tasks`: concrete target/action, purpose-first description and observable completion criteria |
 | Task/Main analysis, research report, PI/student report | `section:report`: question/purpose → approach → findings → cause → conclusion/decision |
 | Experiment results or an analysis, on a page or in chat | `section:results`, bundled as [Reporting results](results-reporting.md): experiment → observation → cause → conclusion, always concluding; run details of runs you started in `report_implementation` |

@@ -2,6 +2,62 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.112.0 — 2026-11-13
+
+Pages written by an AI now fit the screen they are read on. Tables are as wide as their content, with numbers right-aligned and horizontal rules only; a table or a line of code that runs past the column fades at that edge, and a wide table keeps its first column. Words inside figures are at least 13px. An AI connected to Research Loop is told the reading column first, a new guide section gives it in numbers, and a save points out paragraphs, lists and tables that do not fit.
+
+- 표가 논문의 표처럼 보입니다. 표는 내용만큼만 넓습니다. 숫자는 오른쪽에 맞추고, 선은 가로만 긋습니다. 전에는 모든 표가 520px 이상이라, 휴대폰에서는 세 열짜리 표도 오른쪽이 잘렸습니다.
+- 하이픈이나 빗금으로 이은 낱말(`NQ-long`, `2k–4k`)이 표 안에서 끊기지 않습니다.
+- 본문 칸보다 넓은 표만 옆으로 밉니다. 더 있는 쪽 끝이 흐려지고, 끝까지 밀면 또렷해집니다. 첫 열은 자리에 남아서 어느 줄인지 알 수 있습니다. 짧은 열 다섯 개까지는 휴대폰에서도 밀지 않고 다 보입니다.
+- 옆으로 미는 표에서는 비고처럼 문장을 담은 칸이 넓어집니다. 한 줄에 한 낱말씩 서지 않고 한두 줄로 읽힙니다.
+- 긴 코드 줄도 넘치는 쪽 끝이 흐려집니다.
+- 넘치는 표만 탭 키로 멈춥니다. 전에는 모든 표에서 멈췄습니다.
+- 인쇄할 때는 흐림과 붙잡은 열이 없고, 코드는 줄을 바꿉니다.
+- 그림 안의 글자가 13px 이상입니다. 전에는 12px인 곳이 있었습니다. 설명 그림에서 물러난 부품의 이름은 흐려지지 않고 옅은 글자색으로 남습니다. 발표의 수식 그림 눈금도 읽히는 색입니다.
+- 콜아웃의 위아래 여백이 같습니다. 편집할 수 있는 사람에게만 아래가 넓게 보였습니다. 구분선은 가는 선입니다.
+- 할 일의 체크 상자가 24px입니다. 손가락 화면에서는 누르는 자리가 44px입니다.
+- 논문 정리의 빈 절 제목 안에 단추가 들어 있던 것을 뺐습니다. `모두와 보기`, `가설`, `방법론`의 글자색을 읽히는 대비로 올렸습니다.
+- AI 지침(쓰기 지침 개정 58): 연결하면 가장 먼저 읽는 문장이 화면입니다. "Pages are read in a 38 em column, half that on a phone, so write paragraphs of 2–4 sentences, two-level lists and tables of about five short columns." 새 절 `shape`(`get_guide(topic:writing, section:shape)`)가 화면 너비, 한 줄의 글자 수, 문단·목록·표·코드의 기준을 숫자로 줍니다. 숫자는 데모 앱에서 잰 값입니다.
+- 저장할 때 화면에 안 맞는 곳을 짚어 줍니다. 한글 250자를 넘는 문단이 둘 이상이거나 400자를 넘는 것이 하나면 `advice.long_paragraph`, 네 단계 이상 들어간 목록은 `advice.deep_list`, 본문 칸에 안 들어가는 표는 `advice.wide_table`입니다. 저장은 막지 않습니다. 이번 저장이 더하거나 고친 것만 봅니다. `get_research_page(view:outline)`도 같은 것을 알려 줍니다.
+- 연결 지침이 149자 늘었습니다(2,138자 → 2,288자). 한도를 2,350자로 올렸습니다. 핵심 지침은 6,491자 → 6,768자이고 한도는 6,800자입니다.
+- 지침 시험(`npm run guide:eval`)의 읽기 쉬움 표에 열이 셋 늘었습니다: 긴 문단, 목록 깊이, 넓은 표.
+- 배포: DB 변경은 없습니다. 함수 `research-loop-mcp`를 배포하고, `cloudflare` 브랜치와 `v0.112.0` 태그를 올립니다.
+
+## 0.111.0 — 2026-11-12
+
+Decks made in Research Loop now say their message and look like the app. A slide of words takes its first sentence as its title, an empty side note is no longer a finding, a long list takes the whole slide, and titles break into even lines. A fifth look, Notebook, wears the app's paper, serif titles and hairlines; new talks and progress reports start in it. The research story names its chapters in the reader's language, and the guide for AI-made decks asks for the same.
+
+- 페이지로 만든 발표의 제목이 주장을 말합니다. 글만 있는 슬라이드는 구역의 첫 문장이 제목이 되고, 나머지 문장이 요점이 됩니다. 원문은 발표자 메모에 남습니다. 첫 줄이 통째로 굵은 글씨면 그 줄이 제목입니다. 첫 문장이 제목 두 줄에 안 들어가면 전처럼 구역 이름이 제목입니다.
+- 읽는 문단이 없는 차트는 표에 적어 둔 '강조한 이유'가 슬라이드 제목이 됩니다.
+- 점검이 빈 곁 칸을 세지 않습니다. 곁 메모, 해석, 한 줄 결론, 다음 단계 같은 칸은 비워 둬도 됩니다. 점검은 빈 주 칸(그림, 항목, 표, 수식, 도해, 결론)과 켜 둔 채 비어 있는 요약 줄만 말합니다.
+- 긴 목록, 표, 정리는 슬라이드 본문 전체를 씁니다. 곁 칸이 비어 있을 때만 그렇습니다. 이때 곁 칸은 레이아웃 이름 아래의 "곁 메모 넣기"(표는 "읽는 법 넣기", 정리는 "다음 단계 넣기") 버튼으로 넣습니다. 넣으면 배치가 자리를 냅니다.
+- 표지의 부제가 두 줄까지 들어갑니다. 페이지의 결론 한 줄이 표지에 나옵니다.
+- 두세 줄짜리 제목과 부제는 줄 길이를 고르게 끊습니다. 따옴표나 괄호 안에서는 되도록 끊지 않고, 쉼표 뒤에서 끊는 쪽을 고릅니다. 글자 크기와 줄 수는 그대로입니다. PPTX에서도 같은 자리에서 끊깁니다.
+- 연구 이야기 발표의 챕터가 읽는 사람의 언어로 나옵니다(시작, 전환점, 접어 둔 길, 지금). 한 줄을 넘는 받침 줄은 말줄임표로 줄입니다.
+- 새 모양 '노트'가 생겼습니다. 앱과 같은 종이색 바탕, 명조 제목, 가는 선입니다. 제목만 명조이고 나머지는 고딕입니다. 모양은 이제 노트, 선명, 논문, 무대, 보고서 다섯입니다.
+- 학회·세미나 발표와 랩 미팅 진행 보고가 노트 모양으로 시작합니다. 새 발표, 페이지로 만든 발표, 연구 이야기, AI 발표 요청이 모두 그렇습니다. 서면 보고는 보고서 모양, 논문 소개는 논문 모양 그대로입니다. 이미 만든 발표는 바뀌지 않습니다.
+- 새 발표 창에서 모양 다섯이 한 줄에 놓입니다. 휴대폰에서는 창이 길어져서, 닫기와 만들기가 창 아래에 붙어 있습니다. 편집 화면의 '발표 전체'에서는 모양이 세 개씩 두 줄입니다.
+- AI 발표 요청 창에 입력한 글이 굵게 보이던 것을 고쳤습니다.
+- 머리말이 바닥글과 같은 말을 되풀이하지 않습니다. 페이지로 만든 발표는 발표 제목과 슬라이드의 출처가 같아서, 머리말에서 발표 제목을 뺍니다.
+- 데모에서 약 82%와 80%로 어긋나던 숫자를 맞췄습니다.
+- AI 지침(쓰기 지침 개정 57): 챕터는 사용자의 언어로 쓴 짧은 명사구입니다. 축과 범례 이름만 짧은 영어입니다. 곁 칸은 채울 말이 없으면 비워 둡니다. 글자 수는 전보다 3자 줄었습니다. 플러그인의 발표 안내에 남아 있던 "발표의 구조는 영어"라는 옛 문장도 고쳤습니다.
+- 그림 도우미(research-plot)가 노트 모양을 받습니다: `slide_context("notebook", …)`. 그림 기록(`made.look`)에도 `notebook`을 쓸 수 있습니다.
+- 배포: 마이그레이션이 하나 있습니다(`20261112090000_plot_look_notebook`). 이것을 먼저 적용한 뒤 함수 `research-loop-mcp`를 배포하고, `cloudflare` 브랜치와 `v0.111.0` 태그를 올립니다.
+
+## 0.110.0 — 2026-11-12
+
+An AI connected to Research Loop now explains in plain sentences. The writing guide gains a section on how an explanation is followed on one reading, with the same facts written dense and plain in Korean, English, Japanese and French, and a save points out sentences that take two readings. The first call of a session, who_am_i, is about a quarter of its size and says what waits and what comes first. The requests the app writes for an AI now read in each of the four languages.
+
+- AI가 따라 쓸 본보기가 생겼습니다. 쓰기 지침에 `plain` 구역이 생겼고, 같은 내용을 어렵게 쓴 글과 쉽게 쓴 글을 나란히 보여 줍니다. 결과, 원리, 용어를 한 쌍씩 실었습니다. 본보기는 한국어, 영어, 일본어, 프랑스어로 따로 있고, AI는 쓰는 언어의 것만 읽습니다(`get_guide(topic:writing, section:plain-ko)`).
+- 쓰는 방법은 아홉 가지입니다. 답을 먼저 말한다. 한 문장에 새 정보는 하나. 글자나 코드가 아니라 하는 일로 부른다. 읽는 사람이 아는 것에서 시작한다. 그래서, 그런데, 왜냐하면으로 잇는다. 한 문장에 숫자는 셋까지. 명사를 쌓지 않고 동사로 말한다. 추상적이면 작은 예를 든다. 쉽게 쓰되 사실은 하나도 빼지 않는다.
+- 프로젝트의 작업 지침에 마음에 드는 글을 "이 글의 문체를 따를 것"과 함께 붙여 넣으면, 그 프로젝트에서는 그 글이 기본 본보기보다 앞섭니다.
+- AI가 페이지를 저장할 때 한 번에 읽히지 않는 문장이 세 개 이상 새로 들어오면 조언이 붙습니다. 저장은 막지 않습니다. 보는 것은 네 가지입니다. 문장이 180칸을 넘는다(한글만으로 90자). 괄호가 세 쌍 이상이다. 괄호 밖 숫자가 다섯 개 이상이다. 한국어에서 "~의, ~에 대한, ~을 통한" 같은 말이 네 번 이상 이어진다. 접히는 구역, 인용문, 표, 코드, 논문 원고는 보지 않습니다.
+- `who_am_i`가 가벼워졌습니다. 진행 중인 프로젝트 8개와 배정 5건이 있는 계정에서 17,597자가 4,628자가 됐습니다. 프로젝트 설명과 보관된 프로젝트는 `list_projects`가, 배정의 진행 메모와 완료 기준은 `get_my_research_tasks`가 줍니다.
+- 기다리는 일이 있으면 `who_am_i`가 순서를 한 줄로 말합니다. 대화에서 요청한 일을 먼저 합니다. 메모 질문에는 답합니다. 맡긴 작업과 팀원의 질문은 무엇이 기다리는지 알리고, 시작해도 되는지 묻습니다.
+- 앱이 요청 칸에 미리 써 주는 요청문 넷(할 일의 보고서, 연구 트리 최신화, 후속 질문 정리, 이번 주 계획)이 영어, 일본어, 프랑스어 화면에서 그 언어로 나옵니다. 전에는 한국어로 나왔습니다. 보고서 요청문에는 "문장은 plain 지침의 본보기처럼 한 번 읽고 이해되게 쓰세요"를 더했습니다.
+- 지침 시험(`npm run guide:eval`)의 요약에 읽기 쉬움 표가 생겼습니다. 페이지와 답변 각각에서 쉬운 문장의 비율과 문장 길이를 보여 줍니다.
+- 배포: 마이그레이션은 없습니다. 함수 `research-loop-mcp`를 배포한 뒤 `cloudflare` 브랜치와 `v0.110.0` 태그를 올립니다.
+
 ## 0.109.0 — 2026-11-06
 
 Choosing words anywhere now brings the same three actions, Discuss, Memo and Add to basket, and memos work on every research page as in a paper reading. A memo is painted on its words; on a wide page its card stands beside them in the right column, which switches between the outline and the memos, and on a narrow page it opens from the painted words. A memo is kept to yourself or shown to everyone in the project, and can be asked of your own AI, whose answer appears under it; inside ChatGPT or Claude the question goes to the conversation at once.

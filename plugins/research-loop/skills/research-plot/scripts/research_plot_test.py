@@ -357,8 +357,19 @@ class SlideTests(unittest.TestCase):
         with plot.slide_context("report", purpose="memo") as style:
             self.assertEqual((style.label_size, style.tick_size), (12, 12))
 
+    def test_the_notebook_look_draws_on_the_apps_paper(self):
+        # 0.111.0: the app's own look. Its ground is the app's paper, its first accent the brand green, its words the sans.
+        with plot.slide_context("notebook", slot="claim-figure", purpose="progress") as style:
+            self.assertEqual((style.look, style.background, style.focus), ("notebook", "#F8F7F3", "#1D6F5B"))
+            self.assertEqual((style.strong, style.body, style.muted, style.rule), ("#1F2A25", "#2B3631", "#5C6760", "#CFD2CA"))
+            self.assertEqual(style.categories, ("#1D6F5B", "#3F6C9E", "#A84B4B", "#6B5DA3"))
+            self.assertEqual(style.family, "Research Loop Sans")
+            self.assertEqual(to_rgba(matplotlib.rcParams["figure.facecolor"]), to_rgba("#F8F7F3"))
+        with plot.slide_context("notebook", accent="A84B4B") as style:
+            self.assertEqual(style.focus, "#A84B4B")
+
     def test_unknown_names_say_what_is_possible(self):
-        cases = [({"look": "neon"}, "vivid, paper, stage, report"), ({"look": "vivid", "slot": "hero"}, "claim-figure, figure, comparison, big-number"),
+        cases = [({"look": "neon"}, "notebook, vivid, paper, stage, report"), ({"look": "vivid", "slot": "hero"}, "claim-figure, figure, comparison, big-number"),
                  ({"look": "vivid", "purpose": "keynote"}, "talk, progress, memo, journal"), ({"look": "vivid", "accent": "FFFFFF"}, "#2457D6")]
         for arguments, possible in cases:
             with self.subTest(arguments=arguments), self.assertRaisesRegex(ValueError, possible):
@@ -395,6 +406,7 @@ class SlideTests(unittest.TestCase):
             (root / "results" / "kv.csv").write_text("budget,loss\n10,4.2\n", encoding="utf-8")
             (root / "figures" / "kv.py").write_text("print('plot')\n", encoding="utf-8")
             (Path(temporary) / "secret.csv").write_text("x\n", encoding="utf-8")
+            self.assertEqual(plot.figure_record(["results/kv.csv"], look="notebook", slot="figure", root=root)["look"], "notebook")
             record = plot.figure_record(["results/kv.csv"], "figures/kv.py", look="vivid", slot="claim-figure", commit="ABC1234", root=root)
             self.assertEqual(list(record), ["data", "code", "commit", "tool", "look", "slot", "date"])
             self.assertEqual(record["data"], [{"name": "results/kv.csv", "sha256": hashlib.sha256(b"budget,loss\n10,4.2\n").hexdigest()}])

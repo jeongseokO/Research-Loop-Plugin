@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.109.0",
+  "version": "0.112.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Choosing words anywhere now brings the same three actions, Discuss, Memo and Add to basket, and memos work on every research page as in a paper reading. A memo is painted on its words; on a wide page its card stands beside them in the right column, which switches between the outline and the memos, and on a narrow page it opens from the painted words. A memo is kept to yourself or shown to everyone in the project, and can be asked of your own AI, whose answer appears under it; inside ChatGPT or Claude the question goes to the conversation at once.",
+        "release_notes": "Pages written by an AI now fit the screen they are read on. Tables are as wide as their content, with numbers right-aligned and horizontal rules only; a table or a line of code that runs past the column fades at that edge, and a wide table keeps its first column. Words inside figures are at least 13px. An AI connected to Research Loop is told the reading column first, a new guide section gives it in numbers, and a save points out paragraphs, lists and tables that do not fit.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

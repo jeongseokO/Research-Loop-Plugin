@@ -13,10 +13,10 @@ The answer first, every number within reach, and a conclusion a colleague can ac
 
 Illustrative, not a finding; localize it.
 
-Weak: "B beat A on accuracy. Do not over-read this; more analysis is needed."
+Weak: "Reuse beat the baseline on accuracy. Do not over-read this; more analysis is needed."
 
 Strong:
-- Experiment: does reusing the cached prefix (B) keep accuracy and cut latency? A recomputes; same model, data, 3 seeds.
-- Observation: accuracy 71.8 ± 0.3 (B) vs 69.7 ± 0.4 (A), +2.1 pt on every seed; latency −38%. The gain is on inputs over 4k tokens (+5.0 pt), none under 1k.
-- Cause: not noise (5× the seed spread) or tuning (same sweep). With caching off but B's truncation fix on, the gain stays: the fix explains accuracy, caching only latency.
-- Conclusion: adopt B. Its accuracy gain comes from the truncation fix (high confidence: every seed, ablation); it would vanish if A had the fix, so port the fix to A next.
+- Experiment: does reusing the cached prefix keep accuracy while cutting latency? The baseline recomputes it. Model, data and the three seeds are the same.
+- Observation: reuse was more accurate on every seed, 71.8 against 69.7 (table). Latency fell 38%. The gain sits on inputs over 4k tokens (+5.0 pt); under 1k there is none.
+- Cause: not noise, since the gain is five times the spread between seeds. Not tuning, since both used the same sweep. With caching off and only the truncation fix on, the gain stays. So the fix explains the accuracy, and caching only the latency.
+- Conclusion: adopt reuse. Its accuracy gain comes from the truncation fix (high confidence: every seed, and the ablation). It would vanish if the baseline had the fix, so port the fix to the baseline next.

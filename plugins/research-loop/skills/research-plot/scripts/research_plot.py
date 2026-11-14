@@ -217,7 +217,7 @@ def _slide_fonts(family, font_paths):
 def slide_context(look, slot="claim-figure", purpose="talk", accent=None, font_paths=(), portable=True):
     """Apply a deck's look to a figure for one of its slides, yielding its ``SlideStyle``.
 
-    ``look`` is the deck's look (vivid, paper, stage, report), ``slot`` the layout the
+    ``look`` is the deck's look (notebook, vivid, paper, stage, report), ``slot`` the layout the
     figure goes in (claim-figure, figure, comparison, big-number), ``purpose`` what the
     deck is for (talk, progress, memo, journal) and ``accent`` the deck's accent, one of
     the look's four (its first when omitted). The canvas is the slot's picture box at

@@ -1,6 +1,30 @@
 {
   "version": 1,
   "looks": {
+    "notebook": {
+      "family": "sans",
+      "background": "F8F7F3",
+      "strong": "1F2A25",
+      "body": "2B3631",
+      "muted": "5C6760",
+      "axis": "838C86",
+      "rule": "CFD2CA",
+      "bar": "CFD2CA",
+      "support": "46514B",
+      "value": "46514B",
+      "accents": [
+        "1D6F5B",
+        "3F6C9E",
+        "A84B4B",
+        "6B5DA3"
+      ],
+      "ramp": [
+        "46514B",
+        "747C75",
+        "A1A7A0",
+        "CFD2CA"
+      ]
+    },
     "vivid": {
       "family": "sans",
       "background": "FFFFFF",
@@ -120,37 +144,37 @@
     "talk": {
       "claim-figure": {
         "w": 653,
-        "h": 387
+        "h": 371
       },
       "figure": {
         "w": 1136,
-        "h": 355
+        "h": 339
       },
       "comparison": {
         "w": 556,
-        "h": 283
+        "h": 267
       },
       "big-number": {
         "w": 556,
-        "h": 339
+        "h": 323
       }
     },
     "progress": {
       "claim-figure": {
         "w": 653,
-        "h": 391
+        "h": 383
       },
       "figure": {
         "w": 1136,
-        "h": 359
+        "h": 351
       },
       "comparison": {
         "w": 556,
-        "h": 287
+        "h": 279
       },
       "big-number": {
         "w": 556,
-        "h": 343
+        "h": 335
       }
     },
     "memo": {
