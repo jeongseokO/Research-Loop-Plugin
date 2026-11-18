@@ -2,6 +2,93 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.116.2 — 2026-11-17
+
+No change to the app. 0.116.1 did not reach the site: on a slow runner its browser tests ran past their 35 minutes, and a release ships only after every check passes. They now run in three parts at once, each on its own runner. This version brings 0.113.0 to 0.116.1 to the site.
+
+- 0.116.1도 사이트에 나가지 않았습니다. 브라우저 검사가 느린 검사 기계에서 35분 제한에 걸려 335개 중 240개에서 멈췄습니다. 그때까지 실패한 시험은 없었습니다.
+- 브라우저 검사를 세 부분으로 나눠 기계 셋에서 동시에 돌립니다. 부분마다 시험의 3분의 1씩이라, 느린 기계에서도 20분 안팎에 끝납니다.
+- 앱, DB, 함수는 0.116.1과 같습니다. 0.113.0부터 0.116.1까지가 이번 버전과 함께 나갑니다.
+- 배포: 새 DB 마이그레이션은 없습니다. 함수 둘을 다시 올리고(버전만 바뀜), 브랜치와 `v0.116.2` 태그를 푸시합니다.
+
+## 0.116.1 — 2026-11-17
+
+Fixes the two things the release checks found on a clean machine, which kept 0.116.0 off the site; this version brings 0.113.0 to 0.116.0 with it. The front page fetches the fonts its example record is set in together with the page, so its first screen no longer shifts when they arrive late. On the thinking canvas a number, its percent sign and the particle after it, such as 25%냐고, stay on one line: in the mind map, a thought's card, an AI's replies and a shared canvas.
+
+- 0.116.0은 사이트에 나가지 않았습니다. GitHub의 브라우저 검사가 아래 두 가지를 잡아 배포를 막았습니다. 0.113.0부터 0.116.0까지의 내용은 이번 버전과 함께 나갑니다.
+- 랜딩: 첫 화면의 예시 기록에 쓰는 명조 글꼴을 페이지와 함께 미리 받습니다. 그 글꼴이 늦게 오면 첫 화면이 움직이던 것이 없어졌습니다(휴대폰에서 28px).
+- 생각 정리: 마인드맵, 고른 생각의 카드, AI의 말, 함께 보는 캔버스에서 "25%냐고"처럼 숫자, %, 조사가 한 줄에 남습니다. 전에는 % 뒤에서 줄이 바뀌어 조사만 다음 줄로 갈 수 있었습니다.
+- 배포: 새 DB 마이그레이션은 없습니다. 0.116.0의 것(`20261116100000`)이 아직이면 먼저 적용합니다. 함수 `research-loop-mcp`와 `shared-page`를 올리고, 브랜치와 `v0.116.1` 태그를 푸시합니다.
+
+## 0.116.0 — 2026-11-17
+
+Each project now has a thinking canvas, one for each person. Write a thought a line under Intent, Understanding, Undecided and Advice wanted, step thoughts in with Tab, settle a worry once it is decided, or see the same thoughts as a mind map. Your AI reads your intent before it starts work and leaves words under a thought: an answer, a check against the records, a suggestion. Accept them, dismiss them or make a to-do of them; it never edits what you wrote. Only you and your AI see the canvas unless you share it with the project.
+
+- 프로젝트마다 "생각 정리"가 생겼습니다. 색인에서 프로젝트의 첫 줄입니다. 사람마다 하나씩 갖습니다.
+- 한 줄에 생각 하나를 적습니다. 칸은 넷입니다. 의도, 이해한 것, 고민, 조언 구함. 칸이 더 필요하면 묶음을 여덟 개까지 만듭니다.
+- 칸의 맨 아래 줄을 누르고 적습니다. Enter는 다음 생각, Tab은 안으로, Shift+Tab은 밖으로입니다. 고민과 물음은 ⌘Enter로 "풀린 고민", "풀린 물음"에 내립니다. 줄마다 ⋯ 메뉴에 같은 일이 있습니다.
+- "마인드맵"으로 바꾸면 같은 생각이 프로젝트의 질문을 가운데 두고 가지로 보입니다. 거기서도 적고, 끌어서 옮깁니다.
+- AI는 일을 시작하기 전에 의도를 읽습니다. 읽고 나서 생각 아래에 말을 남깁니다. 답, 기록과 같음, 기록과 다름, 제안입니다. 받아들이거나, 할 일로 만들거나, 닫습니다. AI는 사람의 글을 고치지 못합니다.
+- 새로 온 말은 색인에 수로 뜹니다. 캔버스 위의 띠에서 "차례로 보기"로 하나씩 봅니다.
+- 기본은 나와 연결한 AI만 봅니다. "공개 범위"에서 프로젝트 사람들과 함께 볼 수 있습니다. 함께 보는 캔버스는 읽기만 됩니다.
+- ⌘J 창의 "어디에"에서 생각 정리의 네 칸을 고를 수 있습니다. "AI에게 검토 맡기기"는 캔버스 전체를 AI에게 맡깁니다.
+- 프로젝트를 떠나거나 계정을 지우면 캔버스도 지워집니다.
+- AI에게: `get_project_instructions`에 `thinking`(의도, 열린 고민과 물음의 수)이 붙습니다. 새 도구 묶음 `thinking`에 `get_thinking`과 `reply_to_thought`가 있습니다. 답하는 규칙은 `get_thinking`의 결과에 실려 옵니다. 쓰기 지침은 그대로입니다.
+- 배포: DB 마이그레이션 하나(`20261116100000`), 함수 `research-loop-mcp`, 사이트. 순서는 DB → 함수 → 사이트입니다.
+
+## 0.115.0 — 2026-11-16
+
+Research Loop can now be read on white paper. In Personal settings, Background offers Paper, White and Dark. On White the screen, the index and the page are pure white and areas are told apart by hairlines, so a capture pasted into a slide or a document brings no cream rectangle with it. The choice is kept in the browser and is on the page from its first paint, the front page included. The sidebar's light and dark button returns to the paper you chose. Paper stays the default: nothing changes until you choose.
+
+- 배경색에 흰색이 생겼습니다. 개인 설정의 "배경색"에서 종이색, 흰색, 어두운색 가운데 하나를 고릅니다.
+- 흰색을 고르면 화면, 왼쪽 색인, 페이지의 바탕이 모두 흰색(`#ffffff`)입니다. 영역은 색이 아니라 가는 선으로 나뉩니다.
+- 화면을 캡처해 흰 슬라이드나 문서에 붙여도 종이색 사각형이 따라오지 않습니다.
+- 고른 색은 이 브라우저에 남습니다. 다음에 열 때 첫 화면부터 그 색입니다. 랜딩과 약관 문서도 따릅니다. 공유 페이지는 전부터 흰 바탕입니다.
+- 색인 아래의 해·달 단추는 그대로입니다. 어둡게 갔다가 돌아오면 고른 밝은 색입니다.
+- 기본값은 지금처럼 종이색입니다. 고르지 않으면 달라지는 것이 없습니다.
+- 글자, 강조색, 그림과 표의 색은 그대로입니다. 바탕, 옅은 채움, 선의 색 열 가지만 바뀝니다.
+- 배포: DB와 AI 지침은 바뀌지 않습니다. 0.114.0과 한 번들입니다. 0.114.0의 순서(DB → 함수 → 사이트)대로 올리고, 태그는 `v0.115.0` 하나만 올립니다.
+
+## 0.114.0 — 2026-11-16
+
+Experiment, analysis and claim pages now read in two layers. On top is what a person reads: the conclusion, then a few claims, each one sentence with its number and how sure it is. Under each claim its record folds away: the table, the conditions, the runs. A claim says when its record changed after it was written. An AI reads the top layer in one call, and a save checks that each claim rests on its record. Pages written before stay exactly as they were.
+
+- 실험, 분석, 주장 페이지를 두 층으로 읽습니다. 위에는 사람이 읽는 문장이 있고, 그 아래에 근거가 접혀 있습니다. 내용을 줄인 것이 아니라 아래로 옮긴 것입니다.
+- 페이지를 열면 질문, 결론 한 문장, 주장 몇 개가 보입니다. 주장은 한 문장입니다. 옆에 수치가 붙고, 아래에 얼마나 확실한지가 붙습니다(확인됨, 한 번 실행, 가설, 접음, 보류).
+- 주장을 누르면 그 아래 기록이 펼쳐집니다. 비교한 것, 표, 다른 설명, 한계입니다. 오른쪽 위의 [읽기 | 기록]은 모두 펴고 모두 접습니다.
+- 기록이 바뀌었는데 문장이 그대로면 주장에 "근거가 바뀜"이 붙습니다. "문장 다시 쓰기"는 AI에게 맡기고, "그대로 둠"은 표시를 지웁니다.
+- 데모의 실험 페이지로 쟀습니다. 같은 글을 한 층으로 그리면 5,461px이고, 두 층으로 열면 2,674px입니다. 휴대폰에서는 7,363px과 3,136px입니다.
+- 편집기에서 문단을 주장으로 표시하고, 수치와 확실한 정도를 고칩니다. 섹션 제목은 "기록으로 접기"를 할 수 있습니다.
+- 지금 있는 페이지는 한 글자도 바뀌지 않습니다. 실험·분석·주장 페이지의 "페이지 도구"에 "두 층으로 고쳐 쓰기"가 생겼습니다. 누르면 AI에게 맡깁니다.
+- 새 실험 페이지와 분석 페이지의 틀이 두 층에 맞게 바뀌었습니다. 알게 된 것, 실패하거나 접은 시도, 지금 위치, 다음 할 일이 위층이고, 그 아래가 기록입니다.
+- AI는 `get_research_page`의 `view: "reading"`으로 위층만 한 번에 읽습니다. 데모 페이지에서 네 번(16.1KB)이 한 번(5.1KB)이 됩니다.
+- AI가 주장을 저장하면 서버가 확인합니다. 한 문장인지, "확인됨"에 기록이 있는지, 수치가 기록에 있는지. 맞지 않으면 무엇을 고칠지 알려 주고 저장하지 않습니다.
+- 쓰기 지침(개정 59)에 `layers` 절이 생겼습니다. 주장을 쓰는 법, 확실한 정도를 고르는 법, 기록의 순서, 작은 예시 페이지가 있습니다.
+- 공유 페이지와 ChatGPT·Claude 안의 패널도 두 층으로 보입니다.
+- 고친 것: 블록을 복제하면 원본의 id가 바뀌던 것(메모가 떨어졌습니다). 목록 블록의 "바꾸기"가 아무 일도 하지 않던 것. 코드 언어 창이 화면 맨 위에 뜨던 것.
+- 배포: DB 마이그레이션 `20261115100000_two_layer_page`를 **먼저** 적용합니다. 다음에 함수 `research-loop-mcp`와 `shared-page`를 배포하고, `cloudflare` 브랜치와 `v0.114.0` 태그를 올립니다. 배포한 뒤에는 열어 둔 탭을 새로 고칩니다.
+
+## 0.113.0 — 2026-11-14
+
+The front page now arrives drawn. The server sends it in the visitor's language with a stylesheet and two fonts of its own, and its code follows in steps, so on a slow phone line the page shows in 1.6 s where it took 3.8 s. Nothing moves as fonts and code arrive, and a button pressed early is answered. Drawings keep accented words whole, and no word of any screen's text is left broken across two lines in Korean, English, French or Japanese.
+
+- 랜딩이 그려진 채로 옵니다. 전에는 빈 틀이 먼저 오고, 브라우저가 스크립트 59개와 앱 전체 스타일시트를 받은 뒤에 그렸습니다. 이제 서버가 방문자의 언어로 그려서 보냅니다.
+- 느린 휴대폰 회선(느린 4G)에서 화면이 뜨는 시간이 3.8초에서 1.6초가 됐습니다. 빠른 회선에서는 1.2초에서 0.6초입니다.
+- 한국어 브라우저에는 처음부터 한국어 랜딩이 갑니다. 전에는 영어가 먼저 왔습니다. 로그인하지 않은 사람에게는 브라우저의 언어로 보이고, 화면에서 고른 언어는 그 기기에 남습니다.
+- 랜딩은 자기 스타일시트만 받습니다. 앱의 규칙 5,070개 중 랜딩이 쓰는 1,167개입니다. 96.9KB가 27.1KB가 됐습니다.
+- 랜딩 글꼴이 둘 생겼습니다. 랜딩이 보여 주는 글자만 담은 작은 파일입니다. 큰 글꼴이 늦게 와도 글줄이 다시 나뉘지 않습니다.
+- 코드는 차례로 옵니다. 테마 단추와 언어 선택이 먼저 살아나고, 예시가 다음입니다. 로그인 코드는 화면이 한가해지거나 손이 로그인 단추에 닿을 때 옵니다. 코드가 오기 전에 누른 단추는 맡아 두었다가 답합니다.
+- 히어로 예시는 한 바퀴만 돌고 전체 그림에서 멈춥니다. 전에는 끝없이 돌았습니다.
+- 스크립트를 끈 브라우저에서도 랜딩이 앱의 모양으로 보입니다.
+- 작업 공간이 처음에 받는 코드가 압축 기준 22KB 줄었습니다(707KB → 684KB). Google AI 동의 창과 개인정보 글은 그 창을 열 때 받습니다.
+- 도해 안의 이름에서 악센트가 있는 낱말이 끊기지 않습니다. 프랑스어 랜딩의 휴대폰 화면에서 "d’abord"가 "d’ab…"로 잘리고 "inversés"가 두 줄로 끊겼습니다. AI가 프랑스어나 독일어로 쓴 도해도 같이 고쳐집니다.
+- 화면의 글에서 낱말이 두 줄에 걸친 곳을 고쳤습니다. 프로젝트 홈의 할 일 종류("Quest/ion"), 빈 목록의 안내("모입/니다."), 주간 목표, 데이터셋 설명, 로그인 창의 안내, 할 일의 완료 기준, 원문 읽기가 없는 문헌의 제목, 팀원 업무 정보의 안내, 랜딩 주간 예시의 이름 셋입니다.
+- 도해 아래 화살표 옆의 안내가 휴대폰에서 화면 밖으로 나가던 것을 고쳤습니다(영어, 프랑스어, 일본어).
+- 프로젝트 홈의 작업 띠 아래 질문 이름이 칸이 남는데도 잘리던 것을 고쳤습니다. 이제 칸 끝에서 한 번만 잘립니다.
+- 발표 편집기의 저장 단추 글자가 가운데에 섭니다. 일본어 상태 문장 뒤에 쉼표가 붙던 것("。、")을 고쳤습니다.
+- 랜딩 문구가 프랑스어 네 곳, 영어 한 곳에서 짧아졌습니다(도해의 "A puis B", 주간 예시의 "État de l’art", "Random-order experiment" 등).
+- 배포: DB 변경은 없습니다. 함수 `research-loop-mcp`를 배포하고(패널 묶음이 다시 만들어졌습니다), `cloudflare` 브랜치와 `v0.113.0` 태그를 올립니다.
+
 ## 0.112.0 — 2026-11-13
 
 Pages written by an AI now fit the screen they are read on. Tables are as wide as their content, with numbers right-aligned and horizontal rules only; a table or a line of code that runs past the column fades at that edge, and a wide table keeps its first column. Words inside figures are at least 13px. An AI connected to Research Loop is told the reading column first, a new guide section gives it in numbers, and a save points out paragraphs, lists and tables that do not fit.

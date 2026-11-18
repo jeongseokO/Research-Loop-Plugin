@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.112.0",
+  "version": "0.116.2",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Pages written by an AI now fit the screen they are read on. Tables are as wide as their content, with numbers right-aligned and horizontal rules only; a table or a line of code that runs past the column fades at that edge, and a wide table keeps its first column. Words inside figures are at least 13px. An AI connected to Research Loop is told the reading column first, a new guide section gives it in numbers, and a save points out paragraphs, lists and tables that do not fit.",
+        "release_notes": "No change to the app. 0.116.1 did not reach the site: on a slow runner its browser tests ran past their 35 minutes, and a release ships only after every check passes. They now run in three parts at once, each on its own runner. This version brings 0.113.0 to 0.116.1 to the site.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

@@ -9,6 +9,7 @@ The guide's English is instruction language only. Follow core's output-language 
 | Before substantive authoring | `get_guide(topic:writing)`: core, the shared rules and module index |
 | Any explanation a person will read: a result, a method, a term, a paper, a reply | `section:plain-ko`, `plain-en`, `plain-ja` or `plain-fr`, the language you write in: the manner (one idea per sentence, things named by what they do, reasoning in the linking words) with dense and plain pairs to imitate; a save advises on sentences that take two readings |
 | Before laying out a page: its paragraphs, lists, tables and code | `section:shape`: the column a page is read in (38 em, a little over half of it on a phone) in numbers: paragraphs under 500 columns, lists of two levels, tables of about five short columns, code lines of about 68 characters; a save advises on what does not fit |
+| An experiment, analysis or claim page | `section:layers`: the page in two layers. A person reads a few claims, one sentence each with how sure it is; the record that backs a claim folds under it, and whole record sections fold last. A save holds a claim to its limits and refuses a figure its record does not show |
 | Create or rename a plan/to-do | `section:tasks`: concrete target/action, purpose-first description and observable completion criteria |
 | Task/Main analysis, research report, PI/student report | `section:report`: question/purpose → approach → findings → cause → conclusion/decision |
 | Experiment results or an analysis, on a page or in chat | `section:results`, bundled as [Reporting results](results-reporting.md): experiment → observation → cause → conclusion, always concluding; run details of runs you started in `report_implementation` |
@@ -25,4 +26,4 @@ Experiment, result and claim pages also carry a bottom line, `fields.summary`, w
 
 Then read only the relevant record/task/literature/meeting template. It supplies required content and storage semantics; it does not replace the writing guide. Existing project preferences, source preservation, author permissions, version checks, bounded computation and Main/Sub completion rules still apply.
 
-Use the existing report request and page workflow. Do not rewrite old research records merely because the guide changed, claim that reading guidance proves writing quality, or hide material caveats in notes.
+Use the existing report request and page workflow. Do not rewrite old research records merely because the guide changed (a page in one layer becomes two layers only when the user asks), claim that reading guidance proves writing quality, or hide material caveats in notes.
