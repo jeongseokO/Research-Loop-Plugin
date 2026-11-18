@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.116.2",
+  "version": "0.116.4",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "No change to the app. 0.116.1 did not reach the site: on a slow runner its browser tests ran past their 35 minutes, and a release ships only after every check passes. They now run in three parts at once, each on its own runner. This version brings 0.113.0 to 0.116.1 to the site.",
+        "release_notes": "Scopes the Codex desktop workspace's frame policy to the validated registration address supplied with each request. Other plugin sandboxes remain blocked, and the policy is served without shared caching. Browser regression coverage checks both the registered Codex panel and unrelated or mismatched parent origins.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

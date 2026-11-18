@@ -2,6 +2,20 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.116.4 — 2026-11-18
+
+Scopes the Codex desktop workspace's frame policy to the validated registration address supplied with each request. Other plugin sandboxes remain blocked, and the policy is served without shared caching. Browser regression coverage checks both the registered Codex panel and unrelated or mismatched parent origins.
+
+- 0.116.3에서 HTTPS 샌드박스 전체로 넓어진 frame 허용을 해당 요청의 검증된 등록 주소 하나로 좁힙니다.
+- 실제 브라우저에서 Codex 등록 주소의 표시와 다른 플러그인·위조한 부모 주소의 차단을 함께 검사합니다.
+
+## 0.116.3 — 2026-11-18
+
+Fixes Open Research Loop in the Codex desktop app. The embedded workspace accepts Codex's registered HTTPS panel addresses as well as its existing desktop addresses, with complete-origin validation for the AI conversation bridge and the existing account, project and message checks.
+
+- Codex가 등록별 HTTPS 주소에서 여는 Research Loop 화면을 브라우저가 차단하던 문제를 고칩니다.
+- `/plugin`의 frame 허용과 AI 대화 연결의 주소 검사를 함께 맞춥니다. 등록 ID 형식·출처·계정·프로젝트·nonce 검사와 다른 페이지의 frame 차단을 검증합니다.
+
 ## 0.116.2 — 2026-11-17
 
 No change to the app. 0.116.1 did not reach the site: on a slow runner its browser tests ran past their 35 minutes, and a release ships only after every check passes. They now run in three parts at once, each on its own runner. This version brings 0.113.0 to 0.116.1 to the site.
