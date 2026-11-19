@@ -2,6 +2,18 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.118.0 — 2026-11-19
+
+The thinking canvas is redrawn. Your intent reads as one statement and the other areas as cards with their own mark and colour; an AI's reply folds to one line under its thought until opened, and new replies are counted in the head and walked with Next. A thought can be dragged by its handle to any card and depth, with the move offered back, and the mind map draws chips and two-line boxes, narrower so more of it shows at its own size. On phones, the canvas's head and the menus in To-dos and Presentations no longer run off the screen.
+
+- 생각 정리를 다시 그렸습니다. 의도는 맨 위에 한 문장으로, 이해한 것, 고민, 조언 구함은 카드로 놓이고, 영역마다 표시와 색이 다릅니다. 카드 머리에 기록과 같음, 풀림, 답 기다림 수가 붙습니다.
+- AI가 남긴 답, 기록과 다름, 제안은 생각 아래 한 줄로 접혀 있다가 누르면 펼쳐집니다. 기록과 같음은 줄 끝의 체크로, 답을 기다리는 물음은 시계로 보입니다.
+- 머리 둘째 줄에 공개 범위, AI가 읽은 날, 새로 남긴 말 수, 누구의 생각인지가 놓입니다. 새로 남긴 말을 누르면 하나씩 펼쳐 보여 주고, 다음 버튼이 화면 아래에도 따라옵니다.
+- 생각을 손잡이로 끌어 다른 카드나 다른 깊이로 옮깁니다(마우스와 펜). 놓을 자리와 깊이가 선으로 보이고, Esc로 그만두며, 옮긴 뒤 5초 동안 되돌릴 수 있습니다. 휴대폰에서는 지금처럼 메뉴로 옮깁니다.
+- 마인드맵은 영역 이름을 표시가 있는 칩으로, 생각을 두 줄 상자로 그리고, 선에 영역 색을 씁니다. 글자가 작아지지 않게 제 크기로 열고, 전보다 좁게 그려 한 화면에 더 많이 보입니다. 칩의 +는 숨지 않고 작게 늘 보입니다.
+- 쓰는 중에 되돌리기를 누르면 버튼이 움직여 눌리지 않던 문제를 고쳤습니다.
+- 휴대폰에서 생각 정리 머리의 보기 전환과 공개 범위가 화면 밖으로 밀리던 문제(영어, 일본어, 프랑스어)를 고쳤습니다. 할 일의 정렬과 보기, 발표의 AI에게 맡기기 메뉴가 화면 왼쪽 밖에서 열리던 문제도 고쳤습니다.
+
 ## 0.117.0 — 2026-11-18
 
 Personal settings now show your plan, Free or Paid, and take an invite code: whoever enters a code that a super account made is on Paid at no charge, and super accounts make, copy and stop their codes in the same place. The operator also gets three read-only usage reports to paste into the SQL Editor; the generated panel bundles are built on install instead of committed; old release notes fold into a one-line timeline; and two large files are split by feature.
