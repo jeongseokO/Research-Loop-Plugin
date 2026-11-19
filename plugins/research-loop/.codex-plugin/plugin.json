@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.116.4",
+  "version": "0.117.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Scopes the Codex desktop workspace's frame policy to the validated registration address supplied with each request. Other plugin sandboxes remain blocked, and the policy is served without shared caching. Browser regression coverage checks both the registered Codex panel and unrelated or mismatched parent origins.",
+        "release_notes": "Personal settings now show your plan, Free or Paid, and take an invite code: whoever enters a code that a super account made is on Paid at no charge, and super accounts make, copy and stop their codes in the same place. The operator also gets three read-only usage reports to paste into the SQL Editor; the generated panel bundles are built on install instead of committed; old release notes fold into a one-line timeline; and two large files are split by feature.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

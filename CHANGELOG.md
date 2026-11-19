@@ -2,6 +2,17 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.117.0 — 2026-11-18
+
+Personal settings now show your plan, Free or Paid, and take an invite code: whoever enters a code that a super account made is on Paid at no charge, and super accounts make, copy and stop their codes in the same place. The operator also gets three read-only usage reports to paste into the SQL Editor; the generated panel bundles are built on install instead of committed; old release notes fold into a one-line timeline; and two large files are split by feature.
+
+- 개인 설정에 플랜이 나옵니다. Free인지 Paid인지, 내 프로젝트를 몇 개까지 만들 수 있는지 적힙니다. Free 계정은 여기서 초대 코드를 넣으면 바로 Paid가 되고, 결제는 없습니다.
+- 슈퍼 계정은 같은 곳에서 초대 코드를 만듭니다. 쓸 사람 수(1~100)와 메모를 정하고, 복사하거나 막을 수 있습니다. 막아도 이미 넣은 사람은 Paid로 남습니다. 슈퍼 계정은 운영자가 SQL 한 줄로 정합니다.
+- 운영자용 사용 현황 보고서 셋을 더합니다. 주별 사용, 계정 흐름, AI 도구 호출 결과입니다. `npm run -s report:sql -- weekly`로 SQL Editor에 붙여 넣으며, 수만 세고 이름이나 글은 읽지 않습니다.
+- 패널 번들(생성 파일, 2.2MB)을 git에 두지 않고 `npm ci`가 빌드합니다. 바뀔 때마다 저장소에 쌓이던 사본이 더는 쌓이지 않습니다.
+- 지난 릴리스 노트를 한 줄짜리 기록(`docs/history/README.md`)으로 접고, 실행이 끝난 계획을 지웁니다. 전문은 git에 남습니다.
+- 대화상자 넷과 페이지 편집기의 블록 편집기들을 각자의 파일로 옮깁니다. 화면과 동작은 같습니다.
+
 ## 0.116.4 — 2026-11-18
 
 Scopes the Codex desktop workspace's frame policy to the validated registration address supplied with each request. Other plugin sandboxes remain blocked, and the policy is served without shared caching. Browser regression coverage checks both the registered Codex panel and unrelated or mismatched parent origins.
