@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.118.0",
+  "version": "0.119.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "The thinking canvas is redrawn. Your intent reads as one statement and the other areas as cards with their own mark and colour; an AI's reply folds to one line under its thought until opened, and new replies are counted in the head and walked with Next. A thought can be dragged by its handle to any card and depth, with the move offered back, and the mind map draws chips and two-line boxes, narrower so more of it shows at its own size. On phones, the canvas's head and the menus in To-dos and Presentations no longer run off the screen.",
+        "release_notes": "The thinking canvas edits like an outliner. Shift+Enter puts a line break inside a thought, kept on the board, in the mind map and through a reload, while Enter still starts the next thought. The up and down arrows move along the lines as drawn and keep their column, across thoughts and past short lines. Tab pressed right after Korean typing now indents instead of leaving the field, and Tab on an empty new line starts one under the last thought.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

@@ -2,6 +2,23 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.119.0 — 2026-11-19
+
+The thinking canvas edits like an outliner. Shift+Enter puts a line break inside a thought, kept on the board, in the mind map and through a reload, while Enter still starts the next thought. The up and down arrows move along the lines as drawn and keep their column, across thoughts and past short lines. Tab pressed right after Korean typing now indents instead of leaving the field, and Tab on an empty new line starts one under the last thought.
+
+- 생각 안에서 Shift+Enter로 줄을 바꿀 수 있습니다. 캔버스, 마인드맵, 새로 고침 뒤에도 그대로 남습니다. Enter는 지금처럼 다음 생각입니다. AI는 그 줄바꿈을 " / "로 읽습니다.
+- ↑↓가 화면에 그려진 줄을 따라 움직이고, 생각의 첫 줄과 끝 줄에서는 위아래 생각으로 같은 자리(열)에 넘어갑니다. 짧은 줄을 지나도 처음 자리를 지키고, 다른 곳을 누르면 누른 자리가 새 기준이 됩니다.
+- 한글을 치다가 바로 Tab을 누르면 칸을 떠나던 문제(Safari)를 고쳤습니다. 이제 글자가 끝난 뒤 한 번 들여 씁니다. 더할 줄에 아무것도 없을 때 Tab은 위 생각 아래에 빈 줄을 엽니다.
+- 아래의 글쇠 안내: Enter 다음 생각, Shift Enter 줄바꿈, Tab 안으로, Shift Tab 밖으로, Alt ↑↓ 옮기기, Esc 나가기.
+
+## 0.118.1 — 2026-11-19
+
+When your AI finds that the records say otherwise than a thought, its words now lead with where they come from, From the records, in the same quiet colour as its other words, and the button to revise reads Refine the thought. The AI is asked to start from what the record shows, with its number, and never to call a thought a mistake. The keys at the foot of the canvas show only while you write in a line.
+
+- AI가 생각을 기록과 견줘 기록이 다르게 말한다고 할 때, 줄에 "기록과 다름" 대신 "기록에 따르면"이 붙고 호박색 바탕을 없앴습니다. 맵과 수에서는 "기록 참고"로 보이고, 단추는 "생각 다듬기"입니다.
+- AI가 받는 지침도 바꿨습니다. 기록이 보여 주는 것을 수와 함께 먼저 쓰고, 살펴볼 점으로 남기며, 틀렸다고 쓰지 않습니다. 검토를 맡길 때 보내는 요청문도 같은 뜻으로 고쳤습니다.
+- 캔버스 아래의 글쇠 안내는 줄에 쓰는 동안만 보입니다. AI의 말이나 메뉴를 누를 때는 나오지 않습니다.
+
 ## 0.118.0 — 2026-11-19
 
 The thinking canvas is redrawn. Your intent reads as one statement and the other areas as cards with their own mark and colour; an AI's reply folds to one line under its thought until opened, and new replies are counted in the head and walked with Next. A thought can be dragged by its handle to any card and depth, with the move offered back, and the mind map draws chips and two-line boxes, narrower so more of it shows at its own size. On phones, the canvas's head and the menus in To-dos and Presentations no longer run off the screen.
