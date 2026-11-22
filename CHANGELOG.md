@@ -2,6 +2,18 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.120.0 — 2026-11-22
+
+The research tree is now a board. Each step is a card that says its page's one-line conclusion, joined by a string to the step it grew from. What is alive reaches the top row; a line that ended folds into one slip beside the card it left and says what it learned; short separate beginnings wait beside the board. Choosing a card draws its other relations. Your AI is told to rewrite the page a fact belongs to instead of adding pages, and to give each step its own sentence.
+
+- 연구 흐름을 열면 관계도가 나옵니다. 걸음 하나가 카드 한 장이고, 카드는 종류, 제목, 그 페이지의 결론 한 줄, 상태, 시점을 말합니다. 카드가 자란 걸음이 아래에 선으로 이어지고, 고침, 다시 실험, 새 가지, 질문 전환은 선에 적힙니다.
+- 살아 있는 길의 끝은 깊이와 상관없이 모두 맨 윗줄에 옵니다. 끝난 길은 갈라진 카드 옆에 쪽지 한 장으로 접혀 무엇을 배웠는지 한 문장으로 말하고, 펴면 그 옆에서 아래로 읽습니다. 펴도 다른 카드는 움직이지 않습니다.
+- 걸음이 여섯을 넘는 줄기가 있으면, 여섯 이하의 짧은 시작은 관계도 옆 '따로 시작한 길'에서 기다립니다. 어디서 이어졌는지 모르는 기록은 '관계도에 없는 기록'에 수와 함께 접혀 있습니다.
+- 카드를 고르면 근거, 사용, 지지, 반박 같은 다른 관계가 점선으로 나타나고, 옆 패널이 그 걸음의 한 줄부터 보여 줍니다. 상태와 이유를 고치는 칸은 '정리하기' 아래에 있습니다.
+- 화면보다 큰 관계도는 창 안에서 스크롤하거나 바탕을 끌어 옮기고, −, +, 맞춤으로 크기를 바꿉니다. 화살표 글쇠로 카드를 따라 걷습니다.
+- 가지를 한 줄씩 적던 표는 뺐습니다. 연구사는 그대로입니다.
+- AI가 받는 지침을 고쳤습니다. 고친 내용이나 같은 실행의 새 숫자는 그 페이지를 고치고, 곧 하지 않을 후속 작업은 새 페이지가 아니라 그 페이지의 다음 줄에 적습니다. 트리의 메모는 걸음마다 그 걸음만의 한 문장이고, 후속 실험은 새 뿌리가 아니라 자란 걸음에 잇습니다. 'AI로 관계도 정리'가 보내는 요청문도 같은 뜻입니다.
+
 ## 0.119.0 — 2026-11-19
 
 The thinking canvas edits like an outliner. Shift+Enter puts a line break inside a thought, kept on the board, in the mind map and through a reload, while Enter still starts the next thought. The up and down arrows move along the lines as drawn and keep their column, across thoughts and past short lines. Tab pressed right after Korean typing now indents instead of leaving the field, and Tab on an empty new line starts one under the last thought.
