@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.120.0",
+  "version": "0.120.1",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "The research tree is now a board. Each step is a card that says its page's one-line conclusion, joined by a string to the step it grew from. What is alive reaches the top row; a line that ended folds into one slip beside the card it left and says what it learned; short separate beginnings wait beside the board. Choosing a card draws its other relations. Your AI is told to rewrite the page a fact belongs to instead of adding pages, and to give each step its own sentence.",
+        "release_notes": "There is no limit on the number of projects you own. The limits announced for November 24 (2 for a general account, 10 with the invitation benefit) are withdrawn: the revised Terms and the notice now say so, and that any future limit will be announced 30 days ahead. Personal settings name your plan without a number and say there is no limit, and the new project dialog no longer counts your projects.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

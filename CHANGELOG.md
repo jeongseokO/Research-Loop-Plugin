@@ -2,6 +2,15 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.120.1 — 2026-11-22
+
+There is no limit on the number of projects you own. The limits announced for November 24 (2 for a general account, 10 with the invitation benefit) are withdrawn: the revised Terms and the notice now say so, and that any future limit will be announced 30 days ahead. Personal settings name your plan without a number and say there is no limit, and the new project dialog no longer counts your projects.
+
+- 소유 프로젝트 수에 한도를 두지 않습니다. 11월 24일부터 적용한다고 알렸던 한도(일반 계정 2개, 초대 혜택 계정 10개)는 적용하지 않습니다.
+- 이용약관 개정안과 개정 공지의 그 대목을 고쳤습니다. 앞으로 한도를 두게 되면 시행 30일 전에 알립니다. 다른 개정 내용과 시행 시각(11월 24일 00:00)은 그대로입니다.
+- 개인 설정의 플랜은 Free, Paid (초대 혜택)이라고만 부르고 "지금은 프로젝트 수에 한도가 없습니다"라고 적습니다. 새 프로젝트 창에는 플랜 안내가 나오지 않습니다.
+- 초대 코드와 플랜은 그대로입니다. 지금은 Free와 Paid의 차이가 없습니다.
+
 ## 0.120.0 — 2026-11-22
 
 The research tree is now a board. Each step is a card that says its page's one-line conclusion, joined by a string to the step it grew from. What is alive reaches the top row; a line that ended folds into one slip beside the card it left and says what it learned; short separate beginnings wait beside the board. Choosing a card draws its other relations. Your AI is told to rewrite the page a fact belongs to instead of adding pages, and to give each step its own sentence.
