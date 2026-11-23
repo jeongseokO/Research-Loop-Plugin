@@ -2,6 +2,17 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.122.0 — 2026-11-23
+
+When Claude or ChatGPT saves a page, Research Loop now tells it how the page reads: a sentence said twice, a sentence that speaks to whoever asked or only announces what follows, words run together, stray backslashes, emoji or mostly bold text, one long flat list, or one note stamped on several steps of the tree. It is advice, two kinds at a time, about what that save added, and the page is saved either way. In a page, a list item that is only a link to another page now shows that page's one-line conclusion under the link.
+
+- AI가 페이지를 저장하면 그 글이 어떻게 읽히는지 서버가 알려 줍니다. 같은 문장을 두 번 쓴 곳, 요청한 사람에게 말을 걸거나("요청하신 대로", "도움이 되길 바랍니다") 뒤에 올 내용을 예고만 하는 문장, 띄어쓰기 없이 붙여 쓴 구절, 변환하다 남은 백슬래시, 이모지와 지나친 굵은 글씨, 열두 줄이 넘는 한 겹짜리 목록입니다. 한 번에 두 가지까지만 말하고, 저장은 그대로 됩니다.
+- 그 저장이 새로 넣은 글만 봅니다. 예전부터 있던 글은 다시 묻지 않습니다.
+- 관계도의 메모도 봅니다. 같은 문장이 세 걸음 이상에 똑같이 붙으면 알려 줍니다.
+- 목록의 한 줄이 다른 페이지로 가는 링크뿐이면 그 페이지의 한 줄 결론이 링크 아래에 보입니다. 링크를 하나씩 열어 보지 않아도 됩니다. 따로 적는 글이 아니어서, 그 페이지의 결론이 바뀌면 같이 바뀝니다.
+- 화면의 군말을 줄였습니다. '이 페이지를 참조하는 기록' 아래의 설명 문장과 '데이터셋 예시' 옆의 안내를 뺐습니다. 길어서 자른 한 줄은 괄호 중간에서 끊기지 않습니다.
+- 글쓰기 지침(60판)에 두 줄을 더했습니다. 저장한 뒤 서버가 무엇을 보는지, 그리고 링크만 있는 줄에는 그 페이지의 요약을 다시 쓰지 않는다는 것입니다.
+
 ## 0.121.0 — 2026-11-23
 
 A page now says where it stands before anything else: a page on a path that ended shows that path's state, what it learned and where the research goes on, and an experiment run in an earlier setup says which one. Links to such pages carry the same sign, and resting on a link shows that page's line without opening it. The board can stand around a single page, showing the step it grew from, what followed, what it rests on and where it is used, and it can take the whole window (F).

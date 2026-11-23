@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.121.0",
+  "version": "0.122.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "A page now says where it stands before anything else: a page on a path that ended shows that path's state, what it learned and where the research goes on, and an experiment run in an earlier setup says which one. Links to such pages carry the same sign, and resting on a link shows that page's line without opening it. The board can stand around a single page, showing the step it grew from, what followed, what it rests on and where it is used, and it can take the whole window (F).",
+        "release_notes": "When Claude or ChatGPT saves a page, Research Loop now tells it how the page reads: a sentence said twice, a sentence that speaks to whoever asked or only announces what follows, words run together, stray backslashes, emoji or mostly bold text, one long flat list, or one note stamped on several steps of the tree. It is advice, two kinds at a time, about what that save added, and the page is saved either way. In a page, a list item that is only a link to another page now shows that page's one-line conclusion under the link.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
