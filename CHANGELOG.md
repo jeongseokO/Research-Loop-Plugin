@@ -2,6 +2,19 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.121.0 — 2026-11-23
+
+A page now says where it stands before anything else: a page on a path that ended shows that path's state, what it learned and where the research goes on, and an experiment run in an earlier setup says which one. Links to such pages carry the same sign, and resting on a link shows that page's line without opening it. The board can stand around a single page, showing the step it grew from, what followed, what it rests on and where it is used, and it can take the whole window (F).
+
+- 끝난 길에 있는 페이지는 제목 아래에서 그 사실부터 말합니다. 보류한 길, 결론이 난 길, 폐기한 길 중 무엇인지, 그 길이 무엇을 배웠는지, 지금은 어디서 이어지는지가 나옵니다. 지금 진행 중인 페이지에는 아무것도 붙지 않습니다.
+- 모듈의 현재 설정이 아닌 설정으로 돌린 실험과 그 결과는 '이전 설정'이라고 말하고, 돌린 설정과 현재 설정, 바뀐 값을 보여 줍니다.
+- 그런 페이지로 가는 링크는 제목 앞에 기호가 붙습니다(‖ 보류, ✓ 결론, × 폐기, ○ 이전 설정). 링크에 마우스를 잠시 올리거나 키보드로 닿으면 그 페이지의 한 줄 결론과 상태가 카드로 뜹니다.
+- 관계도를 한 페이지 중심으로 볼 수 있습니다. 가운데가 그 페이지이고, 아래는 그 페이지가 자란 걸음, 위는 거기서 이어진 걸음, 왼쪽은 근거와 참조, 오른쪽은 쓰인 곳입니다. 옆의 카드를 누르면 그 페이지가 가운데로 오고, 브라우저의 뒤로 가기로 되돌아갑니다.
+- 여는 길은 셋입니다. 기록 페이지에서 길의 이름을 누르거나, 트리의 걸음이 아닌 페이지(문헌, 데이터셋, 노트)에서 '이어진 기록 N개'를 누르거나, 관계도에서 카드를 고른 뒤 '이 페이지만 보기'를 누릅니다.
+- 관계도를 전체 화면으로 볼 수 있습니다. 머리 줄의 단추나 F로 켜고 Esc로 끕니다.
+- 관계도 옆 패널을 줄였습니다. 관계도가 이미 그리고 있는 이어진 곳, 여기서 이어진 걸음, 다른 관계의 목록을 뺐고, ★ 중요와 지금 하는 일은 '정리하기' 안으로 옮겼습니다.
+- 말을 둘 고쳤습니다. 속성이 가리키는 기록의 관계는 '참조'가 아니라 '관련'입니다('참고'와 한 글자 차이였습니다). 트리에 없는 기록의 '관계도에 놓기'는 '자리 정하기'가 되었습니다.
+
 ## 0.120.1 — 2026-11-22
 
 There is no limit on the number of projects you own. The limits announced for November 24 (2 for a general account, 10 with the invitation benefit) are withdrawn: the revised Terms and the notice now say so, and that any future limit will be announced 30 days ahead. Personal settings name your plan without a number and say there is no limit, and the new project dialog no longer counts your projects.

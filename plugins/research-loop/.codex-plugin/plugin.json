@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.120.1",
+  "version": "0.121.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "There is no limit on the number of projects you own. The limits announced for November 24 (2 for a general account, 10 with the invitation benefit) are withdrawn: the revised Terms and the notice now say so, and that any future limit will be announced 30 days ahead. Personal settings name your plan without a number and say there is no limit, and the new project dialog no longer counts your projects.",
+        "release_notes": "A page now says where it stands before anything else: a page on a path that ended shows that path's state, what it learned and where the research goes on, and an experiment run in an earlier setup says which one. Links to such pages carry the same sign, and resting on a link shows that page's line without opening it. The board can stand around a single page, showing the step it grew from, what followed, what it rests on and where it is used, and it can take the whole window (F).",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
