@@ -2,6 +2,81 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.126.0 — 2026-11-24
+
+Slides with a figure now read from the back of the room: in the presenter a diagram's step words stand at 14 pt (they were 10), a big figure takes the band an empty conclusion line leaves (plots grow by a fifth or more), a long chapter bar fades where it goes on and keeps the current chapter in view, and notes show bold. From the studio, one slide of a saved deck can be handed to your own AI, which reads it with get_slide and changes its title, notes and words with revise_slide; nothing else on the deck can change. Writing guide revision 62.
+
+- 발표 화면에서 도해의 단계 글이 슬라이드에서 14pt로 섭니다. 범례와 단계 번호는 12pt쯤입니다. 전에는 M1 도해의 단계 글이 10pt, 범례가 9pt쯤이었습니다. 그림은 맞춘 크기 그대로입니다. 이미 그만큼 큰 도해(E1)는 그대로 둡니다.
+- 큰 그림 슬라이드에서 한 줄 결론이 비어 있으면 그 띠까지 그림이 씁니다. 공부 노트(N-plots)의 수식 그래프 네 장이 22~49% 높아졌습니다(슬라이드 기준 230px이던 KL 발산 그래프가 287px). 결론 줄에 글을 쓰면 원래 배치로 돌아오고, 스튜디오에서는 '한 줄 결론 넣기'로 다시 넣습니다. 표는 행 수대로 서서 그대로입니다.
+- 방법 페이지(M1)의 식은 이렇게 생긴 자리에 그래프가 섭니다. 그래프가 기호 이름보다 먼저라는 수식 판의 순서(0.98.0)대로 기호 이름 자리에 서고, 이름은 발표자 메모에 있습니다. 식 안의 기호는 글자 획이 아닌 그 기호의 상자 어디를 가리켜도 밝아집니다.
+- 발표 목차의 챕터가 칸보다 길면 이어지는 쪽 끝이 흐려지고, 지금 챕터가 흐림 밖에 오도록 따라 움직입니다. 전에는 E1의 마지막 챕터가 표시 없이 잘렸고, 챕터 이름이 줄어들며 서로 겹쳤습니다. 스튜디오 안 발표에서 챕터에 상자 테두리가 생기던 것도 밑줄로 고쳤습니다.
+- 발표자 메모의 `**굵게**`가 발표 화면과 발표자 화면에서 굵게 보입니다. PPTX의 메모에는 표시 없이 글만 들어갑니다.
+- 스튜디오에서 슬라이드 옆 '이 장 AI에게 맡기기'로 그 장만 내 AI에게 맡길 수 있습니다. 저장한 덱에서만 켜집니다. 누르면 스튜디오가 닫히고, AI에게 맡기기 창이 그 장을 한 줄로 보여 줍니다. 무엇을 고칠지만 적으면 됩니다.
+- AI는 `get_slide`로 그 장만 읽고(덱 전체 대신 그 장 몇백 토큰), `revise_slide`로 제목, 글, 노트만 바꿉니다. 다른 장의 블록, 그림, 글의 종류를 바꾸는 요청은 거절됩니다. 서버가 앱과 같은 발표 코드로 덱을 다시 써서 다른 장은 바뀌지 않습니다. 응답에 바뀐 장과 점검 결과가 오고, AI는 바꾼 점과 바꾸기 전 글을 맡긴 작업 결과에 남깁니다.
+- 글쓰기 지침 62판: 한 장을 고치는 요청은 `get_slide`와 `revise_slide`로 하고 덱 전체를 다시 쓰지 않습니다.
+- 저장하는 데이터와 마이그레이션은 바뀌지 않았습니다. MCP 서버에 도구 두 개가 생겼습니다.
+
+## 0.125.1 — 2026-11-24
+
+0.124.0 stopped in the release checks before it reached the website, and 0.125.0 would have stopped there too: the MCP server's own tests still expected revision 60 of the writing guide, which 0.124.0 moved to 61. Those tests and the guide's sample prompt now follow revision 61. 0.125.1 carries everything in 0.124.0 and 0.125.0 and changes nothing else.
+
+- 0.124.0은 GitHub의 릴리스 검사에서 멈춰 사이트에 올라가지 못했습니다. 글쓰기 지침을 61판으로 올렸는데, MCP 서버 자체 검사는 아직 60판을 기대했습니다. 이 검사는 Deno로 도는데, 릴리스를 만든 곳에 Deno가 없어서 건너뛰었습니다.
+- 서버 검사가 61판을 기대하도록 고치고, 지침 시험용 프롬프트(`docs/guide-trial/equation.md`)를 지침에서 다시 만들었습니다. 바뀐 줄은 판 번호 하나입니다.
+- 0.125.1에는 0.124.0과 0.125.0의 변경이 모두 들어 있고, 그 밖에 바뀐 것은 없습니다.
+- 이제 릴리스를 만들기 전에 CI가 돌리는 서버 검사 네 묶음(MCP, 캘린더, 계정 삭제, 공유 페이지)을 Deno로 먼저 돌립니다.
+
+## 0.125.0 — 2026-11-24
+
+A screen now shows once its words are set: nothing already painted moves when the fonts or the formatting arrive, and on a slow line the screen keeps the system's fonts instead of jumping. The paper reading no longer drops its text on first open. The front page draws the app's own research board, a new account starts on two steps (make a project, connect an AI), the index starts folded between a phone and a desk so the screen keeps the window, and single-letter shortcuts can be turned off in settings.
+
+- 화면이 글자가 자리 잡은 뒤에 나타납니다. 글꼴이나 수식이 늦게 와도 이미 보인 글자는 움직이지 않습니다. 전에는 논문 읽기를 처음 열면 본문이 197px 내려앉았고, 글꼴이 늦으면 홈, E1, M1이 밀렸습니다.
+- 기다림은 길어야 1초입니다. 그 안에 글꼴이 오지 않으면 그 화면은 컴퓨터에 있는 글꼴로 보이고, 보는 도중에 바뀌지 않습니다. 다음 화면에서는 다시 Research Loop의 글꼴을 씁니다.
+- 논문 읽기는 처음 열 때 본문 전체의 자리를 한 번 잡은 뒤에 화면 밖 블록을 건너뜁니다. 첫 화면 근처의 수식은 보이기 전에 조판됩니다.
+- 랜딩의 연구 과정에 앱의 관계도를 그대로 그렸습니다. 지금 하는 실험이 맨 위에 있고, 접은 가지와 멈춘 가지는 갈라진 카드 옆에 한 줄씩 남습니다. 가지 표, 일곱 단계 목록, 방법 버전 목록은 뺐습니다.
+- 새 계정의 내 연구는 두 단계로 시작합니다. 프로젝트 만들기, AI 연결. AI를 연결하면 "연결됨: Claude Code"처럼 적힙니다. 보관한 프로젝트만 있는 계정은 전처럼 보관함으로 안내합니다.
+- 화면 폭이 721~1100px이면 색인이 아이콘만 남기고 접힌 채 시작합니다. 768px에서 본문 폭이 494px에서 약 690px로 늘었습니다. 직접 펴거나 접으면 그 선택을 기억합니다. 1024px에서는 페이지 주변 관계도가 줄과 함께 넓게 그려집니다.
+- 접힌 색인의 아이콘이 가운데에 섭니다. 현재 프로젝트 아이콘이 40px로 줄어 있던 것도 다른 아이콘처럼 44px입니다.
+- 개인 설정에 키보드 항목이 생겼습니다. 한 글자 단축키(E 편집, F 전체 화면, O 발표 목차, N 발표자 메모)를 끌 수 있습니다. 끄면 단추에 적힌 키 안내도 사라집니다. ⌘K, 방향키, Space, Esc는 그대로입니다.
+- 단계의 날짜 범위는 연도를 한 번만 적습니다(2026.1.9~5월).
+- 저장하는 데이터, 마이그레이션, AI 도구와 지침은 바뀌지 않았습니다.
+
+## 0.124.0 — 2026-11-24
+
+A deck made from a page written in two layers now leads with its claims: each claim takes a slide titled by its sentence, with its number large, its name and how sure it is under the number, its table or figure beside it and its facts under both, and the sections of record follow the closing slide. Tables are set at the size of the slide's words instead of the caption size, a reading stands right under the figure it reads, and a slide of words sets them larger when it has the room. Decks made from the demo pages come back from the check with nothing to fix.
+
+- 두 층으로 쓴 페이지로 발표를 만들면 주장마다 슬라이드가 하나씩 생깁니다. 주장 문장이 제목이고, 수치가 크게 놓입니다. 수치 아래에는 수치의 이름과 얼마나 확실한지가 적힙니다("한 번 실행 (실행 중, 200문항까지)"). 근거 표나 그림은 옆에, 사실 목록은 둘 아래에 놓입니다.
+- 전에는 주장이 발표자 메모로 들어가고, 표 슬라이드 셋의 제목이 모두 절 이름("알게 된 것")이었습니다. 표가 없는 주장은 슬라이드가 없었습니다.
+- 발표자 메모는 주장 전체와 확실한 정도로 시작합니다. 슬라이드에 다 싣지 못한 근거는 그 주장의 메모에 있습니다.
+- 기록으로 표시한 절(질문과 배경, 실험 설계, 재현 정보 등)은 '정리' 뒤로 갑니다. 발표는 결론에서 끝나고, 기록은 질문이 나올 때 넘겨 보는 뒷장이 됩니다. 주장이 없는 페이지는 순서를 그대로 둡니다.
+- 표는 슬라이드 글자 크기로 놓입니다(진행 보고 20pt). 전에는 캡션 크기(14pt)였습니다. 칸은 글자가 필요한 만큼만 넓고, 해석 옆에 두기에 너무 넓은 표는 본문 폭을 다 씁니다.
+- 표나 그림 아래 해석은 그림 바로 밑에 붙습니다. 전에는 본문 맨 아래에 떨어져 있었습니다.
+- 글만 있는 슬라이드는 자리가 남으면 글자가 커집니다(진행 보고에서 24pt나 28pt). 문단이 한 줄보다 더 늘어나는 크기는 쓰지 않습니다. 서면 보고, 랩 템플릿, 요약 줄이 있는 슬라이드, 손으로 크기를 정한 슬라이드는 그대로입니다.
+- 그림을 목록이 읽고 있으면 그림 바로 앞 문단의 첫 문장이 제목이 됩니다. 방법 페이지의 도해에는 그림을 읽는 문장 한 줄을 더했습니다. 데모 페이지 다섯 곳과 연구 이야기로 만든 발표는 점검에서 고칠 것이 없습니다.
+- AI 발표 요청: 큰 수치 슬라이드가 옆 칸에 글을 받고 둘 아래에 해석 칸을 둡니다. 글쓰기 지침(61판)은 수치 설명에 이름과 얼마나 확실한지를 적으라고 합니다.
+- 도해는 이번에 그대로 둡니다. 재 보니 세로로 쌓아도 그림이 커지지 않았습니다. 단계 글을 그림 크기와 따로 정하는 일은 수식 그래프를 크게 그리는 일과 함께 다음 발표 작업에서 합니다.
+
+## 0.123.1 — 2026-11-24
+
+Changing the size of the board or the mind map with ⌘ or Ctrl and the wheel now keeps the card under the pointer exactly where it was. On a screen that fits each letter to the pixel grid, a line in a card can fit at one size and break at another, and the card under the pointer used to move by that line. The sign-up form no longer asks, on a second line, for the revised Terms of November 24, which are now in force. 0.123.0 did not reach the website because of the first change; 0.123.1 carries everything in it.
+
+- 관계도와 마인드맵을 ⌘ 또는 Ctrl과 휠로 키우고 줄일 때 포인터 아래 카드가 제자리에 있습니다. 글자를 픽셀에 맞춰 그리는 컴퓨터에서는 같은 문장이 크기에 따라 한 줄에 들어가기도 하고 꺾이기도 합니다. 그래서 위쪽 카드가 한 줄을 잃으면 포인터 아래 카드가 26px쯤 밀렸습니다.
+- 카드 사이 빈 곳에 포인터가 있으면 가장 가까운 카드를 기준으로 맞춥니다.
+- 가입 화면에서 11월 24일 시행 약관에 동의를 구하던 둘째 줄을 지웠습니다. 약관이 시행되어 필요 없어졌고, 그 줄은 0.120.1에서 철회한 프로젝트 한도(Free 2개)를 적고 있었습니다.
+- 0.123.0은 이 문제로 배포 전 브라우저 검사에서 멈춰 사이트에 올라가지 않았습니다. 0.123.1에 0.123.0의 변경이 모두 들어 있습니다.
+
+## 0.123.0 — 2026-11-23
+
+Reading and editing a page now keep their place: after a save the page comes back where you were editing, with what changed marked for a moment; E starts editing at the block in view and Escape returns to reading. Text typed in the editor is stored as typed: periods, hyphens, tildes and underscores no longer get a backslash, which connected AI clients used to read and repeat. Every screen works out its styles in about half the time, pages open with far fewer layout passes, and the board and the mind map change size under ⌘ or Ctrl with the wheel, or a pinch on a trackpad.
+
+- 페이지를 고치고 저장하면 고치던 자리로 돌아옵니다. 바뀐 블록은 잠깐 표시됩니다. 전에는 맨 위로 올라갔습니다.
+- 읽다가 E를 누르면 보던 자리에서 편집이 열립니다. 글자를 골라 두고 누르면 그 글자가 골라진 채로 열립니다. 같은 글자가 블록에 여러 번 있어도 고른 그 자리입니다. 편집 중 Esc는 읽기 화면으로 돌아가고, 바꾼 것이 있으면 먼저 묻습니다. 키는 각 단추에 적혀 있습니다.
+- 편집기가 글을 입력한 그대로 저장합니다. 전에는 손댄 블록의 마침표, 하이픈, 물결표, 밑줄 앞에 백슬래시를 붙여 저장했습니다("92다\\.", "1\\~300"). 화면에는 안 보였지만 연결한 AI는 그대로 읽고 다시 썼습니다. 이미 저장된 백슬래시는 그 블록을 다음에 저장할 때 없어집니다.
+- 모든 화면에서 스타일 계산이 절반쯤으로 줄었습니다. 글자를 골랐을 때의 색을 정하는 규칙 한 줄이 원인이었습니다. 250블록 페이지로 재면 여는 데 0.18초가 0.14초로, 편집을 여는 데 0.39초가 0.28초로 줄었습니다.
+- 페이지를 여는 동안 화면 배치를 다시 계산하는 횟수가 실험 페이지는 14번에서 5번, 방법 페이지는 14번에서 9번, 그림이 많은 노트는 12번에서 4번으로 줄었습니다.
+- 단계별 도해는 접힌 곳 안에 있어도 단계를 넘길 때 아래 글을 밀지 않습니다.
+- 관계도와 생각 정리의 마인드맵을 ⌘ 또는 Ctrl을 누른 채 휠로 키우고 줄입니다. 트랙패드에서는 두 손가락을 벌리거나 오므립니다. 포인터가 있는 곳을 중심으로 바뀌고, 휠만 굴리면 전처럼 움직입니다.
+- 크기 단추(−, +)는 10% 눈금에 맞춰 움직입니다.
+
 ## 0.122.0 — 2026-11-23
 
 When Claude or ChatGPT saves a page, Research Loop now tells it how the page reads: a sentence said twice, a sentence that speaks to whoever asked or only announces what follows, words run together, stray backslashes, emoji or mostly bold text, one long flat list, or one note stamped on several steps of the tree. It is advice, two kinds at a time, about what that save added, and the page is saved either way. In a page, a list item that is only a link to another page now shows that page's one-line conclusion under the link.

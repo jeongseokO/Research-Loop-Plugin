@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.122.0",
+  "version": "0.126.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "When Claude or ChatGPT saves a page, Research Loop now tells it how the page reads: a sentence said twice, a sentence that speaks to whoever asked or only announces what follows, words run together, stray backslashes, emoji or mostly bold text, one long flat list, or one note stamped on several steps of the tree. It is advice, two kinds at a time, about what that save added, and the page is saved either way. In a page, a list item that is only a link to another page now shows that page's one-line conclusion under the link.",
+        "release_notes": "Slides with a figure now read from the back of the room: in the presenter a diagram's step words stand at 14 pt (they were 10), a big figure takes the band an empty conclusion line leaves (plots grow by a fifth or more), a long chapter bar fades where it goes on and keeps the current chapter in view, and notes show bold. From the studio, one slide of a saved deck can be handed to your own AI, which reads it with get_slide and changes its title, notes and words with revise_slide; nothing else on the deck can change. Writing guide revision 62.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
