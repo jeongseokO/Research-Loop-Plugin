@@ -2,6 +2,82 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.131.0 — 2026-11-25
+
+Security, hardened. Every page is now signed with its own script nonce, so a script injected into a page does not run, and every HTML response refuses framing, isolates its window and is never cached; HTTPS is pinned for a year. React is updated against a remote code execution in Server Components. Personal settings can sign out every other device. The site publishes where to report a security problem.
+
+- 사이트의 모든 페이지가 요청마다 새로 만든 열쇠(nonce)로 자기 스크립트에 서명합니다. 페이지에 끼어든 스크립트, `javascript:` 링크, 이벤트 속성은 실행되지 않습니다.
+- 페이지는 저장되지 않고, 다른 사이트 안에 넣을 수 없고(ChatGPT, Claude의 패널 화면은 그대로), 다른 사이트가 연 창에서 이 창을 다룰 수 없습니다(AI가 여는 연결 창은 그대로). HTTPS는 1년 동안 고정됩니다.
+- React를 19.2.9로 올렸습니다. 서버 컴포넌트에서 인증 없이 코드가 실행될 수 있던 문제를 막습니다. Next와 Cloudflare 도구도 올렸습니다.
+- 개인 설정에 '로그인한 기기'가 생겼습니다. '다른 기기에서 로그아웃'은 이 기기만 남기고 모두 로그아웃합니다. 로그인해서 연결한 ChatGPT, Claude는 다시 연결해야 하고, API 키로 연결한 AI는 그대로입니다.
+- `/.well-known/security.txt`가 보안 문제를 알릴 곳(개인정보 처리방침의 보호책임자)을 알려 줍니다.
+- AI 서버 함수가 패널 화면을 압축해 담습니다. 함수가 4.8MB에서 3.5MB로 줄어, Supabase가 Docker 없이 받는 5MB 한도 아래로 다시 올라갑니다.
+- 데이터베이스 단계는 없습니다. 함수 두 개(`research-loop-mcp`, `shared-page`)와 사이트를 올리면 됩니다.
+
+## 0.130.0 — 2026-11-25
+
+The research board is now in hand. The home shows what is alive: each live line's newest step as its board card. On the board an editor drags a card onto another to tie it there, told before letting go what it will make; a record from beside the board lands the same way. A string drawn from a card's dot asks which relation it is and draws it. The bar offers either back. A chosen step's panel lists its relations, cut after a question or made by keyboard. On a phone a card moves by its grip. On looks without a head row a top logo keeps clear of the title.
+
+- 홈의 큰 방향 아래에 '살아 있는 길'이 생겼습니다. 이어지는 길마다 맨 끝 걸음을 관계도의 카드 그대로 보여 주고, 카드 위에 그 길의 이름과 걸음 수를 적습니다. 지금 하는 일이 먼저, 그다음 최근 순으로 네 장까지 놓습니다. 카드를 누르면 그 페이지가, '관계도에서'를 누르면 그 카드를 고른 관계도가 열립니다.
+- 관계도에서 카드를 끌어 다른 카드에 놓으면 그 카드에서 이어집니다. 끄는 동안 놓을 수 있는 카드에 테두리가 생기고, 판 아래에 놓으면 무엇이 되는지(다음 걸음, 새 가지)가 미리 뜹니다. 자기에게서 이어진 카드와 이미 이어진 카드에는 놓을 수 없고, 왜 안 되는지 알려 줍니다. 빈 곳에 놓거나 Esc를 누르면 아무것도 바뀌지 않습니다.
+- '관계도에 없는 기록'의 기록도 카드에 끌어 놓으면 그 자리에 놓입니다.
+- 카드 오른쪽 아래의 점을 끌어 다른 카드에 놓으면 어떤 관계인지 묻습니다(지지, 반박, 검증, 사용, 참고, 관련). 고르면 관계가 이름과 함께 그려집니다.
+- 옮기거나 관계를 이은 뒤에는 판 위 줄에 한 일과 '되돌리기'가 남습니다. 다음 변경을 하거나 관계도를 떠날 때까지 있습니다. 그 사이 관계도가 바뀌었으면 덮어쓰지 않고 그렇다고 알려 줍니다.
+- 고른 걸음의 칸에 '관계'가 생겼습니다. 이어진 관계를 종류, 방향과 함께 보여 주고, '끊기'는 한 번 물어본 뒤 끊습니다. '정리하기'의 '관계 잇기'로 키보드만으로도 잇습니다.
+- 폰에서는 카드를 눌러 고른 뒤 왼쪽 위 손잡이를 끌어 옮깁니다. 손가락으로 카드를 끌면 판이 움직입니다. 끄는 동안에는 아래에서 올라온 걸음 칸이 비켜 줍니다.
+- 쥔 카드를 판의 끝으로 가져가면 판이 따라 흐릅니다.
+- 선명, 무대 모양의 본문처럼 머리줄이 없는 장에서 위쪽 로고가 제목과 24 떨어지도록 올라갑니다. 자리가 없으면 다음 모서리로 갑니다.
+- 데이터베이스 단계는 없습니다. MCP 함수와 사이트를 올리면 됩니다.
+
+## 0.129.0 — 2026-11-25
+
+A project's logo now goes on its decks. Owners and Semi-Owners put the lab's logo in once, in the project's settings, choose its corner, size and strength, and see a cover and a slide drawn with it; every deck in a look then carries it, made by a person or an AI, on screen, in the presenter and in the PPTX. It sits in a corner of the margin, the head or foot there making room, and is drawn reversed where it would not read, on the dark look and a report's band. One deck can leave it out; a deck on a lab template keeps the template's own marks.
+
+- 프로젝트 설정의 발표 칸에 '로고'가 생겼습니다. 한 번 올리면 이 프로젝트의 발표마다 들어갑니다. 자리(네 모서리), 크기, 진하기, 표지에서의 크기를 고르는 대로 저장하고, 표지와 본문 한 장을 로고와 함께 그려 보여 줍니다. 다섯 모양에서 어떻게 보일지도 바로 볼 수 있습니다.
+- 로고는 여백의 모서리에 앉고, 그 모서리의 머리말이나 꼬리말이 비켜 줍니다. 슬라이드의 글은 움직이지 않습니다.
+- 어두운 무대 모양과 보고서의 띠에서는 로고를 흰색으로 뒤집어 그립니다.
+- 스튜디오, 발표자 보기, AI 결과 검토, 내려받은 PPTX가 같은 자리에 같은 진하기로 그립니다.
+- 한 발표에서만 빼려면 스튜디오의 '발표 전체'에서 '프로젝트 로고'를 끕니다. 랩 양식으로 만든 발표에는 넣지 않습니다.
+- 올릴 때 투명한 여백을 잘라 여백 끝에 맞추고, 크기를 줄여 둡니다. PNG, JPEG, WebP, SVG를 1MB까지 받습니다.
+- 'AI에게 맡기기' 메뉴의 'AI N개가 이 요청을 가져갈 수 있습니다' 줄을 메뉴 단추와 같은 크기, 같은 시작선으로 맞췄습니다.
+- 데이터베이스 단계는 없습니다. MCP 함수와 사이트를 올리면 됩니다.
+
+## 0.128.0 — 2026-11-25
+
+Decks now follow the order a listener asks in. The presentation guide puts a research talk in order: the problem, the closest prior way and its shortfall, what was tried and why this way, AS-IS / TO-BE, each experiment with the claim it tests, what is unknown and what to decide. A project keeps its 발표 지침, written by its Owners and Semi-Owners and read by an AI before a deck. AI decks are built only from layouts, in chat too, and the studio and the AI review name boxes drawn by hand, a change told only in words and one layout for every claim.
+
+- 연구 발표 지침이 63판이 됐습니다. 듣는 사람이 묻는 순서가 규칙의 뼈대입니다: 문제(구체적인 경우와 왜 중요한지), 가장 가까운 기존 방법과 그 한계(같은 축으로), 원인을 찾은 측정, 해 본 것과 각각 보인 것과 이 길을 고른 이유, AS-IS / TO-BE, 주장마다 그것을 시험한 실험, 아직 모르는 것, 정할 것과 다음 확인. 제목만 이어 읽어도 논증이 되게 쓰고, 이득에는 비용과 조건을 붙입니다. 보여 주신 지도교수 피드백은 뜻만 녹였고 그 말은 넣지 않았습니다.
+- 프로젝트 설정에 '발표' 칸이 생겼습니다. 작업 지침 바로 아래에서 발표 지침(4,000자까지)을 쓰고, 발표 예시도 이 칸으로 옮겼습니다. Owner와 Semi-Owner가 쓰고, AI는 발표를 만들기 전에 이 지침을 먼저 읽습니다(바꾸지는 못합니다).
+- 대화에서 발표를 만들어 달라고 하면 AI가 `create_presentation`으로 레이아웃에 맞춰 만들어 '미팅 발표' 노트로 저장합니다. 맡긴 작업과 같은 계약입니다. AI가 좌표로 상자를 놓는 슬라이드는 이제 만들 수 없습니다.
+- 스튜디오와 AI 결과 검토가 세 가지를 알려 줍니다: 손으로 그린 상자와 화살표(도해로 그리면 단계와 이름이 이어집니다), 제목이 말하는 숫자의 변화를 보여 줄 그림이나 표가 없는 장, 모든 주장에 같은 레이아웃.
+- 좌표로 놓은 상자의 글이 PowerPoint처럼 상자의 세로 가운데에 섭니다.
+- 설정에서 한 칸(작업 지침, 프로젝트 정보)을 저장하면 다른 지침 칸에 쓰던 글이 사라지던 문제를 고쳤습니다. 같은 글이 다른 곳에서 바뀌었을 때만 알리고, 다시 누르면 지금 쓴 내용으로 바꿉니다.
+- 데이터베이스 마이그레이션이 하나 있습니다(발표 지침). 배포 안내의 SQL 단계를 먼저 하세요. 프로젝트 로고(발표 양식)는 0.129.0에 옵니다.
+
+## 0.127.1 — 2026-11-25
+
+The plugin screen now works inside ChatGPT's limits. ChatGPT's sandbox answers the browser's confirm box with "no" at once and blocks the clipboard, new windows and downloads, so 51 buttons that ask first did nothing, copy buttons failed and saved files never arrived. Questions are now asked in the page, on the website too; copies fall back to the copy command; links and files go through ChatGPT. The project gear no longer slips from under the pointer, and the plugin screen's foot, with the account row, is no longer cut off.
+
+- ChatGPT 안의 플러그인 화면에서 확인을 묻는 버튼 51개가 눌러도 진행되지 않았습니다. ChatGPT는 플러그인을 격리된 틀(sandbox)에서 돌리고, 그 안에서는 브라우저의 확인 창이 뜨지 않고 바로 '취소'로 답합니다. 페이지 삭제, AI 작업 취소, AI 권한 철회, 프로젝트 나가기, 구성원 내보내기, Google 연결, 저장하지 않은 수정을 버리고 이동하기가 모두 그랬습니다.
+- 이제 확인은 페이지 안의 창에서 묻습니다. 묻는 말 아래에 '취소'와 할 일의 이름(삭제, 나가기, 철회, 버리고 이동)이 섭니다. 지우거나 버리는 질문은 '취소'에 초점이 먼저 갑니다. Esc나 창 바깥을 누르면 취소입니다. 사이트에서도 같은 창을 씁니다.
+- 복사 버튼 16개가 ChatGPT 안에서 실패했습니다. 이제 클립보드가 막히면 브라우저의 복사 명령으로 복사하고, 그것도 안 되면 글을 선택해 둔 창을 띄웁니다. '복사했습니다'는 실제로 복사됐을 때만 뜹니다.
+- 다른 사이트로 가는 링크, Google 로그인, 저장된 파일 보기, '사이트 열기'는 ChatGPT를 거쳐 엽니다. 파일 저장과 PPTX 내보내기는 ChatGPT에 저장을 요청하고 '대화 화면에서 저장하세요'라고 알립니다. ChatGPT가 그 기능을 주지 않으면 주소를 복사하게 하거나 사이트의 같은 화면으로 안내합니다. 발표자 보기는 사이트에서 엽니다.
+- 왼쪽 메뉴의 프로젝트 톱니바퀴가 누르는 순간 15px 내려가 클릭이 빗나가던 것을 고쳤습니다. 플러그인 화면에서만 생겼습니다. 연구 흐름 판의 접기 표시도 같은 이유로 빗나가서 같이 고쳤습니다.
+- 플러그인 화면의 아래 48px가 늘 잘려 있었고, 왼쪽 메뉴의 내 프로필 줄이 거기 있었습니다. 이제 화면이 플러그인 틀에 맞습니다. 대화 안에 띄운 화면에서는 메뉴 끝에서 휠이 대화로 넘어가 아래까지 내려가고, 전체 화면에서는 ChatGPT가 알려 주는 아래 여백만큼 비웁니다.
+- 발표의 'AI에게 맡기기' 메뉴에서 'AI 6개가 이 요청을 가져갈 수 있습니다' 줄만 글자가 컸던 것을 고쳤습니다(16px에서 13px).
+- 저장하는 데이터, 마이그레이션, MCP 도구는 바뀌지 않았습니다. 플러그인 패널이 바뀌어 MCP 함수를 다시 배포합니다.
+
+## 0.127.0 — 2026-11-25
+
+The experiments list now lays out what is current and folds what is past. In a module, each older setup folds to one line saying only what differs from the current setup; a line of the research board that ended folds under its name and what it learned or why it stopped. A search opens the folds it reaches, the setup filter is gone, and a module's version opens the list at its own fold. The demo's methods now run under three setups of one module. Implementation reports open with three lines.
+
+- 실험 목록이 지금 하는 것은 펼치고 지난 것은 접습니다. 모듈별로 보면 현재 설정의 실험이 펼쳐져 있고, 이전 설정은 한 줄로 접혀 지금과 다른 것만 말합니다(예: 지금과 다른 것 allocation uniform → layerwise, middle_share 추가 외 1줄). 질문별로 보면 관계도에서 끝난 길(보류, 결론, 폐기)이 그 길의 이름과 배운 것 한 문장으로 접힙니다. 무엇이 지난 것인지는 모듈의 현재 설정과 관계도의 길 상태로만 정하고, 날짜나 제목으로 짐작하지 않습니다.
+- 접힌 줄은 페이지 링크와 같은 기호(○ ‖ ✓ ×)와 말(이전 설정, 보류한 길, 결론이 난 길, 폐기한 길)을 씁니다. 누르면 그 아래에 실험이 펼쳐집니다. 검색이 접힌 줄 안의 실험에 닿으면 그 줄이 열리고, 검색을 지우면 다시 접힙니다. 내가 연 줄은 그대로 둡니다.
+- 모듈 이름 아래에 현재 설정이 링크로 섭니다. '현재 설정만, 모든 설정, 이전 설정, 설정 미지정' 선택 상자와 '설정 미지정 실험 N개 보기' 링크는 없앴습니다. 모듈에 있지만 설정이 없는 실험은 그 줄에 '설정 미지정'이라고 적습니다. 모듈 페이지에서 버전의 '실험 N개'를 누르면 그 버전의 접힌 줄이 열린 채로 보입니다.
+- 데모의 KV 프로젝트에 모듈 'KV 예산 평가'와 설정 세 개(v1 균일 예산, v2 sink 보존, v3 레이어별 예산)를 넣었습니다. 끝난 실험에는 결과 목록을 적어, 실험 목록에 남은 점검 표시는 128k 재실험의 '일부 결과만' 하나입니다.
+- 구현 확인 보고가 세 줄로 시작합니다: 지시의 문장을 어떻게 했나, 요청 밖 변경이 어디에 닿나, 보고가 설명하지 않은 파일. 섹션 제목 아래에서 제목을 다시 설명하던 줄과 '설명보다 코드 줄과 확인 결과를 보고 정하세요'는 없앴습니다.
+- 저장하는 데이터, 마이그레이션, MCP 서버는 바뀌지 않았습니다.
+
 ## 0.126.0 — 2026-11-24
 
 Slides with a figure now read from the back of the room: in the presenter a diagram's step words stand at 14 pt (they were 10), a big figure takes the band an empty conclusion line leaves (plots grow by a fifth or more), a long chapter bar fades where it goes on and keeps the current chapter in view, and notes show bold. From the studio, one slide of a saved deck can be handed to your own AI, which reads it with get_slide and changes its title, notes and words with revise_slide; nothing else on the deck can change. Writing guide revision 62.
