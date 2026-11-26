@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.131.0",
+  "version": "0.134.1",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "Security, hardened. Every page is now signed with its own script nonce, so a script injected into a page does not run, and every HTML response refuses framing, isolates its window and is never cached; HTTPS is pinned for a year. React is updated against a remote code execution in Server Components. Personal settings can sign out every other device. The site publishes where to report a security problem.",
+        "release_notes": "0.134.0 did not reach the website: on GitHub its database check ran without the Supabase CLI it needs. The step that installs the CLI asked GitHub's API for the latest version on every run, a call that most likely failed on a runner's shared address, and the check's cleanup then failed on top of it. The check now installs a pinned version, which downloads without asking, and the steps that read or stop the local database run only when the CLI is there and the database started. 0.134.1 carries everything in 0.134.0 and changes nothing else.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",

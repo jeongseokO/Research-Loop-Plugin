@@ -144,19 +144,19 @@
     "talk": {
       "claim-figure": {
         "w": 653,
-        "h": 371
+        "h": 379
       },
       "figure": {
         "w": 1136,
-        "h": 395
+        "h": 403
       },
       "comparison": {
         "w": 556,
-        "h": 267
+        "h": 275
       },
       "big-number": {
         "w": 556,
-        "h": 323
+        "h": 331
       }
     },
     "progress": {

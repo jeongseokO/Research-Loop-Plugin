@@ -2,6 +2,50 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.134.1 — 2026-11-26
+
+0.134.0 did not reach the website: on GitHub its database check ran without the Supabase CLI it needs. The step that installs the CLI asked GitHub's API for the latest version on every run, a call that most likely failed on a runner's shared address, and the check's cleanup then failed on top of it. The check now installs a pinned version, which downloads without asking, and the steps that read or stop the local database run only when the CLI is there and the database started. 0.134.1 carries everything in 0.134.0 and changes nothing else.
+
+- 0.134.0은 GitHub의 데이터베이스 검사에서 멈춰 사이트에 올라가지 않았습니다. 검사가 쓰는 Supabase CLI가 설치되지 않았고, 마지막 정리 단계(`supabase stop`)까지 "command not found"로 실패했습니다.
+- 설치 단계는 실행할 때마다 GitHub API에 최신 버전을 물었습니다. 여러 러너가 함께 쓰는 주소는 이 API 한도에 걸리기 쉬워서, 이번에도 거기서 막혔을 가능성이 큽니다.
+- 이제 CLI 버전을 2.122.0으로 고정해 묻지 않고 바로 받습니다. GitHub이 지금 최신으로 표시한 릴리스입니다.
+- 로컬 DB를 읽거나 멈추는 단계는 CLI가 설치되고 DB가 떴을 때만 돕니다. 설치가 실패하면 빨간 단계는 그 하나뿐입니다.
+- 0.134.1에는 0.134.0의 변경이 모두 들어 있고, 그 밖에 바뀐 것은 없습니다. 데이터베이스 단계와 함수 배포는 없습니다. 브랜치와 `v0.134.1` 태그를 푸시하면 됩니다.
+
+## 0.134.0 — 2026-11-26
+
+Slide type. A notebook deck's titles are now set in the same sans as their words, bold, instead of a thin serif, and the words under a slide's title are never more than two thirds of its size, so a title always stands clearly larger. The paper look keeps its serif.
+
+- 노트 모양 덱의 제목을 얇은 명조 대신 본문과 같은 고딕으로, 굵게 씁니다. 표지와 절 제목도 같습니다.
+- 슬라이드 제목 아래의 본문은 제목 크기의 3분의 2를 넘지 않습니다. 제목이 늘 본문보다 1.5배 이상 큽니다. 글만 있는 슬라이드가 커질 때도 거기까지입니다.
+- 논문 모양은 명조를 그대로 씁니다. 연구실 양식과 직접 정한 크기는 그대로입니다.
+- 데이터베이스 단계는 없습니다. 함수(`research-loop-mcp`)와 사이트를 올리면 됩니다.
+
+## 0.133.0 — 2026-11-26
+
+Decks in one place. Editing and presenting are one screen: Esc or Edit in the show returns to the slide you were on, F5 and Shift+F5 present, and Audience view shows a slide as the show draws it. A saved deck can be shared by link as its slides, without speaker notes. Slides stay 16:9 on a phone. ⌘ or Ctrl with the wheel, a pinch or two fingers zoom around the pointer, and Fill window gives the slide the whole window. Closing asks about unsaved changes, drafts can be deleted, Contents scrolls, and Korean slide titles end in a noun.
+
+- 편집과 발표가 한 화면입니다. 발표 중에 Esc나 오른쪽 위 '편집'을 누르면 보던 장의 편집으로 돌아옵니다. 목록에서 발표를 시작해도 같습니다. F5는 처음부터, Shift+F5와 ⌘/Ctrl+Enter는 지금 장부터 발표합니다.
+- 캔버스 위 '발표 모습'(P)을 누르면 편집 표시가 사라지고 발표 화면에 보이는 그대로 보입니다.
+- 저장한 덱을 링크로 공유할 수 있습니다. 덱 화면 위와 목록 줄에 '공유'가 있습니다. 받은 사람은 슬라이드를 발표 화면으로 넘겨 보고, 발표자 메모는 보지 못합니다.
+- 폰에서도 슬라이드가 16:9 그대로입니다. 옆으로 들면 화면을 채우고, 한 번 누르면 위아래 막대가 나옵니다. 글로 읽고 싶으면 '글로 보기'를 누릅니다.
+- ⌘이나 Ctrl을 누른 채 휠을 굴리거나, 트랙패드나 화면에서 두 손가락을 벌리면 포인터 둘레를 400%까지 확대합니다. 끌어서 옮기고, 0을 누르면 맞춤으로 돌아옵니다. '꽉 채우기'는 위아래 막대를 걷고 슬라이드에 창을 다 줍니다.
+- 닫을 때 저장하지 않은 것이 있으면 저장, 초안으로 두기, 버리기를 묻습니다. 덱을 열기만 해서는 초안이 생기지 않고, 목록의 초안마다 휴지통이 있습니다.
+- 목차가 길어도 화면 안에서 스크롤됩니다.
+- 한국어 슬라이드 제목이 문장이 아니라 명사로 끝납니다(정확도 3%p 향상). 편집기 검사와 AI 지침(64판)이 같은 규칙을 씁니다.
+- 데이터베이스 단계는 없습니다. 함수 두 개(`research-loop-mcp`, `shared-page`)와 사이트를 올리면 됩니다.
+
+## 0.132.0 — 2026-11-26
+
+Lighter on every first visit. The connection guide, the privacy policy and the terms are now plain pages from the server with a small stylesheet of their own: 76 KB instead of 467 in English, 225 instead of 646 in Korean, and nothing moves as they load. The front page fetches its account code only when a hand reaches for sign-in, and the Korean page no longer fetches the whole Hangul face. The workspace's first load leaves out the presentation code. Size budgets now stop a build, a release and a deploy. The presenter's zoom fills the window.
+
+- 연결 안내, 개인정보 처리방침, 약관이 서버가 바로 그린 글자 페이지가 됐습니다. 영어는 467 KB에서 76 KB로, 한국어는 646 KB에서 225 KB로 줄었고, 열리는 동안 글자가 움직이지 않습니다.
+- 첫 화면은 로그인 단추에 손이 갈 때만 계정 코드(60 KB)를 받습니다. 한국어 첫 화면은 한글 글꼴 전체(142 KB) 대신 이 페이지의 글자만 담은 33 KB짜리를 씁니다. 영어 438 KB에서 365 KB로, 한국어 639 KB에서 455 KB로.
+- 작업 공간의 첫 로드에서 발표 코드와 로그인 화면이 빠졌습니다. 1,266 KB에서 1,070 KB로, 스크립트는 3.0 MB에서 2.5 MB로. 한가할 때 미리 받는 화면은 이 브라우저에서 최근에 연 화면 여섯 개뿐이고, 데이터 절약 모드나 느린 회선에서는 받지 않습니다. 이 목록은 로그아웃하면 지워집니다.
+- 크기 예산(`budgets.json`)이 생겼습니다. 넘으면 빌드, 릴리스, 배포가 멈춥니다.
+- 발표 화면의 '확대'가 슬라이드보다 작게 열리던 문제를 고쳤습니다. 이제 창을 가득 채웁니다.
+- 데이터베이스 단계는 없습니다. 함수 두 개(`research-loop-mcp`, `shared-page`)와 사이트를 올리면 됩니다.
+
 ## 0.131.0 — 2026-11-25
 
 Security, hardened. Every page is now signed with its own script nonce, so a script injected into a page does not run, and every HTML response refuses framing, isolates its window and is never cached; HTTPS is pinned for a year. React is updated against a remote code execution in Server Components. Personal settings can sign out every other device. The site publishes where to report a security problem.
