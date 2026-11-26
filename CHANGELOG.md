@@ -2,6 +2,18 @@
 
 Research Loop는 버전이 하나입니다. 웹사이트, MCP 서버, ChatGPT·Claude 안의 패널, 이 플러그인 패키지가 같은 번호를 씁니다. 새 버전은 맨 위에 `## x.y.z` 항목으로 적습니다. 항목의 첫 문단은 플러그인 디렉터리에 올라가는 release note이므로 영어 한 문단으로 쓰고, 그 아래에 사람이 읽을 내용을 한국어로 적습니다. 릴리스 명령이 제목에 날짜를 붙입니다.
 
+## 0.135.0 — 2026-11-26
+
+Edit a deck together. A saved deck saves itself, and every window on it sees the others' changes as they are typed; what a teammate or an AI writes elsewhere merges into the deck on screen without moving the slide or the caret, and where two people change the same words, yours stay and theirs are one press away. The header shows who is here and the strip where; a box being typed in is held for its typist. A deck's author can open it to every Editor. Slides take comments, for everyone or yourself. An AI's one-slide edit lands while people work.
+
+- 저장한 덱은 스스로 저장합니다. 고치고 3초쯤 지나면, 계속 고치는 중에는 30초에 한 번, 창을 떠나거나 닫을 때는 바로 저장합니다. 제목 옆에 저장됨, 곧 저장, 저장 중…이 보이고, 저장 단추와 닫을 때의 질문은 없어졌습니다. 처음 저장하는 새 덱은 저장 단추가 그대로 있습니다.
+- 같은 덱을 연 창들은 서로의 변경을 바로 봅니다. AI나 팀원이 다른 곳에서 고친 것도 5초 안에 들어오고, 보던 장과 커서는 그대로입니다. 같은 글을 둘이 다르게 고치면 내 글이 남고, 다른 쪽 글로 바꾸는 단추가 나옵니다. 사본이 생기지 않습니다.
+- 위쪽에 덱을 연 사람이 동그라미로 보이고, 누르면 누가 몇 장에 있는지 나옵니다. 슬라이드 목록에는 그 장에 있는 사람의 점이, 슬라이드에는 그 사람이 고르거나 고치는 상자의 선이 보입니다. 누가 고치는 상자는 그 사람이 나갈 때까지 다른 사람이 고칠 수 없습니다.
+- 팀원 누구나 고칠 수 있게: 덱을 만든 사람, Owner, Semi-Owner가 켜면 프로젝트의 Editor 누구나 그 덱을 검토 없이 바로 고칩니다. 기본은 꺼져 있습니다.
+- 슬라이드 댓글: 위쪽 댓글을 누르면 오른쪽에 이 장, 또는 모든 장의 댓글이 나옵니다. 모두에게 또는 나만 보게 남기고, AI에게도 물을 수 있습니다. 댓글이 있는 장은 슬라이드 목록에 개수가 붙고, 내가 안 본 새 댓글이 있으면 댓글 단추에 점이 찍힙니다.
+- AI가 한 장을 고칠 때(`get_slide`, `revise_slide`) 받은 `slide_version`을 넘기면, 그사이 사람들이 다른 장을 고쳐도 그 장이 그대로면 바로 저장됩니다. AI 지침은 65판입니다.
+- 데이터베이스 단계가 있습니다: 마이그레이션 `20261126200000_deck_rooms`(덱 방에 들어올 수 있는 사람, 팀원 누구나 고치기, 페이지 작성자의 댓글 지우기). 사이트와 함수(`research-loop-mcp`)도 올립니다.
+
 ## 0.134.1 — 2026-11-26
 
 0.134.0 did not reach the website: on GitHub its database check ran without the Supabase CLI it needs. The step that installs the CLI asked GitHub's API for the latest version on every run, a call that most likely failed on a runner's shared address, and the check's cleanup then failed on top of it. The check now installs a pinned version, which downloads without asking, and the steps that read or stop the local database run only when the CLI is there and the database started. 0.134.1 carries everything in 0.134.0 and changes nothing else.

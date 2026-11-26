@@ -1,6 +1,6 @@
 {
   "name": "research-loop",
-  "version": "0.134.1",
+  "version": "0.135.0",
   "description": "Research Loop workspace with separate notebook and team spaces, explicit AI requests and selected evidence sharing; equations, diagrams and charts the page draws from data.",
   "author": {
     "name": "오정석",
@@ -44,7 +44,7 @@
   "extensions": {
     "com.openai": {
       "publication": {
-        "release_notes": "0.134.0 did not reach the website: on GitHub its database check ran without the Supabase CLI it needs. The step that installs the CLI asked GitHub's API for the latest version on every run, a call that most likely failed on a runner's shared address, and the check's cleanup then failed on top of it. The check now installs a pinned version, which downloads without asking, and the steps that read or stop the local database run only when the CLI is there and the database started. 0.134.1 carries everything in 0.134.0 and changes nothing else.",
+        "release_notes": "Edit a deck together. A saved deck saves itself, and every window on it sees the others' changes as they are typed; what a teammate or an AI writes elsewhere merges into the deck on screen without moving the slide or the caret, and where two people change the same words, yours stay and theirs are one press away. The header shows who is here and the strip where; a box being typed in is held for its typist. A deck's author can open it to every Editor. Slides take comments, for everyone or yourself. An AI's one-slide edit lands while people work.",
         "translations": {
           "ko-KR": {
             "subtitle": "연구 기록부터 팀의 다음 할 일까지",
